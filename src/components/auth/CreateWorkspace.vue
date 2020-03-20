@@ -34,6 +34,7 @@
 </template>
 
 <script>
+
 export default {
   name: "NamingWorkspace",
   props: {
@@ -97,7 +98,6 @@ export default {
 .input-workspace-name {
   &::v-deep input {
     text-align: right;
-
   }
 }
 </style>

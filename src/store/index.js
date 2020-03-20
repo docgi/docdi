@@ -1,15 +1,13 @@
-export const state = () => {
-  return {
-    tokenSetted: false,
-    user: {},
-    workspace: {}
-  };
+import {getToken} from "../common/token.service"
+
+const state = {
+  isAuthenticated: false,
+  user: {}
 };
 
 export const getters = {
-  isLogged: () => {
-    const token = localStorage.getItem("token");
-    return !!token;
+  isAuthenticated(state) {
+    return state.isAuthenticated;
   },
   workspace: state => {
     return state.workspace;
@@ -26,9 +24,6 @@ export const mutations = {
   setWorkspace(state, workspace) {
     state.workspace = workspace;
   },
-  settedToken(state) {
-    state.tokenSetted = true;
-  }
 };
 
 export const actions = {

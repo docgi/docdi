@@ -14,21 +14,22 @@
 }
 
 .create-workspace-input-form-title {
-  font-size: 23px;
+  font-size: 1.5em;
   margin-top: 8px;
 }
 
 .create-workspace-input-form-subtitle {
   @extend .create-workspace-input-form-title;
-  font-size: 12px;
+  font-size: 1em;
 }
 
 .create-workspace-form {
-  min-height: 450px;
+  height: 350px;
   width: 450px;
   display: flex;
   flex-direction: column;
   padding: 8px;
+  border-radius: 10px;
 }
 
 .create-workspace-form-content {

@@ -38,7 +38,7 @@
         If you already have an workspace
       </div>
       <div class="d-inline">
-        <router-link to="/">
+        <router-link to="/check-workspace">
           login
         </router-link>
       </div>

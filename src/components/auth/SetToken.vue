@@ -2,8 +2,8 @@
   <div>
     <iframe
       v-show="true"
-      scrolling="no"
       :src="iframeSrc"
+      scrolling="no"
       frameborder="0"
       id="ifr"
       @load="sendToken"
@@ -12,15 +12,14 @@
 </template>
 
 <script>
-import {isSubDomain} from "../../common/utils";
+import { isSubDomain } from "../../common/utils";
 
 export default {
   name: "SetToken",
   props: {
     token: {
       type: String,
-      required: true,
-      default: "12344321"
+      required: true
     },
     workspaceName: {
       required: true,
@@ -35,19 +34,17 @@ export default {
   mounted() {
     let subDomain = `${location.protocol}//${this.workspaceName}.${location.host}`;
     this.iframeSrc = `${subDomain}/set-token`;
+    window.currentComponent = this;
     window.onmessage = function(event) {
       if (isSubDomain(event.origin)) {
         let parsed;
         try {
           parsed = JSON.parse(event.data);
-        } catch (e) {
-          console.log(e.toString());
+        } catch (error) {
+          console.log(error.toString());
         }
-        if ("ok" in parsed) {
-          window.location.href = subDomain;
-        }
-        // On some browser can't access `localStorage`, we need force user to login in this step
-        window.location.href = `${subDomain}/login?firstTime=true`;
+        console.log(parsed);
+        window.currentComponent.$emit("nextStep", {status: parsed.ok});
       }
     };
   },
@@ -59,7 +56,7 @@ export default {
       };
       let payload = JSON.stringify(message);
       ifr.postMessage(payload, "*");
-    }
+    },
   }
 };
 </script>

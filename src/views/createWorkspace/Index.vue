@@ -15,22 +15,25 @@
       :code="code"
       @nextStep="createDone"
     />
+
     <set-token
-      v-if="currentStep === steps.done"
+      v-if="showSetToken"
       :token="token"
-      :workspaceName="workspace.name"
+      :workspace-name="workspace.name"
+      @nextStep="setTokenDone"
     />
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { setToken } from "../../common/token.service";
+import { rememberWorkspace } from "../../common/utils";
 import {
   GetCode,
   ValidateCode,
   CreateWorkspace,
   SetToken
-} from "../components/auth";
+} from "../../components/auth";
 
 const STEPS = {
   getCode: 1,
@@ -40,7 +43,8 @@ const STEPS = {
 };
 
 export default {
-  components: { GetCode, ValidateCode, CreateWorkspace, SetToken },
+  name: "CreateWorkspaceView",
+  components: { SetToken, GetCode, ValidateCode, CreateWorkspace },
   head() {
     return {
       title: "Docgi - Create workspace"
@@ -54,23 +58,36 @@ export default {
       user: {},
       token: "",
       currentStep: STEPS.getCode,
-      steps: STEPS
+      showSetToken: false,
+      steps: STEPS,
+      isSetTokenDone: false
     };
   },
   methods: {
-    ...mapMutations(["setUser", "setWorkspace"]),
     mailDone(event) {
       this.email = event.email;
-      this.currentStep = this.steps.validateCode;
+      this.currentStep = STEPS.validateCode;
     },
     codeDone(event) {
       this.code = event.code;
-      this.currentStep = this.steps.namingWorkspace;
+      this.currentStep = STEPS.namingWorkspace;
     },
-    createDone({ token, workspace }) {
-      this.currentStep = this.steps.done;
+    createDone({ token, workspace, user }) {
+      this.currentStep = STEPS.done;
       this.token = token;
       this.workspace = workspace;
+      this.user = { ...user };
+      setToken(this.token);
+      rememberWorkspace({ name: workspace.name, logo: workspace.logo });
+      this.showSetToken = true;
+    },
+    setTokenDone({ status }) {
+      console.log(status);
+      if (this.user.need_pass) {
+        this.$router.push({ name: "SetPassword" });
+      } else {
+        location.href = `${location.protocol}//${this.workspace.name}.${location.host}`;
+      }
     }
   }
 };

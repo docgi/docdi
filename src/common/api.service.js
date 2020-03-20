@@ -2,8 +2,7 @@ import Vue from "vue";
 import Axios from "axios";
 import VueAxios from "vue-axios";
 
-import {getToken} from "./token.service";
-
+import { getToken } from "./token.service";
 
 const ApiService = {
   init() {
@@ -12,9 +11,7 @@ const ApiService = {
   },
 
   setToken() {
-    Vue.axios.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${getToken()}`;
+    Vue.axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
   }
 };
 

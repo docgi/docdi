@@ -13,12 +13,17 @@ const router = new VueRouter({
     {
       path: "/create-workspace",
       name: "CreateWorkspace",
-      component: () => import("@/views/CreateWorkspace")
+      component: () => import("@/views/createWorkspace/Index")
     },
     {
-      path: "/login",
-      name: "Login",
-      component: () => import("@/views/Login")
+      path: "/create-workspace/set-password",
+      component: () => import("@/views/createWorkspace/SetPassword"),
+      name: "SetPassword"
+    },
+    {
+      path: "/create-workspace/invite-members",
+      component: () => import("@/views/createWorkspace/InviteMember"),
+      name: "InviteMembers"
     }
   ]
 });
