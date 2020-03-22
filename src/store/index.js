@@ -1,52 +1,12 @@
-import {getToken} from "../common/token.service"
+import Vue from "vue";
+import Vuex from "vuex";
 
-const state = {
-  isAuthenticated: false,
-  user: {}
-};
+import auth from "./auth.module"
 
-export const getters = {
-  isAuthenticated(state) {
-    return state.isAuthenticated;
-  },
-  workspace: state => {
-    return state.workspace;
-  },
-  user: state => {
-    return state.user;
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  modules: {
+    auth
   }
-};
-
-export const mutations = {
-  setUser(state, user) {
-    state.user = user;
-  },
-  setWorkspace(state, workspace) {
-    state.workspace = workspace;
-  },
-};
-
-export const actions = {
-  async loadWorkspace({ commit }) {
-    try {
-      const res = await this.$http.get("/workspace/");
-      const workspace = res.data;
-      commit("setWorkspace", workspace);
-    } catch (e) {
-      this.app.methods.notifyError({
-        message: "Loading workspace resource failed."
-      });
-    }
-  },
-  async loadUser({ commit }) {
-    try {
-      const res = await this.$http.get("/users/me/");
-      const user = res.data;
-      commit("setUser", user);
-    } catch (e) {
-      this.app.methods.notifyError({
-        message: "Loading user resource failed."
-      });
-    }
-  }
-};
+})

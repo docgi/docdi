@@ -8,17 +8,26 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      component: () => import("@/views/app/Index")
+      component: () => import("@/views/app/Index"),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/set-token",
-      component: () => import("@/views/app/IframeSetToken")
+      component: () => import("@/views/app/IframeSetToken"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/login",
+      component: () => import("@/views/app/InAppLogin"),
+      meta: {
+        requiresAuth: false
+      }
     }
   ]
-});
-
-router.beforeEach((to, from, next) => {
-  next();
 });
 
 export default router;
