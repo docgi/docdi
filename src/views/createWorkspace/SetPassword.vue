@@ -69,7 +69,7 @@
 
 <script>
 import { getToken, removeToken } from "../../common/token.service";
-const MIN_LEN_PASS = 2;
+const MIN_LEN_PASS = 8;
 
 export default {
   name: "SetPassWord",
@@ -83,7 +83,7 @@ export default {
       errorsPass: [],
       errorsConfirmPass: [],
       submitting: false,
-      showSetToken: false
+      showSetToken: false,
     };
   },
   created() {
@@ -91,6 +91,7 @@ export default {
     if (this.token) {
       this.hasToken = true;
       removeToken();
+
     }
   },
   methods: {
@@ -101,17 +102,18 @@ export default {
         confirm_password: this.confirmPass
       };
       try {
-        await this.$http.post("users/set-password/", payload, {
+        let response = await this.$http.post("users/set-password/", payload, {
           headers: { Authorization: "Bearer " + this.token }
         });
         this.submitting = false;
+        let workspaceName = response.data.workspace_name;
+        location.href = `${location.protocol}//${workspaceName}.${location.host}`;
       } catch (e) {
-        let response = { ...e.response };
-        if (response.data.password) {
-          this.errorsPass = response.data.password;
+        if (e.response.data.password) {
+          this.errorsPass = e.response.data.password;
         }
-        if (response.data.confirm_password) {
-          this.errorsPass = response.data.confirm_password;
+        if (e.response.data.confirm_password) {
+          this.errorsPass = e.response.data.confirm_password;
         }
         this.submitting = false;
       }
