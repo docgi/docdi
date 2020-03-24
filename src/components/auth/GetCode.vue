@@ -8,37 +8,36 @@
       Create new workspace to docdi!
     </div>
     <div class="create-workspace-form-content">
-      <div class="create-workspace-input-form-subtitle">
+      <div class="create-workspace-input-form-subtitle mb-4">
         First, enter your work email.
       </div>
       <v-text-field
         :error-messages="errorServerMsg"
         v-model="email"
-        class="mt-1"
         label="Email"
         type="email"
         outlined
-        dense
         placeholder="your@email.com"
+        autofocus
       />
     </div>
-    <div class="d-flex justify-center">
+    <div class="d-flex">
       <v-btn
         :loading="submitting"
         :disabled="!validEmail"
         color="primary"
         type="submit"
-        small
+        class="w-full"
       >
         Get code
       </v-btn>
     </div>
-    <div class="mt-2">
-      <div style="font-size: small" class="d-inline">
+    <div class="mt-6">
+      <div class="d-inline">
         If you already have an workspace
       </div>
       <div class="d-inline">
-        <router-link to="/check-workspace">
+        <router-link to="/login">
           login
         </router-link>
       </div>

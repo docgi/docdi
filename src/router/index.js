@@ -8,23 +8,24 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      component: () => import("@/views/Index")
+      component: () => import("@/views/Index"),
+      children: [
+        {
+          path: "/create-workspace",
+          name: "CreateWorkspace",
+          component: () => import("@/views/createWorkspace/Index")
+        },
+        {
+          path: "/create-workspace/set-password",
+          component: () => import("@/views/createWorkspace/FirstSetPassword"),
+          name: "SetPassword"
+        },
+        {
+          path: "/login",
+          component: () => import("@/views/Login")
+        }
+      ]
     },
-    {
-      path: "/create-workspace",
-      name: "CreateWorkspace",
-      component: () => import("@/views/createWorkspace/Index")
-    },
-    {
-      path: "/create-workspace/set-password",
-      component: () => import("@/views/createWorkspace/SetPassword"),
-      name: "SetPassword"
-    },
-    {
-      path: "/create-workspace/invite-members",
-      component: () => import("@/views/createWorkspace/InviteMember"),
-      name: "InviteMembers"
-    }
   ]
 });
 

@@ -4,7 +4,7 @@ import App from "./App.vue";
 
 import router from "./router";
 import store from "./store";
-import { isSubDomain } from "./common/utils";
+import {isEmptyObject, isSubDomain} from "./common/utils";
 import appRouter from "./router/app";
 import vuetify from "./plugins/vuetify";
 import ApiService from "./common/api.service";
@@ -26,18 +26,21 @@ const routers = () => {
       } else {
         let token = getToken();
         if (token) {
-          Vue.axios
-            .get("/users/me/", {
-              headers: {
-                Authorization: "Bearer " + token //the token is a variable which holds the token
-              }
-            })
-            .then(({ data }) => {
-              store.commit("setUser", data);
-            })
-            .catch(() => {
-              next({path: "/login", query: { redirect: to.fullPath }});
-            });
+          let currentUser = store.state.auth.user;
+          if (isEmptyObject(currentUser)) {
+            Vue.axios
+              .get("/users/me/", {
+                headers: {
+                  Authorization: "Bearer " + token
+                }
+              })
+              .then(({ data }) => {
+                store.commit("setUser", data);
+              })
+              .catch(() => {
+                next({path: "/login", query: { redirect: to.fullPath }});
+              });
+          }
           next();
         } else {
           next({path: "/login", query: { redirect: to.fullPath }});

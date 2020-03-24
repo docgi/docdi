@@ -17,17 +17,29 @@ export const isParentOrigin = parentOrigin => {
 };
 
 export const listWorkspaces = () => {
-  let workspaces = localStorage.getItem(REMEMBER_WORKSPACES_KEY);
-  if (!workspaces) {
-    return [];
+  let _workspaces = localStorage.getItem(REMEMBER_WORKSPACES_KEY);
+  try {
+    return JSON.parse(_workspaces);
+  } catch (e) {
+    return []
   }
-  return workspaces;
 };
 
 export const REMEMBER_WORKSPACES_KEY = "workspaces";
 export const rememberWorkspace = workspace => {
   if (workspace) {
     let workspaces = listWorkspaces();
+    if (!(workspaces instanceof Array)) {
+      workspaces = []
+    }
+    workspaces.push(workspace);
+    console.log(workspace);
+    console.log(workspaces);
     localStorage.setItem(REMEMBER_WORKSPACES_KEY, JSON.stringify(workspaces))
   }
 };
+
+export const isEmptyObject = (obj) => {
+  return Object.keys(obj).length === 0;
+};
+

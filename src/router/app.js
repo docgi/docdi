@@ -11,13 +11,13 @@ const router = new VueRouter({
       component: () => import("@/views/app/Index"),
       meta: {
         requiresAuth: true
-      }
+      },
     },
     {
       path: "/set-token",
       component: () => import("@/views/app/IframeSetToken"),
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     },
     {

@@ -1,39 +1,39 @@
 <template>
-  <div class="d-flex w-full fill-height justify-center align-center">
-    <get-code
-      v-if="currentStep === steps.getCode"
-      @nextStep="mailDone($event)"
-    />
-    <validate-code
-      v-if="currentStep === steps.validateCode"
-      :email="email"
-      @nextStep="codeDone"
-    />
-    <create-workspace
-      v-if="currentStep === steps.namingWorkspace"
-      :email="email"
-      :code="code"
-      @nextStep="createDone"
-    />
+  <div>
+    <div class="d-flex w-full fill-height justify-center" style="padding-top: 150px;">
+      <get-code
+        v-if="currentStep === steps.getCode"
+        @nextStep="mailDone($event)"
+      />
 
-    <set-token
-      v-if="showSetToken"
-      :token="token"
-      :workspace-name="workspace.name"
-      @nextStep="setTokenDone"
-    />
+      <validate-code
+        v-if="currentStep === steps.validateCode"
+        :email="email"
+        @nextStep="codeDone"
+      />
+
+      <create-workspace
+        v-if="currentStep === steps.namingWorkspace"
+        :email="email"
+        :code="code"
+        @nextStep="createDone"
+      />
+
+      <set-token
+        v-if="showSetToken"
+        :token="token"
+        :workspace-name="workspace.name"
+        @nextStep="setTokenDone"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { setToken } from "../../common/token.service";
-import { rememberWorkspace } from "../../common/utils";
-import {
-  GetCode,
-  ValidateCode,
-  CreateWorkspace,
-  SetToken
-} from "../../components/auth";
+import {setToken} from "../../common/token.service";
+import Icon from '../../assets/icon.svg';
+import {CreateWorkspace, GetCode, SetToken, ValidateCode} from "../../components/auth";
+import {rememberWorkspace} from "../../common/utils";
 
 const STEPS = {
   getCode: 1,
@@ -52,6 +52,7 @@ export default {
   },
   data() {
     return {
+      icon: Icon,
       email: "",
       code: "",
       workspace: {},
@@ -59,8 +60,7 @@ export default {
       token: "",
       currentStep: STEPS.getCode,
       showSetToken: false,
-      steps: STEPS,
-      isSetTokenDone: false
+      steps: STEPS
     };
   },
   methods: {
@@ -81,8 +81,7 @@ export default {
       rememberWorkspace({ name: workspace.name, logo: workspace.logo });
       this.showSetToken = true;
     },
-    setTokenDone({ status }) {
-      console.log(status);
+    setTokenDone() {
       if (this.user.need_pass) {
         this.$router.push({ name: "SetPassword" });
       } else {
