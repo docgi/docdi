@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="d-flex w-full fill-height justify-center" style="padding-top: 150px;">
+    <div
+      class="d-flex w-full fill-height justify-center"
+      style="padding-top: 150px;"
+    >
       <get-code
         v-if="currentStep === steps.getCode"
         @nextStep="mailDone($event)"
@@ -30,10 +33,15 @@
 </template>
 
 <script>
-import {setToken} from "../../common/token.service";
-import Icon from '../../assets/icon.svg';
-import {CreateWorkspace, GetCode, SetToken, ValidateCode} from "../../components/auth";
-import {rememberWorkspace} from "../../common/utils";
+import { setToken } from "../../common/token.service";
+import Icon from "../../assets/icon.svg";
+import {
+  CreateWorkspace,
+  GetCode,
+  SetToken,
+  ValidateCode
+} from "../../components/auth";
+import { rememberWorkspace } from "../../common/utils";
 
 const STEPS = {
   getCode: 1,
@@ -45,10 +53,9 @@ const STEPS = {
 export default {
   name: "CreateWorkspaceView",
   components: { SetToken, GetCode, ValidateCode, CreateWorkspace },
-  head() {
-    return {
-      title: "Docgi - Create workspace"
-    };
+  metaInfo: {
+    title: 'Docdi - Create workspace',
+    titleTemplate: '%s'
   },
   data() {
     return {

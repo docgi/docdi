@@ -43,3 +43,10 @@ export const isEmptyObject = (obj) => {
   return Object.keys(obj).length === 0;
 };
 
+export const buildFullSubDomain = (subDomain) => {
+  return `${location.protocol}//${subDomain}.${location.host}`;
+};
+
+export const workspaceNameFromHost = () => {
+  return location.host.split('.')[0];
+};
