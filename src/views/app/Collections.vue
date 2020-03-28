@@ -1,8 +1,11 @@
 <template>
+  <div>
+    Collections
+  </div>
 </template>
 
 <script>
 export default {
-  name: "NavBar"
+  name: "Collections",
 }
 </script>

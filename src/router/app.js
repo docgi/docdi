@@ -7,11 +7,21 @@ const router = new VueRouter({
   mode: "history",
   routes: [
     {
-      path: "/",
+      path: "/dashboard",
       component: () => import("@/views/app/Index"),
       meta: {
         requiresAuth: true
       },
+      children: [
+        {
+          path: "",
+          component: () => import("@/views/app/DashBoard")
+        },
+        {
+          path: "/collections",
+          component: () => import("@/views/app/Collections")
+        }
+      ]
     },
     {
       path: "/set-token",

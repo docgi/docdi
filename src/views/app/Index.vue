@@ -1,51 +1,24 @@
 <template>
-  <div style="height: 100%;" class="d-flex">
-    <v-card
-      height="100%"
-      width="256"
-    >
-      <v-navigation-drawer permanent>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="title">
-              Application
-            </v-list-item-title>
-            <v-list-item-subtitle>
-              subtext
-            </v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list
-          dense
-          nav
-        >
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            link
-          >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-    </v-card>
-    <div>
-      aaaaaaaaaaa
-    </div>
+  <div class="d-flex fill-height">
+    <the-nav-bar />
+    <the-app-bar />
+    <v-content>
+      <v-container class="d-flex">
+        <router-view />
+      </v-container>
+    </v-content>
   </div>
 </template>
 
 <script>
+import TheNavBar from "@/components/app/TheNavBar";
+import TheAppBar from "@/components/app/TheAppBar";
+
 export default {
-  name: "IndexApp"
+  name: "AppIndex",
+  components: {
+    TheNavBar,
+    TheAppBar
+  }
 };
 </script>

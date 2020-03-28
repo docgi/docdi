@@ -11,7 +11,7 @@ import vuetify from "./plugins/vuetify";
 import ApiService from "./common/api.service";
 
 import "./assets/css/main.scss";
-import { getToken } from "./common/token.service";
+import { getToken, removeToken } from "./common/token.service";
 
 Vue.use(Vuetify);
 Vue.use(VueMeta, {
@@ -25,12 +25,11 @@ const routers = () => {
   let host = location.host;
   if (isSubDomain(host)) {
     appRouter.beforeEach((to, from, next) => {
-      if (to.matched.some(record => !record.meta.requiresAuth)) {
-        next();
-      } else {
-        let token = getToken();
+      let token = getToken();
+      if (to.matched.some(record => record.meta.requiresAuth)) {
+        console.log("MATCH");
         if (token) {
-          let currentUser = store.state.auth.user;
+          let currentUser = store.getters.currentUser;
           if (isEmptyObject(currentUser)) {
             Vue.axios
               .get("/users/me/", {
@@ -39,9 +38,10 @@ const routers = () => {
                 }
               })
               .then(({ data }) => {
-                store.commit("setUser", data);
+                store.commit("setAuth", data);
               })
               .catch(() => {
+                removeToken();
                 next({path: "/login", query: { redirect: to.fullPath }});
               });
           }
@@ -49,6 +49,8 @@ const routers = () => {
         } else {
           next({path: "/login", query: { redirect: to.fullPath }});
         }
+      } else {
+        next();
       }
     });
     return appRouter;
