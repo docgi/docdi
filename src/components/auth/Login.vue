@@ -13,6 +13,8 @@
           label="Email"
           text
           outlined
+          autofocus
+          :error-messages="errors"
         />
         <v-text-field
           label="Password"
@@ -52,6 +54,7 @@ export default {
       workspaceName: "",
       submitting: false,
       showPass: false,
+      errors: []
     };
   },
   created() {
@@ -68,9 +71,9 @@ export default {
         let response = await this.$http.post('auth/login/', payload);
         let token = response.data.token;
         setToken(token);
-        this.$router.push('/');
+        await this.$router.push('/');
       } catch (e) {
-        console.log(e);
+        this.errors = ["Incorrect email or password."]
       }
     }
   },

@@ -1,7 +1,6 @@
 <template>
   <div
-    class="d-flex w-full fill-height justify-center"
-    style="padding-top: 150px;"
+    class="d-flex w-full justify-center mt-12"
   >
     <v-form @submit.prevent="checking" class="create-workspace-form">
       <div class="create-workspace-input-form-title">
@@ -42,10 +41,10 @@
 </template>
 
 <script>
-import { buildFullSubDomain, listWorkspaces } from "../common/utils";
+import { buildFullSubDomain, listWorkspaces } from "../../common/utils";
 
 export default {
-  name: "Login",
+  name: "CheckingWorkspace",
   data() {
     return {
       workspaces: [],

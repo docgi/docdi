@@ -1,6 +1,5 @@
 <template>
-  <div class="d-flex w-full fill-height justify-center"
-       style="padding-top: 150px;">
+  <div class="d-flex w-full justify-center mt-12">
     <login />
   </div>
 </template>

@@ -1,40 +1,41 @@
 <template>
-  <div>
-    <div
-      class="d-flex w-full fill-height justify-center"
-      style="padding-top: 150px;"
-    >
-      <get-code
-        v-if="currentStep === steps.getCode"
-        @nextStep="mailDone($event)"
-      />
+  <div class="pa-12" style="height: 90%">
+    <div class="d-flex justify-center align-center">
+      <div>
+        <get-code
+          v-if="currentStep === steps.getCode"
+          @nextStep="mailDone"
+        />
 
-      <validate-code
-        v-if="currentStep === steps.validateCode"
-        :email="email"
-        @nextStep="codeDone"
-      />
+        <validate-code
+          v-if="currentStep === steps.validateCode"
+          :email="email"
+          @nextStep="codeDone"
+        />
 
-      <create-workspace
-        v-if="currentStep === steps.namingWorkspace"
-        :email="email"
-        :code="code"
-        @nextStep="createDone"
-      />
+        <create-workspace
+          v-if="currentStep === steps.namingWorkspace"
+          :email="email"
+          :code="code"
+          @nextStep="createDone"
+        />
 
-      <set-token
-        v-if="showSetToken"
-        :token="token"
-        :workspace-name="workspace.name"
-        @nextStep="setTokenDone"
-      />
+        <set-token
+          v-if="showSetToken"
+          :token="token"
+          :workspace-name="workspace.name"
+          @nextStep="setTokenDone"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { setToken } from "../../common/token.service";
-import Icon from "../../assets/icon.svg";
+// import SVGGetCode from "@/assets/svg/getcode.svg";
+// import SVGVerifyCode from "@/assets/svg/verify-code.svg";
+// import SVGNamingWorkspace from "@/assets/svg/naming-workspace.svg";
 import {
   CreateWorkspace,
   GetCode,
@@ -54,12 +55,11 @@ export default {
   name: "CreateWorkspaceView",
   components: { SetToken, GetCode, ValidateCode, CreateWorkspace },
   metaInfo: {
-    title: 'Docdi - Create workspace',
-    titleTemplate: '%s'
+    title: "Docdi - Create workspace",
+    titleTemplate: "%s"
   },
   data() {
     return {
-      icon: Icon,
       email: "",
       code: "",
       workspace: {},
