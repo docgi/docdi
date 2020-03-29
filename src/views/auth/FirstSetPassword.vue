@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="d-flex w-full fill-height justify-center pa-12"
+      class="d-flex w-full fill-height justify-center mt-12"
     >
       <set-password />
     </div>

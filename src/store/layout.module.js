@@ -1,5 +1,5 @@
 const state = {
-  drawer: false
+  drawer: window.innerWidth >= 960
 };
 
 const getters = {

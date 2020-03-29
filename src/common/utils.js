@@ -50,3 +50,7 @@ export const buildFullSubDomain = (subDomain) => {
 export const workspaceNameFromHost = () => {
   return location.host.split('.')[0];
 };
+
+export const currentWindowWidth = () => {
+  return window.innerWidth;
+};

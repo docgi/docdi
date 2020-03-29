@@ -1,41 +1,36 @@
 <template>
-  <div class="pa-12" style="height: 90%">
-    <div class="d-flex justify-center align-center">
-      <div>
-        <get-code
-          v-if="currentStep === steps.getCode"
-          @nextStep="mailDone"
-        />
+  <div class="d-flex justify-center align-center mt-12">
+    <div>
+      <get-code
+        v-if="currentStep === steps.getCode"
+        @nextStep="mailDone"
+      />
 
-        <validate-code
-          v-if="currentStep === steps.validateCode"
-          :email="email"
-          @nextStep="codeDone"
-        />
+      <validate-code
+        v-if="currentStep === steps.validateCode"
+        :email="email"
+        @nextStep="codeDone"
+      />
 
-        <create-workspace
-          v-if="currentStep === steps.namingWorkspace"
-          :email="email"
-          :code="code"
-          @nextStep="createDone"
-        />
+      <create-workspace
+        v-if="currentStep === steps.namingWorkspace"
+        :email="email"
+        :code="code"
+        @nextStep="createDone"
+      />
 
-        <set-token
-          v-if="showSetToken"
-          :token="token"
-          :workspace-name="workspace.name"
-          @nextStep="setTokenDone"
-        />
-      </div>
+      <set-token
+        v-if="showSetToken"
+        :token="token"
+        :workspace-name="workspace.name"
+        @nextStep="setTokenDone"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { setToken } from "../../common/token.service";
-// import SVGGetCode from "@/assets/svg/getcode.svg";
-// import SVGVerifyCode from "@/assets/svg/verify-code.svg";
-// import SVGNamingWorkspace from "@/assets/svg/naming-workspace.svg";
 import {
   CreateWorkspace,
   GetCode,
