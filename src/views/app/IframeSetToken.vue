@@ -21,6 +21,7 @@ export default {
   },
   mounted() {
     window.onmessage = function(event) {
+      console.log(event);
       if (isParentOrigin(event.origin)) {
         let parsed;
         let mesToParent = {

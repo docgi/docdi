@@ -3,7 +3,7 @@
     <the-nav-bar />
     <the-app-bar />
     <v-content>
-      <v-container class="d-flex">
+      <v-container fluid class="d-flex justify-center">
         <router-view />
       </v-container>
     </v-content>

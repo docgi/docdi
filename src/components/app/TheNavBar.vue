@@ -5,23 +5,67 @@
       color="#EDF2F7"
       floating
       mobile-break-point="960"
-      width="300px"
       v-model="drawer"
+      width="300"
     >
-      {{ workspace.name }}
-      <v-btn to="/collections">xx</v-btn>
-      <v-btn to="/dashboard">xddx</v-btn>
+      <div class="ma-4">
+        <div class="d-flex mb-4">
+          <workspace-logo />
+        </div>
+
+        <v-divider />
+
+        <v-list dense>
+          <v-subheader>Quick access</v-subheader>
+          <v-list-item-group v-model="item" color="primary">
+            <v-list-item
+              v-for="(item, i) in items"
+              :key="i"
+            >
+              <v-list-item-icon>
+                <v-icon v-text="item.icon"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+
+        <v-list dense>
+          <v-subheader>Collections</v-subheader>
+          <v-list-item-group v-model="item" color="primary">
+            <v-list-item
+              v-for="(item, i) in items"
+              :key="i"
+            >
+              <v-list-item-icon>
+                <v-icon v-text="item.icon"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+
+
+      </div>
     </v-navigation-drawer>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import WorkspaceLogo from "@/components/app/workspace/WorkspaceLogo";
+import {mapGetters} from "vuex";
 
 export default {
   name: "TheNavBar",
+  components: {
+    WorkspaceLogo
+  },
   computed: {
-    ...mapGetters({ workspace: "currentWorkspace", getDrawer: "getDrawer"}),
+    ...mapGetters({getDrawer: "getDrawer"}),
     drawer: {
       get() {
         return this.getDrawer;
@@ -30,6 +74,14 @@ export default {
         this.$store.commit("setDrawer", value);
       }
     },
-  }
+  },
+  data: () => ({
+    item: 1,
+    items: [
+      { text: 'Real-Time', icon: 'fa-eye-slash' },
+      { text: 'Audience', icon: 'mdi-account' },
+      { text: 'Conversions', icon: 'mdi-flag' },
+    ],
+  }),
 };
 </script>

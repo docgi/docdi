@@ -1,7 +1,5 @@
-import { getToken } from "../common/token.service";
-
 const state = {
-  isAuthenticated: !!getToken(),
+  isAuthenticated: false,
   user: {},
   workspace: {}
 };
@@ -21,6 +19,7 @@ const mutations = {
     delete data.current_workspace;
     state.user = data;
     state.workspace = currentWorkspace;
+    state.isAuthenticated = true;
   }
 };
 

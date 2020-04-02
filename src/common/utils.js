@@ -33,8 +33,6 @@ export const rememberWorkspace = workspace => {
       workspaces = []
     }
     workspaces.push(workspace);
-    console.log(workspace);
-    console.log(workspaces);
     localStorage.setItem(REMEMBER_WORKSPACES_KEY, JSON.stringify(workspaces))
   }
 };

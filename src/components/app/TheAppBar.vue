@@ -7,6 +7,7 @@
   >
     <v-app-bar-nav-icon
       class="hidden-md-and-up"
+      style="margin-left: -17px"
       @click="setDrawer(true)"
     />
     <v-spacer></v-spacer>

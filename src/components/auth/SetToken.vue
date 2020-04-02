@@ -1,7 +1,6 @@
 <template>
   <div>
     <iframe
-      v-show="true"
       :src="iframeSrc"
       scrolling="no"
       frameborder="0"
@@ -12,7 +11,7 @@
 </template>
 
 <script>
-import { isSubDomain } from "../../common/utils";
+import { isSubDomain } from "@/common/utils";
 
 export default {
   name: "SetToken",
@@ -46,6 +45,7 @@ export default {
         console.log(parsed);
         window.currentComponent.$emit("nextStep", {status: parsed.ok});
       }
+      window.currentComponent.$emit("nextStep", {status: false});
     };
   },
   methods: {

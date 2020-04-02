@@ -19,7 +19,7 @@
         >
           <template v-slot:append-outer>
             <span class="host-name" style="color: black">
-              {{ hostname }}
+              .{{ hostname }}
             </span>
           </template>
         </v-text-field>
@@ -56,7 +56,7 @@ export default {
     };
   },
   mounted() {
-    this.hostname = `.${process.env.VUE_APP_DOMAIN}`;
+    this.hostname = `${process.env.VUE_APP_DOMAIN}`;
   },
   methods: {
     async createWorkspace() {
