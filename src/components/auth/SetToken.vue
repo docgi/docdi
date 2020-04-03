@@ -42,7 +42,6 @@ export default {
         } catch (error) {
           console.log(error.toString());
         }
-        console.log(parsed);
         window.currentComponent.$emit("nextStep", {status: parsed.ok});
       }
       window.currentComponent.$emit("nextStep", {status: false});

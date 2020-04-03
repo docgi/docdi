@@ -123,85 +123,85 @@
 </template>
 
 <script>
-import { workspaceNameFromHost } from "../../common/utils";
-import { setToken } from "../../common/token.service";
-import Icon from "@/assets/icon.svg";
+  import { workspaceNameFromHost } from "../../common/utils";
+  import { setToken } from "../../common/token.service";
+  import Icon from "@/assets/icon.svg";
 
-export default {
-  name: "Login",
-  data() {
-    return {
-      icon: Icon,
-      email: "",
-      password: "",
-      workspaceName: "",
-      submitting: false,
-      showPass: false,
-      errors: [],
-      showForgotPassword: false,
-      showForgotSuccess: false
-    };
-  },
-  created() {
-    this.workspaceName = workspaceNameFromHost();
-  },
-  methods: {
-    async login() {
-      try {
-        let payload = {
-          email: this.email,
-          password: this.password,
-          workspace: this.workspaceName,
-        };
-        let response = await this.$http.post('auth/login/', payload);
-        let token = response.data.token;
-        setToken(token);
-        await this.$router.push('');
-      } catch (e) {
-        this.errors = ["Incorrect email or password."]
+  export default {
+    name: "Login",
+    data() {
+      return {
+        icon: Icon,
+        email: "",
+        password: "",
+        workspaceName: "",
+        submitting: false,
+        showPass: false,
+        errors: [],
+        showForgotPassword: false,
+        showForgotSuccess: false
+      };
+    },
+    created() {
+      this.workspaceName = workspaceNameFromHost();
+    },
+    methods: {
+      async login() {
+        try {
+          let payload = {
+            email: this.email,
+            password: this.password,
+            workspace: this.workspaceName,
+          };
+          let response = await this.$http.post('auth/login/', payload);
+          let token = response.data.token;
+          setToken(token);
+          await this.$router.push('');
+        } catch (e) {
+          this.errors = ["Incorrect email or password."]
+        }
+      },
+      async forgotPasswordSubmit() {
+        try {
+          let payload = {
+            email: this.email,
+            workspace: this.workspaceName,
+            client_origin: location.origin
+          };
+          let response = await this.$http.post('auth/forgot-password/', payload);
+          if (!response.data.send && response.data.send !== 1) {
+            this.errors = ["Something wrong please try again"]
+          } else {
+            this.showForgotSuccess = true;
+          }
+        } catch (e) {
+          if (e.response.data.email) {
+            this.errors = e.response.data.email;
+          } else {
+            this.errors = ["Something wrong please try again"]
+          }
+        }
       }
     },
-    async forgotPasswordSubmit() {
-      try {
-        let payload = {
-          email: this.email,
-          workspace: this.workspaceName,
-          client_origin: location.origin
-        };
-        let response = await this.$http.post('auth/forgot-password/', payload);
-        if (!response.data.send && response.data.send !== 1) {
-          this.errors = ["Something wrong please try again"]
-        } else {
-          this.showForgotSuccess = true;
-        }
-      } catch (e) {
-        if (e.response.data.email) {
-          this.errors = e.response.data.email;
-        } else {
-          this.errors = ["Something wrong please try again"]
-        }
+    computed: {
+      validPayload() {
+        return !(!this.email || !this.password);
+      },
+      validPayloadReset() {
+        return !!this.email;
       }
     }
-  },
-  computed: {
-    validPayload() {
-      return !(!this.email || !this.password);
-    },
-    validPayloadReset() {
-      return !!this.email;
-    }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.app-bar-inner {
-  width: 100%;
-}
-
-@media (min-width: 1000px) {
   .app-bar-inner {
-    width: 60%;
+    width: 100%;
   }
-}
+
+  @media (min-width: 1000px) {
+    .app-bar-inner {
+      width: 60%;
+    }
+  }
 </style>

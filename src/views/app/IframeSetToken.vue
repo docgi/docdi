@@ -37,7 +37,6 @@ export default {
           try {
             setToken(parsed.token);
           } catch (e) {
-            // Maybe `Brave` browser not allow set localStorage via iframe
             parent.postMessage(JSON.stringify(mesToParent), "*");
           }
           mesToParent.ok = true;
