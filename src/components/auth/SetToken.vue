@@ -42,9 +42,10 @@ export default {
         } catch (error) {
           console.log(error.toString());
         }
-        window.currentComponent.$emit("nextStep", {status: parsed.ok});
+        window.currentComponent.$emit("nextStep", { status: parsed.ok });
+      } else {
+        window.currentComponent.$emit("nextStep", { status: false });
       }
-      window.currentComponent.$emit("nextStep", {status: false});
     };
   },
   methods: {
@@ -55,7 +56,8 @@ export default {
       };
       let payload = JSON.stringify(message);
       ifr.postMessage(payload, "*");
-    },
+    }
   }
 };
 </script>
+

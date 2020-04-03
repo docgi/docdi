@@ -43,6 +43,13 @@ const router = new VueRouter({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/reset-password",
+      component: () => import("@/views/app/ResetPassword"),
+      meta: {
+        requiresAuth: false
+      }
     }
   ]
 });

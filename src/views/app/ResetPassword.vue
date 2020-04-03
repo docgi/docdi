@@ -17,32 +17,41 @@
         </v-btn>
       </div>
     </v-app-bar>
-    <div class="pt-2">
-      <v-form v-if="!showForgotPassword" @submit.prevent="login" class="create-workspace-form mt-12">
+    <div class="pt-12 d-flex justify-center">
+      <v-form @submit.prevent="setPass" class="create-workspace-form mt-12">
         <div class="create-workspace-input-form-title">
-          Sign in to <b>{{ workspaceName }}</b>
+          Set your password.
         </div>
         <div class="create-workspace-form-content">
+          <div class="create-workspace-input-form-subtitle mb-4">
+            Yah, strong password is good for you?
+          </div>
           <div>
-            <div class="create-workspace-input-form-subtitle mb-4">
-              Enter your email and password
-            </div>
             <v-text-field
-              v-model="email"
-              label="Email"
-              text
-              outlined
-              autofocus
-              :error-messages="errors"
-            />
-            <v-text-field
-              label="Password"
               v-model="password"
-              outlined
+              label="Password"
               text
+              outlined
+              class="input-workspace-name d-flex-inline"
+              @change="onChangePass"
+              :error-messages="errorsPass"
+              :disabled="!hasToken"
               :type="showPass ? 'text' : 'password'"
               :append-icon="showPass ? 'fa-eye-slash' : 'fa-eye'"
               @click:append="showPass = !showPass"
+            />
+            <v-text-field
+              label="Repeat password"
+              v-model="confirmPass"
+              outlined
+              text
+              class="input-workspace-name d-flex-inline"
+              @change="onChangeConfirmPass"
+              :disabled="!hasToken"
+              :error-messages="errorsConfirmPass"
+              :type="showConfirmPass ? 'text' : 'password'"
+              :append-icon="showConfirmPass ? 'fa-eye-slash' : 'fa-eye'"
+              @click:append="showConfirmPass = !showConfirmPass"
             />
             <div class="justify-center">
               <v-btn
@@ -50,72 +59,12 @@
                 class="w-full"
                 color="primary"
                 type="submit"
-                :disabled="!validPayload"
+                :disabled="!hasToken || !isValidPassword || submitting"
               >
                 Submit
               </v-btn>
             </div>
           </div>
-        </div>
-        <div class="mt-6">
-          <v-btn
-            @click="showForgotPassword = true"
-            class="pl-0"
-            text
-            small
-            color="primary"
-          >
-            Forgot password?
-          </v-btn>
-        </div>
-      </v-form>
-
-      <!--  Case forgot password  -->
-      <v-form v-else class="create-workspace-form mt-12" @submit.prevent="forgotPasswordSubmit">
-        <div class="create-workspace-input-form-title">
-          Reset password
-        </div>
-        <div class="create-workspace-form-content">
-          <div>
-            <div v-if="!showForgotSuccess">
-              <div class="create-workspace-input-form-subtitle mb-4">
-                Enter your email.
-              </div>
-              <v-text-field
-                v-model="email"
-                label="Email"
-                text
-                outlined
-                autofocus
-                :error-messages="errors"
-              />
-              <div class="justify-center">
-                <v-btn
-                  :loading="submitting"
-                  class="w-full"
-                  color="primary"
-                  type="submit"
-                  :disabled="!validPayloadReset"
-                >
-                  Submit
-                </v-btn>
-              </div>
-            </div>
-            <div v-else class="text">
-              Email reset password has been sent, please check inbox, link reset expires in one day.
-            </div>
-          </div>
-        </div>
-        <div class="mt-6">
-          <v-btn
-            @click="showForgotPassword = false"
-            class="pl-0"
-            text
-            small
-            color="primary"
-          >
-            Back to login
-          </v-btn>
         </div>
       </v-form>
     </div>
@@ -123,85 +72,105 @@
 </template>
 
 <script>
-  import { workspaceNameFromHost } from "../../common/utils";
-  import { setToken } from "../../common/token.service";
-  import Icon from "@/assets/icon.svg";
+const MIN_LEN_PASS = 8;
+import Icon from "@/assets/icon.svg";
 
-  export default {
-    name: "Login",
-    data() {
-      return {
-        icon: Icon,
-        email: "",
-        password: "",
-        workspaceName: "",
-        submitting: false,
-        showPass: false,
-        errors: [],
-        showForgotPassword: false,
-        showForgotSuccess: false
+export default {
+  name: "SetPassWord",
+  data() {
+    return {
+      icon: Icon,
+      token: "",
+      password: "",
+      showPass: false,
+      confirmPass: "",
+      showConfirmPass: false,
+      hasToken: false,
+      errorsPass: [],
+      errorsConfirmPass: [],
+      submitting: false
+    };
+  },
+  created() {
+    this.token = this.$route.query.token;
+    this.hasToken = true;
+  },
+  methods: {
+    async setPass() {
+      this.submitting = true;
+      let payload = {
+        password: this.password,
+        confirm_password: this.confirmPass,
+        token: this.token
       };
-    },
-    created() {
-      this.workspaceName = workspaceNameFromHost();
-    },
-    methods: {
-      async login() {
-        try {
-          let payload = {
-            email: this.email,
-            password: this.password,
-            workspace: this.workspaceName,
-          };
-          let response = await this.$http.post('auth/login/', payload);
-          let token = response.data.token;
-          setToken(token);
-          await this.$router.push('');
-        } catch (e) {
-          this.errors = ["Incorrect email or password."]
+      try {
+        let response = await this.$http.post("auth/reset-password/", payload);
+        this.submitting = false;
+        if (response.data.status === true) {
+          location.href = `${location.origin}/login`
         }
-      },
-      async forgotPasswordSubmit() {
-        try {
-          let payload = {
-            email: this.email,
-            workspace: this.workspaceName,
-            client_origin: location.origin
-          };
-          let response = await this.$http.post('auth/forgot-password/', payload);
-          if (!response.data.send && response.data.send !== 1) {
-            this.errors = ["Something wrong please try again"]
-          } else {
-            this.showForgotSuccess = true;
-          }
-        } catch (e) {
-          if (e.response.data.email) {
-            this.errors = e.response.data.email;
-          } else {
-            this.errors = ["Something wrong please try again"]
-          }
+      } catch (e) {
+        if (e.response.data.password) {
+          this.errorsPass = e.response.data.password;
         }
+        if (e.response.data.confirm_password) {
+          this.errorsPass = e.response.data.confirm_password;
+        }
+        if (e.response.token) {
+          this.errorsPass = e.response.token;
+        }
+        this.submitting = false;
       }
     },
-    computed: {
-      validPayload() {
-        return !(!this.email || !this.password);
-      },
-      validPayloadReset() {
-        return !!this.email;
+    onChangePass() {
+      if (this.password.length < MIN_LEN_PASS) {
+        this.errorsPass = ["Password as least 8 character."];
+        return;
       }
+
+      // Validate against with confirm pass
+      if (this.confirmPass) {
+        if (this.password === this.confirmPass) {
+          this.errorsPass = [];
+          this.errorsConfirmPass = [];
+          return;
+        } else {
+          this.errorsConfirmPass = ["Password doesn't match."];
+        }
+      }
+
+      this.errorsPass = [];
+    },
+    onChangeConfirmPass() {
+      if (!this.password) {
+        return;
+      }
+      if (this.confirmPass !== this.password) {
+        this.errorsConfirmPass = ["Password doesn't match."];
+        return;
+      }
+      this.errorsConfirmPass = [];
     }
-  };
+  },
+  computed: {
+    isValidPassword() {
+      if (this.password.length < MIN_LEN_PASS) {
+        return false;
+      }
+      return this.password === this.confirmPass;
+    }
+  }
+};
 </script>
 
 <style scoped>
-  .app-bar-inner {
-    width: 100%;
-  }
+.app-bar-inner {
+  width: 100%;
+}
 
-  @media (min-width: 1000px) {
-    .app-bar-inner {
-      width: 60%;
-    }
+@media (min-width: 1000px) {
+  .app-bar-inner {
+    width: 60%;
   }
+}
 </style>

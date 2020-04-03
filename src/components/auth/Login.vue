@@ -156,7 +156,7 @@ export default {
         let response = await this.$http.post('auth/login/', payload);
         let token = response.data.token;
         setToken(token);
-        await this.$router.push('');
+        await this.$router.push('/dashboard');
       } catch (e) {
         this.errors = ["Incorrect email or password."]
       }
