@@ -1,22 +1,5 @@
 <template>
   <div class="fill-height">
-    <v-app-bar flat fixed>
-      <div class="d-flex mx-auto app-bar-inner">
-        <v-btn text to="/" class="pa-2" height="40px">
-          <img :src="icon" style="height: 30px" alt="icon" /><span>Docdi</span>
-        </v-btn>
-        <v-btn
-          style="margin-left: auto"
-          to="/create-workspace"
-          class="text-capitalize"
-          height="40px"
-          color="success"
-          outlined
-        >
-          New workspace
-        </v-btn>
-      </div>
-    </v-app-bar>
     <div class="pt-12 d-flex justify-center">
       <v-form @submit.prevent="setPass" class="create-workspace-form mt-12">
         <div class="create-workspace-input-form-title">
@@ -73,13 +56,11 @@
 
 <script>
 const MIN_LEN_PASS = 8;
-import Icon from "@/assets/icon.svg";
 
 export default {
   name: "SetPassWord",
   data() {
     return {
-      icon: Icon,
       token: "",
       password: "",
       showPass: false,

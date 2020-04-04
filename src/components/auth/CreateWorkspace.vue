@@ -24,7 +24,7 @@
           </template>
         </v-text-field>
         <div class="d-flex justify-center">
-          <v-btn :loading="submitting" small color="primary" type="submit">
+          <v-btn :loading="submitting" class="w-full" color="primary" type="submit">
             Go
           </v-btn>
         </div>

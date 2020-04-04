@@ -60,12 +60,13 @@ export default {
   },
   methods: {
     async checking() {
+      this.errors = [];
       try {
         let response = await this.$http.post("workspaces/check/", {
           name: this.workspaceName
         });
         if (response.data.exist) {
-          location.href = `${buildFullSubDomain(this.workspaceName)}/login`;
+          location.href = `${buildFullSubDomain(this.workspaceName)}/auth`;
         }
         this.errors = ["This workspace does not exist"]
       } catch (e) {

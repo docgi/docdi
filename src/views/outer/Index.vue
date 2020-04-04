@@ -5,20 +5,30 @@
         <v-btn text to="/" class="pa-2" height="40px">
           <img :src="icon" style="height: 30px" alt="icon" /><span>Docdi</span>
         </v-btn>
-        <v-btn
-          v-if="show"
-          style="margin-left: auto"
-          to="/create-workspace"
-          class="text-capitalize"
-          height="40px"
-          color="success"
-          outlined
-        >
-          New workspace
-        </v-btn>
+        <div style="margin-left: auto; justify-content: space-between" class="d-flex align-center">
+          <v-btn
+            to="/create-workspace"
+            class="text-capitalize mr-2"
+            color="primary"
+            small
+          >
+            New workspace
+          </v-btn>
+
+          <v-btn
+            to="/checking-workspace"
+            class="text-capitalize"
+            color="primary"
+            outlined
+            small
+          >
+            Login
+          </v-btn>
+
+        </div>
       </div>
     </v-app-bar>
-    <div class="fill-height">
+    <div  >
       <router-view />
     </div>
   </div>
@@ -32,7 +42,6 @@ export default {
   data() {
     return {
       icon: Icon,
-      show: true,
     };
   },
 };

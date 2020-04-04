@@ -45,6 +45,12 @@ export const buildFullSubDomain = (subDomain) => {
   return `${location.protocol}//${subDomain}.${location.host}`;
 };
 
+export const getMainAppDomain = () => {
+  let currentHost = location.host;
+  let excludeSubDomain = currentHost.substr(currentHost.search(process.env.VUE_APP_DOMAIN));
+  return `${location.protocol}//${excludeSubDomain}`;
+};
+
 export const workspaceNameFromHost = () => {
   return location.host.split('.')[0];
 };

@@ -38,18 +38,22 @@ const router = new VueRouter({
       }
     },
     {
-      path: "/login",
-      component: () => import("@/views/app/InAppLogin"),
+      path: "/auth",
+      redirect: "/auth/login",
+      component: () => import("@/views/app/auth/Auth"),
       meta: {
         requiresAuth: false
-      }
-    },
-    {
-      path: "/reset-password",
-      component: () => import("@/views/app/ResetPassword"),
-      meta: {
-        requiresAuth: false
-      }
+      },
+      children: [
+        {
+          path: "login",
+          component: () => import("@/views/app/auth/InAppLogin")
+        },
+        {
+          path: "reset-password",
+          component: () => import("@/views/app/auth/ResetPassword")
+        }
+      ]
     }
   ]
 });
@@ -71,12 +75,12 @@ router.beforeEach((to, from, next) => {
           })
           .catch(() => {
             removeToken();
-            next({ path: "/login", query: { redirect: to.fullPath } });
+            next({ path: "/auth/login", query: { redirect: to.fullPath } });
           });
       }
       next();
     } else {
-      next({ path: "/login", query: { redirect: to.fullPath } });
+      next({ path: "/auth/login", query: { redirect: to.fullPath } });
     }
   } else {
     next();

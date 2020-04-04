@@ -3,7 +3,7 @@ import VueMeta from "vue-meta";
 import Vuetify from "vuetify";
 import App from "./App.vue";
 
-import router from "./router";
+import outerRouter from "./router/outer";
 import store from "./store";
 import { isSubDomain } from "./common/utils";
 import appRouter from "./router/app";
@@ -25,7 +25,7 @@ const routers = () => {
   if (isSubDomain(host)) {
     return appRouter;
   }
-  return router;
+  return outerRouter;
 };
 
 new Vue({

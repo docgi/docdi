@@ -21,7 +21,7 @@
           maxLength="6"
         />
         <div class="d-flex justify-center">
-          <v-btn :disabled="!isValidInput" type="submit" color="primary" small>
+          <v-btn :disabled="!isValidInput" type="submit" color="primary" class="w-full">
             Next
           </v-btn>
         </div>
