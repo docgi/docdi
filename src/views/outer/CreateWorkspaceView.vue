@@ -50,8 +50,7 @@ export default {
   name: "CreateWorkspaceView",
   components: { SetToken, GetCode, ValidateCode, CreateWorkspace },
   metaInfo: {
-    title: "Docdi - Create workspace",
-    titleTemplate: "%s"
+    title: "Create workspace",
   },
   data() {
     return {

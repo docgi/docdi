@@ -15,6 +15,10 @@ import { SetPassword } from "../../components/auth";
 
 export default {
   name: "FirstSetPassword",
+  metaInfo: {
+    title: "Set you password",
+    titleTemplate: null
+  },
   components: { SetPassword },
   data() {
     return {

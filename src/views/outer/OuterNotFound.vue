@@ -13,6 +13,10 @@ import NotFound from "@/assets/svg/not-found.svg";
 
 export default {
   name: "OuterNotFound",
+  metaInfo: {
+    "title": "Page not found",
+    "titleTemplate": null
+  },
   data() {
     return {
       notFound: NotFound
@@ -20,8 +24,7 @@ export default {
   },
   methods: {
     back() {
-      // this.$router.back()
-      console.log(this.$router);
+      this.$router.back();
     }
   }
 };

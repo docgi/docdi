@@ -48,6 +48,9 @@ import { buildFullSubDomain } from "../../common/utils";
 
 export default {
   name: "CheckingWorkspace",
+  metaInfo: {
+    title: "Check workspace",
+  },
   data() {
     return {
       hostname: "",

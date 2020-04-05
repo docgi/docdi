@@ -39,6 +39,10 @@ import Icon from "@/assets/icon.svg";
 
 export default {
   name: "OuterLayout",
+  metaInfo: {
+    title: 'Docdi',
+    titleTemplate: 'Docdi - %s'
+  },
   data() {
     return {
       icon: Icon,

@@ -6,6 +6,9 @@
 
 <script>
 export default {
-  name: "OuterIndex"
+  name: "OuterIndex",
+  metaInfo: {
+    title: "Simple docs for you"
+  }
 }
 </script>
