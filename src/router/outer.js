@@ -8,8 +8,12 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      component: () => import("@/views/outer/Index"),
+      component: () => import("@/views/outer/OuterLayout"),
       children: [
+        {
+          path: "",
+          component: () => import("@/views/outer/Index")
+        },
         {
           path: "create-workspace",
           name: "CreateWorkspace",

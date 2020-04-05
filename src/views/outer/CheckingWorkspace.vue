@@ -44,13 +44,12 @@
 </template>
 
 <script>
-import { buildFullSubDomain, listWorkspaces } from "../../common/utils";
+import { buildFullSubDomain } from "../../common/utils";
 
 export default {
   name: "CheckingWorkspace",
   data() {
     return {
-      workspaces: [],
       hostname: "",
       workspaceName: "",
       errors: [],
@@ -58,7 +57,6 @@ export default {
     };
   },
   created() {
-    this.workspaces = listWorkspaces();
     this.hostname = process.env.VUE_APP_DOMAIN;
   },
   methods: {
