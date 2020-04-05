@@ -57,6 +57,9 @@ export default {
       let payload = JSON.stringify(message);
       ifr.postMessage(payload, "*");
     }
+  },
+  beforeDestroy() {
+    window.onmessage = null;
   }
 };
 </script>

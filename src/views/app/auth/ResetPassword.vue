@@ -74,7 +74,9 @@ export default {
   },
   created() {
     this.token = this.$route.query.token;
-    this.hasToken = true;
+    if (this.token) {
+      this.hasToken = true;
+    }
   },
   methods: {
     async setPass() {
@@ -88,7 +90,7 @@ export default {
         let response = await this.$http.post("auth/reset-password/", payload);
         this.submitting = false;
         if (response.data.status === true) {
-          location.href = `${location.origin}/login`
+          location.href = `${location.origin}/auth/login`
         }
       } catch (e) {
         if (e.response.data.password) {
@@ -143,15 +145,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.app-bar-inner {
-  width: 100%;
-}
-
-@media (min-width: 1000px) {
-  .app-bar-inner {
-    width: 60%;
-  }
-}
-</style>

@@ -16,13 +16,17 @@ const router = new VueRouter({
           component: () => import("@/views/outer/CreateWorkspaceView")
         },
         {
-          path: "/create-workspace/set-password",
+          path: "create-workspace/set-password",
           component: () => import("@/views/outer/FirstSetPassword"),
           name: "SetPassword"
         },
         {
           path: "checking-workspace",
           component: () => import("@/views/outer/CheckingWorkspace")
+        },
+        {
+          path: "*",
+          component: () => import("@/views/outer/OuterNotFound")
         }
       ]
     },

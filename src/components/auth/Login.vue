@@ -91,9 +91,9 @@
               </v-btn>
             </div>
           </div>
-          <div v-else class="text">
-            Email reset password has been sent, please check inbox, link reset
-            expires in one day.
+          <div v-else class="text-danger">
+            <span class="text-danger">Email reset password has been sent, please check inbox, link reset
+              expires in one day.</span>
           </div>
         </div>
       </div>

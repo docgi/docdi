@@ -7,6 +7,9 @@
         What is your workspace name?
       </div>
       <div class="create-workspace-form-content">
+        <div class="create-workspace-input-form-subtitle mb-4">
+          Enter your workspace name
+        </div>
         <div class="mt-1">
           <v-text-field
             v-model.trim="workspaceName"
