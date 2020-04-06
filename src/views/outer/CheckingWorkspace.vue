@@ -74,7 +74,9 @@ export default {
         }
         this.errors = ["This workspace does not exist"]
       } catch (e) {
-        console.log(e);
+        if (e.response.data.name) {
+          this.errors = e.response.data.name;
+        }
       }
     }
   }

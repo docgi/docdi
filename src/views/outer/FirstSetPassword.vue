@@ -9,9 +9,7 @@
 </template>
 
 <script>
-import Icon from "../../assets/icon.svg";
-import { SetPassword } from "../../components/auth";
-
+import { SetPassword } from "@/components/auth";
 
 export default {
   name: "FirstSetPassword",
@@ -19,11 +17,6 @@ export default {
     title: "Set you password",
     titleTemplate: null
   },
-  components: { SetPassword },
-  data() {
-    return {
-      icon: Icon,
-    }
-  }
+  components: { SetPassword }
 };
 </script>

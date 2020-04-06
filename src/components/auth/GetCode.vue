@@ -72,7 +72,11 @@ export default {
         this.$emit("nextStep", { email: this.email });
       } catch (e) {
         this.submitting = false;
-        this.errorServerMsg = e.response.data.email;
+        if (e.response.status === 400) {
+          this.errorServerMsg = e.response.data.email;
+        } else {
+          this.errorServerMsg = ["Something wrong, please try again."]
+        }
       }
     }
   }
