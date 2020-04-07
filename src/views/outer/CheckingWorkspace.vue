@@ -71,8 +71,9 @@ export default {
         });
         if (response.data.exist) {
           location.href = `${buildFullSubDomain(this.workspaceName)}/auth`;
+        } else {
+          this.errors = ["This workspace does not exist"]
         }
-        this.errors = ["This workspace does not exist"]
       } catch (e) {
         if (e.response.data.name) {
           this.errors = e.response.data.name;

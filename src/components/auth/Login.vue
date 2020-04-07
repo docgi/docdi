@@ -114,7 +114,7 @@
 
 <script>
 import { workspaceNameFromHost } from "../../common/utils";
-import { setToken } from "../../common/token.service";
+import { setToken, getToken } from "../../common/token.service";
 
 export default {
   name: "Login",
@@ -131,6 +131,10 @@ export default {
     };
   },
   created() {
+    let hasToken = !!getToken();
+    if (hasToken) {
+      this.$router.push({name: "Dashboard"});
+    }
     this.workspaceName = workspaceNameFromHost();
   },
   methods: {
@@ -144,7 +148,7 @@ export default {
         let response = await this.$http.post("auth/login/", payload);
         let token = response.data.token;
         setToken(token);
-        await this.$router.push("/dashboard");
+        await this.$router.push({name: "Dashboard"});
       } catch (e) {
         this.errors = ["Incorrect email or password."];
       }

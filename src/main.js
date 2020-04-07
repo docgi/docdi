@@ -16,6 +16,7 @@ Vue.use(Vuetify);
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 });
+
 ApiService.init();
 
 Vue.config.productionTip = false;

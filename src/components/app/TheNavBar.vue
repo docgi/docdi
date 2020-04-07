@@ -17,38 +17,19 @@
 
         <v-list dense>
           <v-subheader>Quick access</v-subheader>
-          <v-list-item-group v-model="item" color="primary">
-            <v-list-item
-              v-for="(item, i) in items"
-              :key="i"
-            >
+          <v-list-item-group>
+            <v-list-item :to="{name: 'SendInvitations'}">
               <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
+                <v-icon class="fa fa-eye-slash"></v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
+                <v-list-item-title>
+                  Invitations
+                </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
         </v-list>
-
-        <v-list dense>
-          <v-subheader>Collections</v-subheader>
-          <v-list-item-group v-model="item" color="primary">
-            <v-list-item
-              v-for="(item, i) in items"
-              :key="i"
-            >
-              <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-
 
       </div>
     </v-navigation-drawer>
@@ -79,8 +60,8 @@ export default {
     item: 1,
     items: [
       { text: 'Real-Time', icon: 'fa-eye-slash' },
-      { text: 'Audience', icon: 'mdi-account' },
-      { text: 'Conversions', icon: 'mdi-flag' },
+      { text: 'Audience', icon: 'fa-eye-slash' },
+      { text: 'Conversions', icon: 'fa-eye-slash' },
     ],
   }),
 };

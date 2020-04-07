@@ -17,7 +17,7 @@ export default {
     size: {
       type: [String, Number],
       required: false,
-      default: 62
+      default: 28
     }
   },
   computed: {

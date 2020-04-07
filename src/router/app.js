@@ -22,11 +22,18 @@ const router = new VueRouter({
       children: [
         {
           path: "",
-          component: () => import("@/views/app/DashBoard")
+          component: () => import("@/views/app/DashBoard"),
+          name: "Dashboard",
         },
         {
-          path: "/collections",
-          component: () => import("@/views/app/Collections")
+          path: "collections",
+          component: () => import("@/views/app/Collections"),
+          name: "Collections"
+        },
+        {
+          path: "send-invitations",
+          component: () => import("@/views/app/SendInvitation"),
+          name: "SendInvitations"
         }
       ]
     },
