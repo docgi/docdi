@@ -58,3 +58,11 @@ export const workspaceNameFromHost = () => {
 export const currentWindowWidth = () => {
   return window.innerWidth;
 };
+
+export const isValidEmail = (email) => {
+  return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
+};
+
+export const isEscKey = (kbEvent) => {
+  return kbEvent.key === "Escape";
+};

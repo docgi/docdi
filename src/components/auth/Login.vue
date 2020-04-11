@@ -113,8 +113,8 @@
 </template>
 
 <script>
-import { workspaceNameFromHost } from "../../common/utils";
-import { setToken, getToken } from "../../common/token.service";
+import { workspaceNameFromHost } from "@/common/utils";
+import { setToken, getToken } from "@/common/token.service";
 
 export default {
   name: "Login",

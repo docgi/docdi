@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import { getToken, removeToken } from "@/common/token.service";
 import store from "@/store";
 import { isEmptyObject } from "@/common/utils";
+import ApiService from "@/common/api.service";
 
 Vue.use(VueRouter);
 
@@ -23,7 +24,7 @@ const router = new VueRouter({
         {
           path: "",
           component: () => import("@/views/app/DashBoard"),
-          name: "Dashboard",
+          name: "Dashboard"
         },
         {
           path: "collections",
@@ -66,13 +67,19 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let token = getToken();
   if (to.matched.some(record => record.meta.requiresAuth)) {
+    let token = getToken();
     if (token) {
       let currentUser = store.getters.currentUser;
-      if (isEmptyObject(currentUser)) {
+      let currentWorkspace = store.getters.currentWorkspace;
+
+      if (
+        isEmptyObject(currentUser) ||
+        isEmptyObject(currentWorkspace)
+      ) {
+        ApiService.setToken();
         Vue.axios
-          .get("/users/me/", {
+          .get("/stats-workspace/", {
             headers: {
               Authorization: "Bearer " + token
             }

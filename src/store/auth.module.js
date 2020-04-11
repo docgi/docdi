@@ -10,15 +10,17 @@ const getters = {
   },
   currentWorkspace(state) {
     return state.workspace;
+  },
+  getAllConfig(state) {
+    return state.appConfig;
   }
 };
 
 const mutations = {
   setAuth(state, data) {
-    let currentWorkspace = data.current_workspace;
-    delete data.current_workspace;
-    state.user = data;
-    state.workspace = currentWorkspace;
+    state.appConfig = data.config;
+    state.user = data.user;
+    state.workspace = data.workspace;
     state.isAuthenticated = true;
   }
 };

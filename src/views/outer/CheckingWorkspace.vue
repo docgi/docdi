@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { buildFullSubDomain } from "../../common/utils";
+import { buildFullSubDomain } from "@/common/utils";
 
 export default {
   name: "CheckingWorkspace",

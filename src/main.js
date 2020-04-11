@@ -9,7 +9,6 @@ import { isSubDomain } from "./common/utils";
 import appRouter from "./router/app";
 import vuetify from "./plugins/vuetify";
 import ApiService from "./common/api.service";
-
 import "./assets/css/main.scss";
 
 Vue.use(Vuetify);
