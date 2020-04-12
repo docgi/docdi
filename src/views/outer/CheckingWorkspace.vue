@@ -34,7 +34,7 @@
               color="primary"
               type="submit"
             >
-              Check
+              Go
             </v-btn>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default {
           name: this.workspaceName
         });
         if (response.data.exist) {
-          location.href = `${buildFullSubDomain(this.workspaceName)}/auth`;
+          location.href = `${buildFullSubDomain(this.workspaceName)}/auth/login`;
         } else {
           this.errors = ["This workspace does not exist"]
         }

@@ -1,5 +1,5 @@
 <template>
-  <div class="fill-height">
+  <div class="fill-height" v-show="show">
     <v-form
       v-if="!showForgotPassword"
       @submit.prevent="login"
@@ -120,6 +120,7 @@ export default {
   name: "Login",
   data() {
     return {
+      show: false,
       email: "",
       password: "",
       workspaceName: "",
@@ -134,6 +135,8 @@ export default {
     let hasToken = !!getToken();
     if (hasToken) {
       this.$router.push({name: "Dashboard"});
+    } else {
+      this.show = true;
     }
     this.workspaceName = workspaceNameFromHost();
   },
@@ -191,15 +194,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.app-bar-inner {
-  width: 100%;
-}
-
-@media (min-width: 1000px) {
-  .app-bar-inner {
-    width: 60%;
-  }
-}
-</style>

@@ -82,7 +82,7 @@ export default {
         uuid: this.uuid
       };
       try {
-        let res = await this.$http.post("invitations/check/", payload);
+        let res = await this.$http.post("invitations/join/", payload);
         let token = res.data.token;
         let needPass = res.data.need_pass;
 

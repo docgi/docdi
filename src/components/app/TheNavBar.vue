@@ -15,7 +15,7 @@
 
         <v-divider />
 
-        <v-list dense>
+        <v-list dense color="#EDF2F7">
           <v-subheader>Quick access</v-subheader>
           <v-list-item-group v-model="quickAccess.model">
             <v-list-item
@@ -76,7 +76,7 @@ export default {
             name: "Notification",
             path: "/notifications",
             icon: "fa-bell"
-          }
+          },
         ]
       }
     };

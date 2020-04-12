@@ -1,7 +1,10 @@
 <template>
   <div class="d-flex w-logo">
     <v-avatar color="teal" :size="size" tile style="border-radius: 7px" class="fill-height">
-      <v-img :src="workspace.logo" />
+      <v-img v-if="workspace.logo" :src="workspace.logo" />
+      <span v-else>
+        Logo
+      </span>
     </v-avatar>
     <div class="ml-2 flex-column">
       <div class="font-weight-bold" style="font-size: 18px;">
@@ -28,11 +31,6 @@ export default {
   },
   computed: {
     ...mapGetters({ workspace: "currentWorkspace", user: "currentUser" })
-  },
-  methods: {
-    cc() {
-      window.alert(1);
-    }
   }
 };
 </script>
