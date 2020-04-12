@@ -23,7 +23,7 @@
               :key="index"
               :to="item.path"
             >
-              <v-list-item-icon>
+              <v-list-item-icon style="width: 10px">
                 <v-icon :class="'fa ' + item.icon"></v-icon>
               </v-list-item-icon>
               <v-list-item-content class="pb-0">
@@ -69,12 +69,12 @@ export default {
           },
           {
             name: "Search",
-            path: "/dashboard/search",
+            path: "/search",
             icon: "fa-search"
           },
           {
             name: "Notification",
-            path: "/dashboard/notifications",
+            path: "/notifications",
             icon: "fa-bell"
           }
         ]

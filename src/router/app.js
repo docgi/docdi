@@ -12,17 +12,14 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      redirect: "/dashboard"
-    },
-    {
-      path: "/dashboard",
+      redirect: "/dashboard",
       component: () => import("@/views/app/Index"),
       meta: {
         requiresAuth: true
       },
       children: [
         {
-          path: "",
+          path: "dashboard",
           component: () => import("@/views/app/DashBoard"),
           name: "Dashboard"
         },
