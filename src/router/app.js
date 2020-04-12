@@ -27,9 +27,14 @@ const router = new VueRouter({
           name: "Dashboard"
         },
         {
-          path: "collections",
-          component: () => import("@/views/app/Collections"),
-          name: "Collections"
+          path: "search",
+          component: () => import("@/views/app/Search"),
+          name: "Search"
+        },
+        {
+          path: "notifications",
+          component: () => import("@/views/app/Notifications"),
+          name: "Notifications"
         },
         {
           path: "send-invitations",

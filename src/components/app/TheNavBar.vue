@@ -17,20 +17,21 @@
 
         <v-list dense>
           <v-subheader>Quick access</v-subheader>
-          <v-list-item-group>
-            <v-list-item :to="{name: 'SendInvitations'}">
+          <v-list-item-group v-model="quickAccess.model">
+            <v-list-item
+              v-for="(item, index) in quickAccess.items"
+              :key="index"
+              :to="item.path"
+            >
               <v-list-item-icon>
-                <v-icon class="fa fa-eye-slash"></v-icon>
+                <v-icon :class="'fa ' + item.icon"></v-icon>
               </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  Invitations
-                </v-list-item-title>
+              <v-list-item-content class="pb-0">
+                <v-list-item-title v-text="item.name" />
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
         </v-list>
-
       </div>
     </v-navigation-drawer>
   </div>
@@ -38,7 +39,7 @@
 
 <script>
 import WorkspaceLogo from "@/components/app/workspace/WorkspaceLogo";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "TheNavBar",
@@ -46,7 +47,7 @@ export default {
     WorkspaceLogo
   },
   computed: {
-    ...mapGetters({getDrawer: "getDrawer"}),
+    ...mapGetters({ getDrawer: "getDrawer" }),
     drawer: {
       get() {
         return this.getDrawer;
@@ -54,15 +55,31 @@ export default {
       set(value) {
         this.$store.commit("setDrawer", value);
       }
-    },
+    }
   },
-  data: () => ({
-    item: 1,
-    items: [
-      { text: 'Real-Time', icon: 'fa-eye-slash' },
-      { text: 'Audience', icon: 'fa-eye-slash' },
-      { text: 'Conversions', icon: 'fa-eye-slash' },
-    ],
-  }),
+  data() {
+    return {
+      quickAccess: {
+        model: 0,
+        items: [
+          {
+            name: "Home",
+            path: "/dashboard",
+            icon: "fa-home"
+          },
+          {
+            name: "Search",
+            path: "/dashboard/search",
+            icon: "fa-search"
+          },
+          {
+            name: "Notification",
+            path: "/dashboard/notifications",
+            icon: "fa-bell"
+          }
+        ]
+      }
+    };
+  }
 };
 </script>

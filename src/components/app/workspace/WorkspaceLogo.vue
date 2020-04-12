@@ -1,10 +1,16 @@
 <template>
-  <div>
-    <v-avatar color="teal" :size="size" tile style="border-radius: 7px">
-      <span class="white--text headline">
-        {{ shortWorkspaceName }}
-      </span>
+  <div class="d-flex w-logo">
+    <v-avatar color="teal" :size="size" tile style="border-radius: 7px" class="fill-height">
+      <v-img :src="workspace.logo" />
     </v-avatar>
+    <div class="ml-2 flex-column">
+      <div class="font-weight-bold" style="font-size: 18px;">
+        {{ workspace.name }}
+      </div>
+      <div style="font-size: 13px;">
+        {{ user.username }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -17,17 +23,19 @@ export default {
     size: {
       type: [String, Number],
       required: false,
-      default: 28
+      default: 43
     }
   },
   computed: {
-    ...mapGetters({ workspace: "currentWorkspace" }),
-    shortWorkspaceName() {
-      if (this.workspace.name) {
-        return this.workspace.name.substr(0, 3);
-      }
-      return "";
+    ...mapGetters({ workspace: "currentWorkspace", user: "currentUser" })
+  },
+  methods: {
+    cc() {
+      window.alert(1);
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
