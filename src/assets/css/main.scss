@@ -44,3 +44,7 @@
   min-height: 350px;
   min-width: 500px;
 }
+
+.ProseMirror:focus {
+  outline: none;
+}

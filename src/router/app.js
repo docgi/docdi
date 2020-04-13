@@ -37,6 +37,11 @@ const router = new VueRouter({
           path: "send-invitations",
           component: () => import("@/views/app/SendInvitation"),
           name: "SendInvitations"
+        },
+        {
+          path: "typing",
+          component: () => import("@/views/app/Typing"),
+          name: "Typing"
         }
       ]
     },
