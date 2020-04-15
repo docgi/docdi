@@ -1,5 +1,5 @@
 <template>
-  <div class="fill-height" v-show="show">
+  <div class="fill-height w-full mx-auto" v-show="show">
     <v-form
       v-if="!showForgotPassword"
       @submit.prevent="login"

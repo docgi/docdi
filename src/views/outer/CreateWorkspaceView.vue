@@ -1,43 +1,41 @@
 <template>
-  <div class="d-flex justify-center align-center mt-12">
-    <div>
-      <get-code
-        v-if="currentStep === steps.getCode"
-        @nextStep="mailDone"
-      />
+  <div class="d-flex justify-center w-full mt-12">
+    <get-code
+      v-if="currentStep === steps.getCode"
+      @nextStep="mailDone"
+    />
 
-      <validate-code
-        v-if="currentStep === steps.validateCode"
-        :email="email"
-        @nextStep="codeDone"
-      />
+    <validate-code
+      v-if="currentStep === steps.validateCode"
+      :email="email"
+      @nextStep="codeDone"
+    />
 
-      <create-workspace
-        v-if="currentStep === steps.namingWorkspace"
-        :email="email"
-        :code="code"
-        @nextStep="createDone"
-      />
+    <create-workspace
+      v-if="currentStep === steps.namingWorkspace"
+      :email="email"
+      :code="code"
+      @nextStep="createDone"
+    />
 
-      <set-token
-        v-if="showSetToken"
-        :token="token"
-        :workspace-name="workspace.name"
-        @nextStep="setTokenDone"
-      />
-    </div>
+    <set-token
+      v-if="showSetToken"
+      :token="token"
+      :workspace-name="workspace.name"
+      @nextStep="setTokenDone"
+    />
   </div>
 </template>
 
 <script>
-import { setToken } from "../../common/token.service";
+import { setToken } from "@/common/token.service";
 import {
   CreateWorkspace,
   GetCode,
   SetToken,
   ValidateCode
 } from "../../components/auth";
-import { rememberWorkspace } from "../../common/utils";
+import { rememberWorkspace } from "@/common/utils";
 
 const STEPS = {
   getCode: 1,

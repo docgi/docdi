@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap');
 
 .v-application {
-  font-family: 'Baloo Paaji 2', cursive;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont,
+  'Segoe UI', Roboto, 'Helvetica Neue',
+  Ubuntu, Arial, sans-serif;
 }
 
 .w-full {
@@ -20,7 +22,7 @@
 .create-workspace-form {
   display: flex;
   min-width: 319px;
-  max-width: 450px;
+  width: 450px;
   margin: 0 12px 0 12px;
   flex-direction: column;
   padding: 20px;
