@@ -143,6 +143,7 @@ export default {
   methods: {
     async login() {
       try {
+        this.errors = [];
         let payload = {
           email: this.email,
           password: this.password,
