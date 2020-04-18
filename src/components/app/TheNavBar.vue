@@ -81,7 +81,7 @@ export default {
         model: 0,
         items: [
           {
-            name: "Home",
+            name: "Dashboard",
             path: "/dashboard",
             icon: "fa-home"
           },

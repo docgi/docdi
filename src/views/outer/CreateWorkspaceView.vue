@@ -34,7 +34,7 @@ import {
   GetCode,
   SetToken,
   ValidateCode
-} from "../../components/auth";
+} from "@/components/auth";
 import { rememberWorkspace } from "@/common/utils";
 
 const STEPS = {

@@ -1,8 +1,6 @@
 <template>
-  <div class="d-flex justify-center">
-    <div class="col-12 col-md-10 col-lg-6 pa-0">
-      <editor-content :editor="editor"/>
-    </div>
+  <div>
+    <editor-content :editor="editor"/>
   </div>
 </template>
 
