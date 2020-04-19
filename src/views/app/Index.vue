@@ -4,10 +4,8 @@
     <the-app-bar />
     <v-content>
       <v-container fluid class="d-flex justify-center">
-        <div class="d-flex justify-center">
-          <div class="col-12 col-md-10 col-lg-6 pa-0">
-            <router-view />
-          </div>
+        <div class="col-12 col-md-10 col-lg-8 pa-0">
+          <router-view />
         </div>
       </v-container>
     </v-content>
@@ -20,6 +18,10 @@ import TheAppBar from "@/components/app/TheAppBar";
 
 export default {
   name: "AppIndex",
+  metaInfo: {
+    title: 'Docdi',
+    titleTemplate: 'Docdi - %s'
+  },
   components: {
     TheNavBar,
     TheAppBar

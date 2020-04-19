@@ -127,6 +127,9 @@ import {
 
 export default {
   name: "SendInvitation",
+  metaInfo: {
+    title: "Dashboard"
+  },
   data() {
     return {
       memberRoleChoices: WORKSPACE_MEMBER_ROLES,

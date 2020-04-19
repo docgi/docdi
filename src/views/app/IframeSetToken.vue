@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { setToken } from "../../common/token.service";
-import { isParentOrigin } from "../../common/utils";
+import { setToken } from "@/common/token.service";
+import { isParentOrigin } from "@/common/utils";
 import Spin from "vue-spinner/src/PulseLoader";
 
 export default {

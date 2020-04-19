@@ -18,6 +18,9 @@
 <script>
 export default {
   name: "Dashboard",
+  metaInfo: {
+    title: "Dashboard"
+  },
   data() {
     return {
       tab: null,

@@ -10,7 +10,7 @@
       style="margin-left: -17px"
       @click="setDrawer(true)"
     />
-    <v-toolbar-title style="margin-top: 7px">{{ title }}</v-toolbar-title>
+    <v-toolbar-title>{{ title }}</v-toolbar-title>
   </v-app-bar>
 </template>
 
