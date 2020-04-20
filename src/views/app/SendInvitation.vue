@@ -118,7 +118,8 @@
 </template>
 
 <script>
-import { isValidEmail, isEscKey } from "@/common/utils";
+import { isValidEmail } from "@/common/utils";
+import { backOnEsc } from "@/plugins/mixins";
 import {
   MEMBER_ROLE,
   ADMIN_ROLE,
@@ -130,6 +131,7 @@ export default {
   metaInfo: {
     title: "Dashboard"
   },
+  mixins: [backOnEsc],
   data() {
     return {
       memberRoleChoices: WORKSPACE_MEMBER_ROLES,
@@ -175,11 +177,6 @@ export default {
         }
       } finally {
         this.loading = false;
-      }
-    },
-    routerBackOnEsc(keyEvent) {
-      if (isEscKey(keyEvent)) {
-        this.$router.back();
       }
     }
   },

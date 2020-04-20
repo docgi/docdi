@@ -44,14 +44,9 @@ const router = new VueRouter({
           name: "Typing"
         },
         {
-          path: "settings/user",
-          component: () => import("@/views/app/settings/UserSetting"),
-          name: "UserSetting"
-        },
-        {
-          path: "settings/workspace",
-          component: () => import("@/views/app/settings/UserSetting"),
-          name: "WorkspaceSetting"
+          path: "settings",
+          component: () => import("@/views/app/settings/Settings"),
+          name: "Settings"
         }
       ]
     },

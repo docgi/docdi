@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="header font-weight-bold">Profile</div>
     <div class="d-flex mt-6">
       <div class="d-flex flex-column">
-        <div>
-          <div class="font-weight-bold">Avatar</div>
+        <div class="font-weight-bold">Avatar</div>
+        <div class="avatar-wrapper">
           <v-avatar tile size="100" color="teal" style="border-radius: 7px" >
             <img v-if="user.avatar" :src="user.avatar">
             <span v-else>No avatar</span>
           </v-avatar>
         </div>
+
         <div class="mt-6">
           <div class="font-weight-bold">Username</div>
 
@@ -22,6 +22,7 @@
         <div class="d-flex">
           <v-btn color="primary" small>Save</v-btn>
         </div>
+
       </div>
     </div>
   </div>
@@ -32,9 +33,6 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "UserSetting",
-  metaInfo: {
-    title: "User Setting"
-  },
   computed: {
     ...mapGetters({ user: "currentUser" })
   }
@@ -42,7 +40,7 @@ export default {
 </script>
 
 <style scoped lang="scss" >
-.avatar {
-  border-radius: 7px;
+.avatar-wrapper {
+
 }
 </style>
