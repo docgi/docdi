@@ -52,7 +52,16 @@ const router = new VueRouter({
     },
     {
       path: "/set-token",
+      name: "IframeSetToken",
       component: () => import("@/views/app/IframeSetToken"),
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/logout",
+      name: "Logout",
+      component: () => import("@/views/app/Logout"),
       meta: {
         requiresAuth: false
       }
@@ -67,11 +76,13 @@ const router = new VueRouter({
       children: [
         {
           path: "login",
-          component: () => import("@/views/app/auth/Login")
+          component: () => import("@/views/app/auth/Login"),
+          name: "Login"
         },
         {
           path: "reset-password",
-          component: () => import("@/views/app/auth/ResetPassword")
+          component: () => import("@/views/app/auth/ResetPassword"),
+          name: "ResetPassword"
         }
       ]
     }
