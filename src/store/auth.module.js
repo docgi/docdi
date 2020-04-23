@@ -24,17 +24,34 @@ const mutations = {
   },
   setWorkspace(state, workspace) {
     state.workspace = workspace;
+  },
+  setUser(state, user) {
+    state.user = user;
   }
 };
 
 const actions = {
-  async updateWorkspace({ commit }, data) {
+  updateWorkspace({ commit }, data) {
     let fd = new FormData();
     for (let key in data) {
       fd.append(key.toString(), data[key]);
     }
-    let res = await Vue.axios.patch('workspace/', fd);
-    commit("setWorkspace", res.data);
+    return Vue.axios.patch('workspace/', fd).then((res) => {
+      commit("setWorkspace", res.data);
+    }).catch(error => {
+      throw error.response;
+    })
+  },
+  updateUser({ commit }, data) {
+    let fd = new FormData();
+    for (let key in data) {
+      fd.append(key.toString(), data[key]);
+    }
+    return Vue.axios.patch('users/me/', fd).then((res) => {
+      commit("setUser", res.data);
+    }).catch(error => {
+      throw error.response;
+    })
   }
 };
 

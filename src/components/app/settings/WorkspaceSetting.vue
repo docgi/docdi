@@ -3,7 +3,7 @@
     <div class="d-flex mt-6">
       <div class="d-flex flex-column">
         <div class="font-weight-bold">Workspace logo</div>
-        <div class="logo-wrapper">
+        <div class="img-wrapper">
           <v-avatar tile size="100" color="teal" style="border-radius: 7px;">
             <img class="img-logo" v-if="workspace.logo" :src="logoPath"/>
             <span class="img-logo" v-else>No logo</span>
@@ -56,15 +56,20 @@ export default {
       this.selectedLogo = file;
     },
     update() {
-      this.$store.dispatch("updateWorkspace", {logo: this.selectedLogo});
-      this.selectedLogo = "";
+      try {
+        this.$store.dispatch("updateWorkspace", {logo: this.selectedLogo});
+      } catch (e) {
+        console.log(e.response); // Todo
+      } finally {
+        this.selectedLogo = "";
+      }
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.logo-wrapper {
+.img-wrapper {
   .upload-button {
     transition: .5s ease;
     opacity: 0;
