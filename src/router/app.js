@@ -45,7 +45,7 @@ const router = new VueRouter({
         },
         {
           path: "settings",
-          component: () => import("@/views/app/settings/Settings"),
+          component: () => import("@/views/app/Settings"),
           name: "Settings"
         }
       ]
@@ -104,9 +104,10 @@ router.beforeEach((to, from, next) => {
         ApiService.setToken();
         Vue.axios
           .get("/stats-workspace/", {
+            errorHandle: false,
             headers: {
               Authorization: "Bearer " + token
-            }
+            },
           })
           .then(({ data }) => {
             store.commit("setAuth", data);

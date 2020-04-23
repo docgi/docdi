@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-tabs v-model="tab" color="basil">
-      <v-tab v-for="item in items" :key="item">
+      <v-tab v-for="(item, index) in items" :key="index">
         <span class="text-capitalize">{{ item.title }}</span>
       </v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
-      <v-tab-item v-for="item in items" :key="item">
+      <v-tab-item v-for="(item, index) in items" :key="index">
         <v-card flat>
           <v-card-text>
             <user-setting v-if="item.key === 'USER'" />

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueMeta from "vue-meta";
 import Vuetify from "vuetify";
+import VueNotification from "vue-notification";
 import App from "./App.vue";
 
 import outerRouter from "./router/outer";
@@ -12,6 +13,7 @@ import ApiService from "./common/api.service";
 import "./assets/css/main.scss";
 
 Vue.use(Vuetify);
+Vue.use(VueNotification);
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 });
