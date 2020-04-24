@@ -1,17 +1,20 @@
 <template>
-  <v-app-bar
-    app
-    flat
-    color="white"
-    hide-on-scroll
-  >
+  <v-app-bar app flat color="white" hide-on-scroll>
     <v-app-bar-nav-icon
       class="hidden-md-and-up"
       style="margin-left: -17px"
       @click="setDrawer(true)"
     />
     <div class="ml-auto">
-      <v-btn v-if="title !== '/typing'" to="/typing" color="primary" small outlined>New doc</v-btn>
+      <v-btn
+        v-if="currentPath !== '/typing'"
+        to="/typing"
+        color="primary"
+        small
+        outlined
+      >
+        New doc
+      </v-btn>
     </div>
   </v-app-bar>
 </template>
@@ -25,7 +28,7 @@ export default {
     ...mapMutations(["setDrawer"])
   },
   computed: {
-    ...mapGetters({title: "getTitle"})
+    ...mapGetters({ currentPath: "getCurrentPath" })
   }
-}
+};
 </script>

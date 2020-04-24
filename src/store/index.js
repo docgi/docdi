@@ -1,14 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import auth from "./auth.module"
-import layout from "./layout.module"
+import base from "./base.module"
+import ui from "./ui.module"
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    auth,
-    layout,
+    base,
+    ui,
   }
 })

@@ -5,13 +5,14 @@ const isLargeScreen = () => {
 const state = {
   drawer: isLargeScreen(),
   title: "",
+  error: {}
 };
 
 const getters = {
   getDrawer(state) {
     return state.drawer;
   },
-  getTitle(state) {
+  getCurrentPath(state) {
     return state.title;
   }
 };
@@ -22,6 +23,9 @@ const mutations = {
   },
   setTitle(state, title) {
     state.title = title;
+  },
+  setError(state, error) {
+    state.error = error;
   }
 };
 
