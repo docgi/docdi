@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-tabs v-model="tab" color="basil" grow>
+    <v-tabs v-model="tab" color="basil">
       <v-tab v-for="item in items" :key="item">
         <span class="text-capitalize">{{ item }}</span>
       </v-tab>

@@ -10,7 +10,9 @@
       style="margin-left: -17px"
       @click="setDrawer(true)"
     />
-    <v-toolbar-title>{{ title }}</v-toolbar-title>
+    <div class="ml-auto">
+      <v-btn v-if="title !== '/typing'" to="/typing" color="primary" small outlined>New doc</v-btn>
+    </div>
   </v-app-bar>
 </template>
 

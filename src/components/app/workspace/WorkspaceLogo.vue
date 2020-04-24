@@ -12,7 +12,7 @@
           >
             <v-img v-if="workspace.logo" :src="workspace.logo" />
             <span v-else>
-              logo
+              {{ workspace.name }}
             </span>
           </v-avatar>
           <div class="ml-2 flex-column">
@@ -31,7 +31,7 @@
 
       <v-list dense>
         <v-list-item class="pa-0" v-for="(item, index) in items" :key="index" dense>
-          <v-btn text :to="item.path" class="text-capitalize w-full justify-start">
+          <v-btn text :to="item.path" class="text-capitalize w-full justify-start" :color="item.color">
             <template v-slot:default>
               <v-icon small>{{ item.icon }}</v-icon>
               <span class="ml-2" style="font-size: .75em; font-weight: bold">{{ item.title }}</span>
@@ -52,8 +52,8 @@ export default {
     return {
       showMenu: false,
       items: [
-        { title: "Setting", path: "settings", icon: "fa-user" },
-        { title: "Logout", path: "logout", icon: "fa-landmark" },
+        { title: "Setting", path: "settings", icon: "fa-cog", color: "" },
+        { title: "Logout", path: "logout", icon: "fa-sign-out-alt", color: "red lighten-2" },
       ]
     };
   },

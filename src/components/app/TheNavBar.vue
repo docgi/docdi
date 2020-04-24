@@ -22,6 +22,7 @@
               v-for="(item, index) in quickAccess.items"
               :key="index"
               :to="item.path"
+              class="mt-1"
             >
               <v-list-item-icon class="mr-2">
                 <v-icon :class="'fa ' + item.icon" small></v-icon>
@@ -44,6 +45,15 @@
               </v-list-item-icon>
               <v-list-item-content class="pb-1">
                 <v-list-item-title v-text="'Typing'" class="font-weight-bold"/>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item dense>
+              <v-list-item-icon class="mr-2">
+                <v-icon class="fa fa-plus" small/>
+              </v-list-item-icon>
+              <v-list-item-content class="pb-1">
+                <v-list-item-title v-text="'New Collections'"/>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
