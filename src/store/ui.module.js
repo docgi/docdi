@@ -21,7 +21,7 @@ const mutations = {
   setDrawer(state, value) {
     state.drawer = value;
   },
-  setTitle(state, title) {
+  setCurrentPath(state, title) {
     state.title = title;
   },
   setError(state, error) {

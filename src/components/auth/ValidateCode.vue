@@ -60,7 +60,9 @@ export default {
           email: this.email,
           code: this.code
         };
-        await this.$http.post("/create-workspace/check-code/", payload);
+        await this.$http.post("/create-workspace/check-code/", payload, {
+          errorHandle: false
+        });
         this.submitting = false;
         this.$emit("nextStep", {
           code: this.code

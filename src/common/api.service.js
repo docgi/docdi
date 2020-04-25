@@ -4,6 +4,10 @@ import VueAxios from "vue-axios";
 
 import { getToken } from "./token.service";
 
+const ignoreHandleError = (config) => {
+  return !config.errorHandle && config.errorHandle === false;
+};
+
 const ApiService = {
   init() {
     Vue.use(VueAxios, Axios);
@@ -12,7 +16,7 @@ const ApiService = {
 
     Vue.axios.interceptors.response.use(
       response => {
-        if (!response.config.errorHandle && response.config.errorHandle === false) {
+        if (ignoreHandleError(response.config)) {
           return response;
         }
         Vue.notify({
@@ -22,15 +26,14 @@ const ApiService = {
         return response;
       },
       error => {
-        if (error.config.errorHandle && error.config.errorHandle === false ) {
+        if (ignoreHandleError(error.config)) {
           return Promise.reject(error);
-        } else {
-          Vue.notify({
-            group: "foo",
-            type: "error",
-            title: "Update"
-          });
         }
+        Vue.notify({
+          group: "foo",
+          type: "error",
+          title: "Error"
+        });
         return Promise.reject(error);
       }
     );

@@ -91,7 +91,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    store.commit("setTitle", to.path);
+    store.commit("setCurrentPath", to.path);
     let token = getToken();
     if (token) {
       let currentUser = store.getters.currentUser;
@@ -116,7 +116,7 @@ router.beforeEach((to, from, next) => {
             removeToken();
             next({ path: "/auth/login", query: { redirect: to.fullPath } });
           });
-        store.commit("setTitle", to.path);
+        store.commit("setCurrentPath", to.path);
       }
       next();
     } else {

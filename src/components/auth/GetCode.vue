@@ -67,6 +67,8 @@ export default {
       try {
         await this.$http.post("/create-workspace/get-code/", {
           email: this.email
+        }, {
+          errorHandle: false
         });
         this.submitting = false;
         this.$emit("nextStep", { email: this.email });
