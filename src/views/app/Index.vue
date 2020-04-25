@@ -6,6 +6,7 @@
       <v-container fluid class="d-flex justify-center">
         <div class="col-12 col-md-10 col-lg-8 pa-0">
           <router-view />
+          <new-collection-dialog />
         </div>
       </v-container>
     </v-content>
@@ -15,6 +16,7 @@
 <script>
 import TheNavBar from "@/components/app/TheNavBar";
 import TheAppBar from "@/components/app/TheAppBar";
+import NewCollectionDialog from "@/components/app/NewCollectionDialog";
 
 export default {
   name: "AppIndex",
@@ -24,7 +26,8 @@ export default {
   },
   components: {
     TheNavBar,
-    TheAppBar
-  }
+    TheAppBar,
+    NewCollectionDialog,
+  },
 };
 </script>

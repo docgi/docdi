@@ -48,7 +48,7 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item dense>
+            <v-list-item dense @click="showNewCollectionDialog">
               <v-list-item-icon class="mr-2">
                 <v-icon class="fa fa-plus" small/>
               </v-list-item-icon>
@@ -66,24 +66,14 @@
 </template>
 
 <script>
-import WorkspaceLogo from "@/components/app/workspace/WorkspaceLogo";
 import { mapGetters } from "vuex";
+import WorkspaceLogo from "@/components/app/workspace/WorkspaceLogo";
+import { SET_DIALOG } from "@/store/mutations.type";
 
 export default {
   name: "TheNavBar",
   components: {
     WorkspaceLogo
-  },
-  computed: {
-    ...mapGetters({ getDrawer: "getDrawer" }),
-    drawer: {
-      get() {
-        return this.getDrawer;
-      },
-      set(value) {
-        this.$store.commit("setDrawer", value);
-      }
-    }
   },
   data() {
     return {
@@ -108,6 +98,22 @@ export default {
         ]
       }
     };
+  },
+  computed: {
+    ...mapGetters({ getDrawer: "getDrawer" }),
+    drawer: {
+      get() {
+        return this.getDrawer;
+      },
+      set(value) {
+        this.$store.commit("setDrawer", value);
+      }
+    }
+  },
+  methods: {
+    showNewCollectionDialog() {
+      this.$store.commit(SET_DIALOG, { newCollection: true });
+    }
   }
 };
 </script>

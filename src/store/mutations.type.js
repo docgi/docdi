@@ -7,3 +7,4 @@ export const SET_WORKSPACE = "setWorkspace";
 export const SET_DRAWER = "setDrawer";
 export const SET_CURRENT_PATH = "setCurrentPath";
 export const SET_ERROR = "setError";
+export const SET_DIALOG = "setDialog";
