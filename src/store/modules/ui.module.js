@@ -1,10 +1,12 @@
+import { SET_DRAWER, SET_CURRENT_PATH, SET_ERROR } from "@/store/mutations.type";
+
 const isLargeScreen = () => {
   return window.innerWidth >= 960;
 };
 
 const state = {
   drawer: isLargeScreen(),
-  title: "",
+  currentPath: "",
   error: {}
 };
 
@@ -13,18 +15,18 @@ const getters = {
     return state.drawer;
   },
   getCurrentPath(state) {
-    return state.title;
+    return state.currentPath;
   }
 };
 
 const mutations = {
-  setDrawer(state, value) {
+  [SET_DRAWER](state, value) {
     state.drawer = value;
   },
-  setCurrentPath(state, title) {
-    state.title = title;
+  [SET_CURRENT_PATH](state, currentPath) {
+    state.currentPath = currentPath;
   },
-  setError(state, error) {
+  [SET_ERROR](state, error) {
     state.error = error;
   }
 };

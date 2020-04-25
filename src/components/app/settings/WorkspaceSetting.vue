@@ -5,7 +5,7 @@
         <div class="font-weight-bold">Workspace logo</div>
         <div class="img-wrapper">
           <v-avatar tile size="100" color="teal" style="border-radius: 7px;">
-            <img class="img-logo" v-if="workspace.logo" :src="logoPath"/>
+            <img class="img-logo" v-if="workspace.logo" :src="logoPath" />
             <span class="img-logo" v-else>No logo</span>
             <v-file-input
               class="upload-button"
@@ -34,13 +34,14 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { UPDATE_WORKSPACE } from "@/store/actions.type";
 
 export default {
   name: "WorkspaceSetting",
   data() {
     return {
-      selectedLogo: "",
-    }
+      selectedLogo: ""
+    };
   },
   computed: {
     ...mapGetters({ workspace: "currentWorkspace" }),
@@ -57,7 +58,7 @@ export default {
     },
     update() {
       try {
-        this.$store.dispatch("updateWorkspace", {logo: this.selectedLogo});
+        this.$store.dispatch(UPDATE_WORKSPACE, { logo: this.selectedLogo });
       } catch (e) {
         console.log(e.response); // Todo
       } finally {
@@ -71,7 +72,7 @@ export default {
 <style lang="scss" scoped>
 .img-wrapper {
   .upload-button {
-    transition: .5s ease;
+    transition: 0.5s ease;
     opacity: 0;
     top: 50%;
     left: 65%;

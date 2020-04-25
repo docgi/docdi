@@ -1,4 +1,6 @@
 import Vue from "vue";
+import { SET_AUTH, SET_WORKSPACE, SET_USER } from "@/store/mutations.type";
+import { UPDATE_USER, UPDATE_WORKSPACE } from "@/store/actions.type";
 
 const state = {
   isAuthenticated: false,
@@ -16,22 +18,22 @@ const getters = {
 };
 
 const mutations = {
-  setAuth(state, data) {
+  [SET_AUTH](state, data) {
     state.appConfig = data.config;
     state.user = data.user;
     state.workspace = data.workspace;
     state.isAuthenticated = true;
   },
-  setWorkspace(state, workspace) {
+  [SET_WORKSPACE](state, workspace) {
     state.workspace = workspace;
   },
-  setUser(state, user) {
+  [SET_USER](state, user) {
     state.user = user;
   }
 };
 
 const actions = {
-  updateWorkspace({ commit }, data) {
+  [UPDATE_WORKSPACE]({ commit }, data) {
     let fd = new FormData();
     for (let key in data) {
       fd.append(key.toString(), data[key]);
@@ -42,7 +44,7 @@ const actions = {
       throw error.response;
     })
   },
-  updateUser({ commit }, data) {
+  [UPDATE_USER]({ commit }, data) {
     let fd = new FormData();
     for (let key in data) {
       fd.append(key.toString(), data[key]);

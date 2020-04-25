@@ -21,11 +21,12 @@
 
 <script>
 import { mapMutations, mapGetters } from "vuex";
+import { SET_DRAWER } from "@/store/mutations.type";
 
 export default {
   name: "TheAppBar",
   methods: {
-    ...mapMutations(["setDrawer"])
+    ...mapMutations([SET_DRAWER])
   },
   computed: {
     ...mapGetters({ currentPath: "getCurrentPath" })

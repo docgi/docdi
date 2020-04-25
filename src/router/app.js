@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import { getToken, removeToken } from "@/common/token.service";
-import store from "@/store";
-import { isEmptyObject } from "@/common/utils";
 import ApiService from "@/common/api.service";
+import store from "@/store";
+import { SET_CURRENT_PATH, SET_AUTH } from "@/store/mutations.type";
+import { getToken, removeToken } from "@/common/token.service";
+import { isEmptyObject } from "@/common/utils";
 
 Vue.use(VueRouter);
 
@@ -91,7 +92,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    store.commit("setCurrentPath", to.path);
+    store.commit(SET_CURRENT_PATH, to.path);
     let token = getToken();
     if (token) {
       let currentUser = store.getters.currentUser;
@@ -110,13 +111,12 @@ router.beforeEach((to, from, next) => {
             },
           })
           .then(({ data }) => {
-            store.commit("setAuth", data);
+            store.commit(SET_AUTH, data);
           })
           .catch(() => {
             removeToken();
             next({ path: "/auth/login", query: { redirect: to.fullPath } });
           });
-        store.commit("setCurrentPath", to.path);
       }
       next();
     } else {

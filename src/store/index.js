@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import base from "./base.module"
-import ui from "./ui.module"
+import base from "./modules/base.module";
+import ui from "./modules/ui.module";
 
 Vue.use(Vuex);
 
