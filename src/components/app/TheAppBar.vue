@@ -3,7 +3,7 @@
     <v-app-bar-nav-icon
       class="hidden-md-and-up"
       style="margin-left: -17px"
-      @click="setDrawer(true)"
+      @click="enableDrawer"
     />
     <div class="ml-auto">
       <v-btn
@@ -20,13 +20,15 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import { SET_DRAWER } from "@/store/mutations.type";
 
 export default {
   name: "TheAppBar",
   methods: {
-    ...mapMutations([SET_DRAWER])
+    enableDrawer() {
+      this.$store.commit(SET_DRAWER, true);
+    }
   },
   computed: {
     ...mapGetters({ currentPath: "getCurrentPath" })

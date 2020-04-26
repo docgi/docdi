@@ -48,6 +48,16 @@ const router = new VueRouter({
           path: "settings",
           component: () => import("@/views/app/Settings"),
           name: "Settings"
+        },
+        {
+          path: "collections/:id",
+          component: () => import("@/views/app/DetailCollection"),
+          name: "DetailCollection"
+        },
+        {
+          path: "documents/:id",
+          component: () => import("@/views/app/DetailDocument"),
+          name: "DetailDocument"
         }
       ]
     },

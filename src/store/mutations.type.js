@@ -8,3 +8,7 @@ export const SET_DRAWER = "setDrawer";
 export const SET_CURRENT_PATH = "setCurrentPath";
 export const SET_ERROR = "setError";
 export const SET_DIALOG = "setDialog";
+
+// Collections
+export const SET_COLLECTIONS = "setCollections";
+export const SET_ACTIVE = "setActive";

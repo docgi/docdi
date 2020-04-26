@@ -28,52 +28,29 @@
                 <v-icon :class="'fa ' + item.icon" small></v-icon>
               </v-list-item-icon>
               <v-list-item-content class="pb-1">
-                <v-list-item-title v-text="item.name" class="font-weight-bold"/>
+                <v-list-item-title
+                  v-text="item.name"
+                  class="font-weight-bold"
+                />
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
         </v-list>
-
-        <v-list dense color="#EDF2F7">
-          <v-subheader>Collections</v-subheader>
-          <v-list-item-group>
-            <v-list-item
-              to="/typing"
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fa fa-pen" small/>
-              </v-list-item-icon>
-              <v-list-item-content class="pb-1">
-                <v-list-item-title v-text="'Typing'" class="font-weight-bold"/>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item dense @click="showNewCollectionDialog">
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fa fa-plus" small/>
-              </v-list-item-icon>
-              <v-list-item-content class="pb-1">
-                <v-list-item-title v-text="'New Collections'"/>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-
+        <nav-bar-collection-part />
       </div>
-
     </v-navigation-drawer>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import WorkspaceLogo from "@/components/app/workspace/WorkspaceLogo";
-import { SET_DIALOG } from "@/store/mutations.type";
+import NavBarCollectionPart from "@/components/app/NavBarCollectionPart";
+import {SET_DRAWER} from "@/store/mutations.type";
 
 export default {
   name: "TheNavBar",
   components: {
-    WorkspaceLogo
+    WorkspaceLogo, NavBarCollectionPart
   },
   data() {
     return {
@@ -94,25 +71,19 @@ export default {
             name: "Notification",
             path: "/notifications",
             icon: "fa-bell"
-          },
+          }
         ]
       }
     };
   },
   computed: {
-    ...mapGetters({ getDrawer: "getDrawer" }),
     drawer: {
       get() {
-        return this.getDrawer;
+        return this.$store.getters.getDrawer;
       },
       set(value) {
-        this.$store.commit("setDrawer", value);
+        this.$store.commit(SET_DRAWER, value);
       }
-    }
-  },
-  methods: {
-    showNewCollectionDialog() {
-      this.$store.commit(SET_DIALOG, { newCollection: true });
     }
   }
 };

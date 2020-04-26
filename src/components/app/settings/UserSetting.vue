@@ -20,7 +20,7 @@
         <div class="mt-6">
           <div class="font-weight-bold">Username</div>
 
-          <v-text-field outlined dense :value="user.username"></v-text-field>
+          <v-text-field outlined dense v-model="username" :value="user.username"></v-text-field>
         </div>
         <div class="d-flex">
           <v-btn color="primary" small @click="update">Save</v-btn>

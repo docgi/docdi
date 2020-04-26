@@ -6,10 +6,11 @@
       <v-container fluid class="d-flex justify-center">
         <div class="col-12 col-md-10 col-lg-8 pa-0">
           <router-view />
-          <new-collection-dialog />
         </div>
       </v-container>
     </v-content>
+    <new-collection-dialog />
+    <notifications position="bottom right" group="foo" />
   </div>
 </template>
 
