@@ -1,18 +1,21 @@
 import Vue from "vue";
-import { LOAD_ROOT_COLLECTIONS } from "@/store/actions.type";
-import { SET_ACTIVE, SET_COLLECTIONS } from "@/store/mutations.type";
+import {
+  CREATE_NEW_COLLECTION,
+  LOAD_ROOT_COLLECTIONS
+} from "@/store/actions.type";
+import {
+  APPEND_COLLECTION,
+  SET_ACTIVE,
+  SET_COLLECTIONS
+} from "@/store/mutations.type";
 
 const state = {
   collections: [],
-  active: undefined
 };
 
 const getters = {
   getCollections(state) {
     return state.collections;
-  },
-  getActive(state) {
-    return state.active;
   }
 };
 
@@ -26,6 +29,16 @@ const actions = {
       .catch(error => {
         console.log(error);
       });
+  },
+  [CREATE_NEW_COLLECTION]({ commit }, collection) {
+    Vue.axios
+      .post("collections/", collection)
+      .then(response => {
+        commit(APPEND_COLLECTION, response.data);
+      })
+      .catch(error => {
+        throw error;
+      });
   }
 };
 
@@ -35,6 +48,9 @@ const mutations = {
   },
   [SET_ACTIVE](state, active) {
     state.active = active;
+  },
+  [APPEND_COLLECTION](state, collection) {
+    state.collections.push(collection);
   }
 };
 

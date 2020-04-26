@@ -14,7 +14,6 @@
         </div>
 
         <v-divider />
-
         <v-list dense color="#EDF2F7">
           <v-subheader>Quick access</v-subheader>
           <v-list-item-group v-model="quickAccess.model">

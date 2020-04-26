@@ -11,11 +11,14 @@
       </v-card-title>
 
       <v-card-text>
-        <v-text-field dense outlined label="Collection name" v-model="name"/>
+        <div class="d-flex flex-column">
+          <v-text-field dense outlined label="Collection name" :error-messages="error" v-model="collection.name"/>
+          <v-switch v-model="collection.private" label="Private" class="ml-2 mt-1"/>
+        </div>
       </v-card-text>
 
       <v-card-actions class="d-flex justify-center">
-        <v-btn color="green darken-1" outlined small @click="showOff">
+        <v-btn color="green darken-1" outlined small @click="create">
           Create
         </v-btn>
       </v-card-actions>
@@ -26,12 +29,17 @@
 <script>
 import { mapGetters } from "vuex";
 import { SET_DIALOG } from "@/store/mutations.type";
+import {CREATE_NEW_COLLECTION} from "@/store/actions.type";
 
 export default {
   name: "NewCollectionDialog",
   data() {
     return {
-      name: ""
+      collection: {
+        name: "",
+        private: false,
+      },
+      error: []
     };
   },
   computed: {
@@ -39,9 +47,20 @@ export default {
   },
   methods: {
     showOff() {
+      this.collection = {
+        name: "",
+        private: false,
+      };
       this.$store.commit(SET_DIALOG, {
         newCollection: false
       });
+    },
+    create() {
+      this.$store.dispatch(CREATE_NEW_COLLECTION, this.collection).then(() => {
+        this.showOff();
+      }).catch(err => {
+        this.error = err.response.data;
+      })
     }
   }
 };

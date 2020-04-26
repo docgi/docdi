@@ -44,7 +44,7 @@ const actions = {
     return Vue.axios.patch('workspace/', fd).then((res) => {
       commit("setWorkspace", res.data);
     }).catch(error => {
-      throw error.response;
+      commit(SET_ERROR, error.response.data);
     })
   },
   [UPDATE_USER]({ commit }, data) {

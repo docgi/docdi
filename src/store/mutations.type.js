@@ -12,3 +12,4 @@ export const SET_DIALOG = "setDialog";
 // Collections
 export const SET_COLLECTIONS = "setCollections";
 export const SET_ACTIVE = "setActive";
+export const APPEND_COLLECTION = "appendCollection";
