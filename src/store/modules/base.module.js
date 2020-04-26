@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { SET_AUTH, SET_WORKSPACE, SET_USER } from "@/store/mutations.type";
+import {SET_AUTH, SET_WORKSPACE, SET_USER, SET_ERROR} from "@/store/mutations.type";
 import { UPDATE_USER, UPDATE_WORKSPACE } from "@/store/actions.type";
 
 const state = {
@@ -58,7 +58,7 @@ const actions = {
     return Vue.axios.patch('users/me/', fd).then((res) => {
       commit("setUser", res.data);
     }).catch(error => {
-      throw error.response;
+      commit(SET_ERROR, error.response.data);
     })
   }
 };

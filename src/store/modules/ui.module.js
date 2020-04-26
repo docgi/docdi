@@ -22,6 +22,9 @@ const getters = {
   },
   getDialog(state) {
     return state.dialog;
+  },
+  getError(state) {
+    return state.error;
   }
 };
 
