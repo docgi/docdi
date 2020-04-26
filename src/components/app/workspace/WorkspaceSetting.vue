@@ -33,36 +33,40 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { UPDATE_WORKSPACE } from "@/store/actions.type";
 
 export default {
   name: "WorkspaceSetting",
   data() {
     return {
-      selectedLogo: ""
+      workspace: {
+        name: "",
+        logo: ""
+      }
     };
   },
+  created() {
+    this.workspace = {...this.$store.state.base.workspace};
+  },
   computed: {
-    ...mapGetters({ workspace: "currentWorkspace" }),
     logoPath() {
-      if (this.selectedLogo) {
-        return URL.createObjectURL(this.selectedLogo);
+      if (typeof this.workspace.logo !== "string") {
+        return URL.createObjectURL(this.workspace.logo);
       }
       return this.workspace.logo;
     }
   },
   methods: {
     selectLogo(file) {
-      this.selectedLogo = file;
+      this.workspace.logo = file;
     },
-    update() {
+    async update() {
       try {
-        this.$store.dispatch(UPDATE_WORKSPACE, { logo: this.selectedLogo });
+        await this.$store.dispatch(UPDATE_WORKSPACE, this.workspace);
       } catch (e) {
-        console.log(e.response); // Todo
+        console.log(e);
       } finally {
-        this.selectedLogo = "";
+        this.workspace = {...this.$store.state.base.workspace};
       }
     }
   }

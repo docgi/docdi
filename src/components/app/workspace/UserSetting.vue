@@ -20,7 +20,7 @@
         <div class="mt-6">
           <div class="font-weight-bold">Username</div>
 
-          <v-text-field outlined dense v-model="username" :value="user.username"></v-text-field>
+          <v-text-field outlined dense v-model="user.username"></v-text-field>
         </div>
         <div class="d-flex">
           <v-btn color="primary" small @click="update">Save</v-btn>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import { UPDATE_USER } from "@/store/actions.type";
 
 export default {
@@ -39,33 +39,34 @@ export default {
   data() {
     return {
       selectedImage: "",
-      username: ""
+      user: {
+        avatar: "",
+        username: "",
+      }
     };
+  },
+  created() {
+    this.user = {...this.$store.state.base.user};
   },
   methods: {
     ...mapActions([UPDATE_USER]),
     selectImage(file) {
-      this.selectedImage = file;
+      this.user.avatar = file;
     },
-    update() {
+    async update() {
       try {
-        let payload = {
-          avatar: this.selectedImage,
-          username: this.user.username
-        };
-        this.updateUser(payload);
+        await this.$store.dispatch(UPDATE_USER, this.user);
       } catch (e) {
         console.log(e);
       } finally {
-        this.selectedImage = "";
+        this.user = {...this.$store.state.base.user};
       }
     }
   },
   computed: {
-    ...mapGetters({ user: "currentUser" }),
     avatarPath() {
-      if (this.selectedImage) {
-        return URL.createObjectURL(this.selectedImage);
+      if (typeof this.user.avatar !== "string") {
+        return URL.createObjectURL(this.user.avatar);
       }
       return this.user.avatar;
     }

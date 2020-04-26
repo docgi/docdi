@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import UserSetting from "@/components/app/settings/UserSetting";
-import WorkspaceSetting from "@/components/app/settings/WorkspaceSetting";
+import UserSetting from "@/components/app/workspace/UserSetting";
+import WorkspaceSetting from "@/components/app/workspace/WorkspaceSetting";
 
 export default {
   name: "Settings",

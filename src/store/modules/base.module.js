@@ -36,6 +36,9 @@ const actions = {
   [UPDATE_WORKSPACE]({ commit }, data) {
     let fd = new FormData();
     for (let key in data) {
+      if (key === "logo" && typeof data["logo"] === "string") {
+        continue;
+      }
       fd.append(key.toString(), data[key]);
     }
     return Vue.axios.patch('workspace/', fd).then((res) => {
@@ -47,6 +50,9 @@ const actions = {
   [UPDATE_USER]({ commit }, data) {
     let fd = new FormData();
     for (let key in data) {
+      if (key === "avatar" && typeof data["avatar"] === "string") {
+        continue;
+      }
       fd.append(key.toString(), data[key]);
     }
     return Vue.axios.patch('users/me/', fd).then((res) => {
