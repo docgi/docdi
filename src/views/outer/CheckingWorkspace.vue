@@ -68,6 +68,8 @@ export default {
       try {
         let response = await this.$http.post("workspaces/check/", {
           name: this.workspaceName
+        }, {
+          errorHandle: false
         });
         if (response.data.exist) {
           location.href = `${buildFullSubDomain(this.workspaceName)}/auth/login`;
