@@ -1,19 +1,18 @@
 <template>
   <div class="justify-center d-flex align-center w-full" style="height: 100%;">
-    <spin :loading="true" />
+    <v-progress-circular
+      indeterminate
+      color="green"
+    ></v-progress-circular>
   </div>
 </template>
 
 <script>
 import { setToken } from "@/common/token.service";
 import { isParentOrigin } from "@/common/utils";
-import Spin from "vue-spinner/src/PulseLoader";
 
 export default {
   name: "IframeSetToken",
-  components: {
-    Spin
-  },
   data() {
     return {
       tokenSet: false

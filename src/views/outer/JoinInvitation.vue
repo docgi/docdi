@@ -1,6 +1,10 @@
 <template>
   <div class="justify-center d-flex align-center w-full" style="height: 90%;">
-    <spin v-if="loading" :loading="true" />
+    <v-progress-circular
+      v-if="loading"
+      indeterminate
+      color="green"
+    ></v-progress-circular>
     <div v-else>
       <div v-if="isError">
         <v-alert type="warning">
@@ -36,7 +40,6 @@
 </template>
 
 <script>
-import Spin from "vue-spinner/src/PulseLoader";
 import { setToken } from "@/common/token.service";
 import { buildFullSubDomain } from "@/common/utils";
 
@@ -44,9 +47,6 @@ export default {
   name: "JoinInvitation",
   metaInfo: {
     title: "Join invitation"
-  },
-  components: {
-    Spin
   },
   data() {
     return {
