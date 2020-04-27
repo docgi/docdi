@@ -1,16 +1,18 @@
 import Vue from "vue";
 import {
   CREATE_NEW_COLLECTION,
+  LOAD_DETAIL_COLLECTION,
   LOAD_ROOT_COLLECTIONS
 } from "@/store/actions.type";
 import {
   APPEND_COLLECTION,
+  COLLECTION_FILL_CHILDREN,
   SET_ACTIVE,
   SET_COLLECTIONS
 } from "@/store/mutations.type";
 
 const state = {
-  collections: [],
+  collections: []
 };
 
 const getters = {
@@ -39,8 +41,30 @@ const actions = {
       .catch(error => {
         throw error;
       });
+  },
+  [LOAD_DETAIL_COLLECTION]({ commit }, collectionId) {
+    Vue.axios.get(`collections/${collectionId}/`).then(response => {
+      commit(COLLECTION_FILL_CHILDREN, {collectionId, data: response.data});
+    });
   }
 };
+
+const fillChild = (array, id, data) => {
+  if (!(array instanceof Array)) {
+    return;
+  }
+  for (let i = 0; i < array.length; i++) {
+    if ("is_collection" in array[i]) {
+      if (array[i].id === id) {
+        array[i] = {...data};
+        break;
+      }
+      if ("children" in array[i]) {
+        fillChild(array[i].children, id, data);
+      }
+    }
+  }
+}
 
 const mutations = {
   [SET_COLLECTIONS](state, collections) {
@@ -51,6 +75,9 @@ const mutations = {
   },
   [APPEND_COLLECTION](state, collection) {
     state.collections.push(collection);
+  },
+  [COLLECTION_FILL_CHILDREN](state, { collectionId, data }) {
+    fillChild(state.collections, collectionId, data);
   }
 };
 

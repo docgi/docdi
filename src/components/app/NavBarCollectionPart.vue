@@ -12,6 +12,7 @@
           expand-icon="fa-angle-down"
           :return-object="true"
           :items="collections"
+          :load-children="loadChildren"
           @update:open="updateActive"
           @update:active="updateActive"
         >
@@ -48,15 +49,13 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { LOAD_ROOT_COLLECTIONS } from "@/store/actions.type";
+import {LOAD_DETAIL_COLLECTION, LOAD_ROOT_COLLECTIONS} from "@/store/actions.type";
 import {SET_DIALOG} from "@/store/mutations.type";
 
 export default {
   name: "NavBarCollectionPart",
   data() {
-    return {
-      active: undefined
-    }
+    return {}
   },
   mounted() {
     this.$store.dispatch(LOAD_ROOT_COLLECTIONS);
@@ -65,7 +64,12 @@ export default {
     ...mapGetters({ getDrawer: "getDrawer", collections: "getCollections" })
   },
   methods: {
-    loadChildren() {
+    async loadChildren(item) {
+      try {
+        await this.$store.dispatch(LOAD_DETAIL_COLLECTION, item.id);
+      } catch (e) {
+        console.log(e);
+      }
     },
     updateActive(objs) {
       let obj = objs[0];

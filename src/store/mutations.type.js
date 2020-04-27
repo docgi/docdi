@@ -13,3 +13,4 @@ export const SET_DIALOG = "setDialog";
 export const SET_COLLECTIONS = "setCollections";
 export const SET_ACTIVE = "setActive";
 export const APPEND_COLLECTION = "appendCollection";
+export const COLLECTION_FILL_CHILDREN = "collectionFillChildren";
