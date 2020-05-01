@@ -2,10 +2,25 @@ import Vue from "vue";
 import Axios from "axios";
 import VueAxios from "vue-axios";
 
-import { getToken } from "./token.service";
+import {getToken} from "./token.service";
 
 const ignoreHandleError = (config) => {
   return !config.errorHandle && config.errorHandle === false;
+};
+
+const getErrorMsg = (data) => {
+  let res = [];
+  for (let key of Object.keys(data)) {
+    if (data[key] instanceof String) {
+      res.push(data[key]);
+    }
+    if (data[key] instanceof Array) {
+      for (let i = 0; i < data[key].length; i++) {
+        res.push(data[key][i]);
+      }
+    }
+  }
+  return res;
 };
 
 const ApiService = {
@@ -29,15 +44,12 @@ const ApiService = {
         if (ignoreHandleError(error.config)) {
           return Promise.reject(error);
         }
-        for (let key in error.response.data) {
-          let msg = "";
-          if (error.response.data[key] instanceof Array) {
-            msg = error.response.data[key][0];
-          }
+        let msgs = getErrorMsg(error.response.data);
+        for (let index = 0; index < msgs.length; index++) {
           Vue.notify({
             group: "foo",
             type: "error",
-            title: msg
+            title: msgs[index]
           });
         }
         return Promise.reject(error);

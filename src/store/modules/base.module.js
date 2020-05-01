@@ -59,6 +59,7 @@ const actions = {
       commit("setUser", res.data);
     }).catch(error => {
       commit(SET_ERROR, error.response.data);
+      return Promise.reject(error);
     })
   }
 };

@@ -20,7 +20,7 @@
         <div class="mt-6">
           <div class="font-weight-bold">Username</div>
 
-          <v-text-field outlined dense v-model="user.username"></v-text-field>
+          <v-text-field :error-messages="error.username" outlined dense v-model="user.username"></v-text-field>
         </div>
         <div class="d-flex">
           <v-btn color="primary" small @click="update">Save</v-btn>
@@ -38,11 +38,11 @@ export default {
   name: "UserSetting",
   data() {
     return {
-      selectedImage: "",
       user: {
         avatar: "",
         username: "",
-      }
+      },
+      error: {}
     };
   },
   created() {
@@ -54,10 +54,11 @@ export default {
       this.user.avatar = file;
     },
     async update() {
+      this.error = {};
       try {
         await this.$store.dispatch(UPDATE_USER, this.user);
       } catch (e) {
-        console.log(e);
+        this.error = e.response.data;
       } finally {
         this.user = {...this.$store.state.base.user};
       }
