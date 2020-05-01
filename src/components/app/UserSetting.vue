@@ -20,7 +20,7 @@
         <div class="mt-6">
           <div class="font-weight-bold">Username</div>
 
-          <v-text-field :error-messages="error.username" outlined dense v-model="user.username"></v-text-field>
+          <v-text-field outlined dense v-model="user.username"></v-text-field>
         </div>
         <div class="d-flex">
           <v-btn color="primary" small @click="update">Save</v-btn>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import { UPDATE_USER } from "@/store/actions.type";
 
 export default {
@@ -64,7 +64,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({error: "getError"}),
     avatarPath() {
       if (typeof this.user.avatar !== "string") {
         return URL.createObjectURL(this.user.avatar);

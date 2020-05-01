@@ -29,11 +29,17 @@ const ApiService = {
         if (ignoreHandleError(error.config)) {
           return Promise.reject(error);
         }
-        Vue.notify({
-          group: "foo",
-          type: "error",
-          title: "Error"
-        });
+        for (let key in error.response.data) {
+          let msg = "";
+          if (error.response.data[key] instanceof Array) {
+            msg = error.response.data[key][0];
+          }
+          Vue.notify({
+            group: "foo",
+            type: "error",
+            title: msg
+          });
+        }
         return Promise.reject(error);
       }
     );

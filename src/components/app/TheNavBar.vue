@@ -9,40 +9,44 @@
       width="300"
     >
       <div class="ma-4">
+
         <div class="d-flex mb-4">
-          <workspace-logo />
+          <workspace-logo/>
         </div>
 
-        <v-divider />
-        <v-list dense color="#EDF2F7">
-          <v-subheader>Quick access</v-subheader>
-          <v-list-item-group v-model="quickAccess.model">
-            <v-list-item
-              v-for="(item, index) in quickAccess.items"
-              :key="index"
-              :to="item.path"
-              class="mt-1"
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon :class="'fa ' + item.icon" small></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content class="pb-1">
-                <v-list-item-title
-                  v-text="item.name"
-                  class="font-weight-bold"
-                />
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-        <nav-bar-collection-part />
+        <v-divider/>
+        <v-sheet class="overflow-y-auto" max-height="1000" color="#EDF2F7">
+          <v-list dense color="#EDF2F7">
+
+            <v-subheader>Quick access</v-subheader>
+            <v-list-item-group v-model="quickAccess.model">
+              <v-list-item
+                v-for="(item, index) in quickAccess.items"
+                :key="index"
+                :to="item.path"
+                class="mt-1"
+              >
+                <v-list-item-icon class="mr-2">
+                  <v-icon :class="'fa ' + item.icon" small></v-icon>
+                </v-list-item-icon>
+                <v-list-item-content class="pb-1">
+                  <v-list-item-title
+                    v-text="item.name"
+                    class="font-weight-bold"
+                  />
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+          <nav-bar-collection-part/>
+        </v-sheet>
       </div>
     </v-navigation-drawer>
   </div>
 </template>
 
 <script>
-import WorkspaceLogo from "@/components/app/workspace/WorkspaceLogo";
+import WorkspaceLogo from "@/components/app/WorkspaceLogo";
 import NavBarCollectionPart from "@/components/app/NavBarCollectionPart";
 import {SET_DRAWER} from "@/store/mutations.type";
 

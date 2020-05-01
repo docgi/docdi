@@ -52,7 +52,7 @@ export default {
     return {
       showMenu: false,
       items: [
-        { title: "Setting", path: "Settings", icon: "fa-cog", color: "" },
+        { title: "Settings", path: "Settings", icon: "fa-cog", color: "" },
         { title: "Logout", path: "Logout", icon: "fa-sign-out-alt", color: "red lighten-2" },
       ]
     };

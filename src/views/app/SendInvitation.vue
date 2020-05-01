@@ -4,7 +4,7 @@
       value="true"
       max-width="600px"
       @click:outside="$router.back()"
-      @keydown="routerBackOnEsc"
+      @keydown.esc="$router.back()"
     >
       <v-card>
         <v-card-title class="ml-2">
@@ -119,7 +119,6 @@
 
 <script>
 import { isValidEmail } from "@/common/utils";
-import { backOnEsc } from "@/plugins/mixins";
 import {
   MEMBER_ROLE,
   ADMIN_ROLE,
@@ -131,7 +130,6 @@ export default {
   metaInfo: {
     title: "Dashboard"
   },
-  mixins: [backOnEsc],
   data() {
     return {
       memberRoleChoices: WORKSPACE_MEMBER_ROLES,
@@ -172,7 +170,6 @@ export default {
         this.recentlyInvited = result.data.recently_invited || [];
       } catch (e) {
         if (e.response.data.invitations.invitations) {
-          console.log(e.response.data);
           this.errorMessage = e.response.data.invitations.invitations;
         }
       } finally {

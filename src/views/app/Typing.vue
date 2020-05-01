@@ -1,24 +1,53 @@
 <template>
   <div>
-    <editor-content :editor="editor"/>
+    <editor
+      autofocus
+      holder-id="codex-editor"
+      save-button-id="save-button"
+      :init-data="initData"
+    />
   </div>
 </template>
 
 <script>
-import { Editor, EditorContent } from 'tiptap';
+// import { Editor, EditorContent } from 'tiptap';
 
 export default {
   name: "Typing",
-  components: {
-    EditorContent
-  },
   data() {
     return {
-      editable: false,
-      editor: new Editor({
-        editable: false,
-        content: 'Tại sao ổ dịch Hạ Lôi phức tạp hơn nhiều so với Sơn Lôi?'})
-    }
+      initData: {
+        time: 1554508385558,
+        blocks: [
+          { type: "header", data: { text: "Hello Vue/Editor.js", level: 2 } },
+          {
+            type: "list",
+            data: {
+              style: "ordered",
+              items: ["Learn Vue.js<br>", "Learn Editor.js"]
+            }
+          },
+          {
+            type: "quote",
+            data: {
+              text: "This is awesome block based editor.<br>",
+              caption: "",
+              alignment: "left"
+            }
+          },
+          { type: "delimiter", data: {} },
+          {
+            type: "warning",
+            data: {
+              title: "Warning",
+              message: "Open Development Tools console"
+            }
+          },
+          { type: "delimiter", data: {} }
+        ],
+        version: "2.12.3"
+      }
+    };
   },
   watch: {
     editable() {
