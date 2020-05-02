@@ -41,7 +41,7 @@ const router = new VueRouter({
         },
         {
           path: "typing",
-          component: () => import("@/views/app/Typing"),
+          component: () => import("@/views/app/collections/Typing"),
           name: "Typing"
         },
         {
@@ -51,12 +51,17 @@ const router = new VueRouter({
         },
         {
           path: "collections/:id",
-          component: () => import("@/views/app/DetailCollection"),
+          component: () => import("@/views/app/collections/DetailCollection"),
           name: "DetailCollection"
         },
         {
+          path: "collections/:collectionId/new",
+          component: () => import("@/views/app/collections/NewDocument"),
+          name: "NewDocument"
+        },
+        {
           path: "documents/:id",
-          component: () => import("@/views/app/DetailDocument"),
+          component: () => import("@/views/app/collections/DetailDocument"),
           name: "DetailDocument"
         }
       ]
@@ -64,7 +69,7 @@ const router = new VueRouter({
     {
       path: "/set-token",
       name: "IframeSetToken",
-      component: () => import("@/views/app/IframeSetToken"),
+      component: () => import("@/views/app/auth/IframeSetToken"),
       meta: {
         requiresAuth: false
       }
@@ -72,7 +77,7 @@ const router = new VueRouter({
     {
       path: "/logout",
       name: "Logout",
-      component: () => import("@/views/app/Logout"),
+      component: () => import("@/views/app/auth/Logout"),
       meta: {
         requiresAuth: false
       }

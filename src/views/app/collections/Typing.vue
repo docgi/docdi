@@ -1,11 +1,6 @@
 <template>
   <div>
-    <editor
-      autofocus
-      holder-id="codex-editor"
-      save-button-id="save-button"
-      :init-data="initData"
-    />
+
   </div>
 </template>
 

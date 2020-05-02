@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueMeta from "vue-meta";
 import VueNotification from "vue-notification";
-import Editor from 'vue-editor-js';
 import App from "./App.vue";
 
 import outerRouter from "./router/outer";
@@ -11,9 +10,9 @@ import appRouter from "./router/app";
 import vuetify from "./plugins/vuetify";
 import ApiService from "./common/api.service";
 import "./assets/css/main.scss";
+import "./assets/tiptap/sass/main.scss";
 
 Vue.use(VueNotification);
-Vue.use(Editor);
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 });

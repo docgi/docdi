@@ -7,13 +7,15 @@
     />
     <div class="ml-auto">
       <v-btn
-        v-if="currentPath !== '/typing'"
+        v-if="showNewDocButton()"
         to="/typing"
         color="primary"
         small
-        outlined
+        class="text-capitalize"
       >
-        New doc
+        <template v-slot:default>
+          <v-icon small class="fa fa-plus mr-2" /><span style="padding-top: 2px" >New document</span>
+        </template>
       </v-btn>
     </div>
   </v-app-bar>
@@ -28,10 +30,23 @@ export default {
   methods: {
     enableDrawer() {
       this.$store.commit(SET_DRAWER, true);
+    },
+    showNewDocButton() {
+      let hideOnRoutes = [
+        '/typing',
+        '/collections/[0-9]+'
+      ]
+      for (const item of hideOnRoutes) {
+        let regex = RegExp(item);
+        if (regex.test(this.currentPath)) {
+          return false;
+        }
+      }
+      return true;
     }
   },
   computed: {
     ...mapGetters({ currentPath: "getCurrentPath" })
-  }
+  },
 };
 </script>

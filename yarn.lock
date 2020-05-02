@@ -730,13 +730,6 @@
     levenary "^1.1.1"
     semver "^5.5.0"
 
-"@babel/runtime@^7.3.1":
-  version "7.9.2"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.2.tgz#d90df0583a3a252f09aaa619665367bae518db06"
-  integrity sha512-NE2DtOdufG7R5vnfQUTehdTfNycfUANEtCa9PssN9O/xmTzP4E08UI797ixaei6hBEVL9BI/PsdJS5x7mWoB9Q==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
 "@babel/runtime@^7.8.4":
   version "7.8.7"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.8.7.tgz#8fefce9802db54881ba59f90bb28719b4996324d"
@@ -776,91 +769,6 @@
     esutils "^2.0.2"
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
-
-"@editorjs/checklist@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@editorjs/checklist/-/checklist-1.1.0.tgz#1c5a083a48852f3d86d6086d2e1a6057ac5b0429"
-  integrity sha512-rE0weE4iHoN6NM9GpP0XMiighGGrSyAkWWtmkRmn/2vLot3mXrh15KGaRJIP17HOW62yrOy4zJdzLEL+JyNdOg==
-
-"@editorjs/code@^2.4.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@editorjs/code/-/code-2.4.1.tgz#a1851c781c9ead9a84bd921f04df172a2383f550"
-  integrity sha512-R4UUApkm6FLuxrQoqISg6GL73t0WWOdoPdAmAa36xarmtmBRkxu4AfxIwzW2CtUD1CqG1T7Be6jnv4ZeUoMNYQ==
-
-"@editorjs/delimiter@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@editorjs/delimiter/-/delimiter-1.1.0.tgz#f61808ea92e4e289607d54441964f1cb8605410a"
-  integrity sha512-0G36vEvvb94g6nu/qs2rVjC/qjxLnY20OfOgxROKSOOXzS7xnkTij5raeIxRiYueeLL5fMrzrvtFH7wclfxF+g==
-
-"@editorjs/editorjs@^2.16.1":
-  version "2.17.0"
-  resolved "https://registry.yarnpkg.com/@editorjs/editorjs/-/editorjs-2.17.0.tgz#38f20d7f99bc21868904b6b937905b6daad5a2a2"
-  integrity sha512-5rMjZLdiFOiUGESe5MZagvuVaLggORXBEolbbDLLVWHslR+r4+TACOXBcN8A6m9hMmnpHIJsC3442MZEWdNfQA==
-  dependencies:
-    codex-notifier "^1.1.2"
-    codex-tooltip "^1.0.0"
-
-"@editorjs/embed@^2.2.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@editorjs/embed/-/embed-2.3.1.tgz#893680c9ccde16dbd8de48c80379f661731a8726"
-  integrity sha512-9IkHjQSsSUwRCX9WwI4fKaKl73BCadEYZyHSAvMUWtiRAgC8MiYLKHMCp6j/zpWqsKWy3pN+UuQNTr7lRC5Gug==
-
-"@editorjs/header@^2.3.2":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@editorjs/header/-/header-2.4.1.tgz#253ea37d8b63f5ac7b1462da152d9d469addcb09"
-  integrity sha512-mHEr9M2xgbUHffXs9yvjoJXOTDFTJt9RhtxDrGdwENo7OO5KF5jLSMijodYsirtLs85kr3oCwVqiGz6tR2wCuA==
-
-"@editorjs/image@^2.3.3":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@editorjs/image/-/image-2.3.4.tgz#0b6fc9247ecc7750e5157aae5ea954c75196b3e6"
-  integrity sha512-KMtmK6VDERewL0t5+Ooo/vHNVxbueq/M6WRjKJWgXYU4sOybhwpKAuVL2KHogBY3Cx2RGcHI9mjvjeHUMyip0g==
-
-"@editorjs/inline-code@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@editorjs/inline-code/-/inline-code-1.3.1.tgz#4890e30d00dcaeacafbcb30459309dfd740b0d4b"
-  integrity sha512-iY6DeRmJo2Jl6sB2S9QEA9OoSp+KCHBztoY2fjPeiBcKCOKX8we5H3JQJTLxT0L/N8uJqCUiiPKgG6xvqaCn+g==
-
-"@editorjs/link@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@editorjs/link/-/link-2.1.3.tgz#fd14f0a519aab75e234bba5f6e729ba5f0b94422"
-  integrity sha512-nLRnuco61scMPyvczhOVjCd2axk6PWPClpBYEtrtOxP4Cp6tHNRuwvVfSwSGewHBb4A4SJL/NMCShRdfbOm6DQ==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-
-"@editorjs/list@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@editorjs/list/-/list-1.4.0.tgz#e92459a8ac2305bc4385245e329c8b5c8437456a"
-  integrity sha512-iYDXGbVXvsAJbSxbjFMP4p7kS1zhQyNDqVNzkfMRhItulzKYlOMlFjTIGHqu5SxPy6NrcckhVFaWdfGDn5/gEA==
-
-"@editorjs/marker@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@editorjs/marker/-/marker-1.2.2.tgz#d9261a257436bf70179c0fa1e766ab85c823c96b"
-  integrity sha512-BN/IHbVKKahGnMAiBOV5U7XUjfF6JkIkTZ6qNLxtTr7PUPM8UsJV8G8pyll9CX+XRUYYZyokA2kEBHTS4vUyyw==
-
-"@editorjs/paragraph@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@editorjs/paragraph/-/paragraph-2.6.1.tgz#efd21da9912686024abd96eedd0c2258193f7d31"
-  integrity sha512-YaV8nVQVS3iMKig/XwmX0+Bq4NxHymWdUPdwpaAyyhOoo6z0ht5uhEzDG9QOOTVKsimcmR49bJLEtl3dlBoqxA==
-
-"@editorjs/quote@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@editorjs/quote/-/quote-2.3.0.tgz#5585cf93a87a1fd4e0c72ba08c90eb8eb06b518d"
-  integrity sha512-B+4xEXMWiZki2EQDTJRnzMK8hNwpf7vGJtYIxfE4rOuXi5mke3xkKhrD7yPXcZYucVtCnfCVPOmFaQ3ZgiG2Qw==
-
-"@editorjs/raw@^2.1.1":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@editorjs/raw/-/raw-2.1.2.tgz#fb8bcd44f38b15294d35d3859e310f878e499bbd"
-  integrity sha512-XgJkMfxcM+6jEyXzPi3kjR72XQAhWTc4dP6sV4sIhRyVAIucRULr4S6dXKtkcBf7Ci40lXqgdE9K16ggFrXVWQ==
-
-"@editorjs/table@^1.2.0":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@editorjs/table/-/table-1.2.2.tgz#6a3746acecf5e87e42d551dcd2716e911bd7efbc"
-  integrity sha512-1uQlSk/hDxshZbRgSpsSbB966qaIOIy7r0BkSL+dh9rtx8HJSjAsSWaT22z105YkWDpm16VINzHkdURt4UhTqA==
-
-"@editorjs/warning@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@editorjs/warning/-/warning-1.1.1.tgz#8981f36f2316ae87e5204e808d22a0d9aa072468"
-  integrity sha512-YIO9yEdJZMUeKPNrlwXIYmMzfBfKiXDhTgSh8JSAmh0XCV2rJfPWo9g2pgyD3g0Re/kclfbUVSfFLCBR0RsCtw==
 
 "@fortawesome/fontawesome-free@^5.12.1":
   version "5.12.1"
@@ -1186,20 +1094,6 @@
     prettier "^1.18.2"
     source-map "~0.6.1"
     vue-template-es2015-compiler "^1.9.0"
-
-"@vue/composition-api@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-0.3.4.tgz#43d2c3377173cfe1d02e51e3342bcf0fbde9c4b6"
-  integrity sha512-aMbg/pEk0PSQAIFyWWLqbAmaCCTx1kFq+49KZslIBJH9Wqos7eEPLtMv4gGxd/EcciBIgfbtUXaXGg/O3mheRA==
-  dependencies:
-    tslib "^1.9.3"
-
-"@vue/composition-api@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-0.5.0.tgz#2dbaa02a5d1f5d0d407d53d5529fe444aa8362f3"
-  integrity sha512-9QDFWq7q839G1CTTaxeruPOTrrVOPSaVipJ2TxxK9QAruePNTHOGbOOFRpc8WLl4YPsu1/c29yBhMVmrXz8BZw==
-  dependencies:
-    tslib "^1.9.3"
 
 "@vue/preload-webpack-plugin@^1.1.0":
   version "1.1.1"
@@ -2317,16 +2211,6 @@ code-point-at@^1.0.0:
   resolved "https://registry.npm.taobao.org/code-point-at/download/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-codex-notifier@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/codex-notifier/-/codex-notifier-1.1.2.tgz#a733079185f4c927fa296f1d71eb8753fe080895"
-  integrity sha512-DCp6xe/LGueJ1N5sXEwcBc3r3PyVkEEDNWCVigfvywAkeXcZMk9K41a31tkEFBW0Ptlwji6/JlAb49E3Yrxbtg==
-
-codex-tooltip@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/codex-tooltip/-/codex-tooltip-1.0.1.tgz#f6e4f39d81507f9c455b667f1287746d14ee8056"
-  integrity sha512-1xLb1NZbxguNtf02xBRhDphq/EXvMMeEbY0ievjQTHqf8UjXsD41evGk9rqcbjpl+JOjNgtwnp1OaU/X/h6fhQ==
-
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/collection-visit/download/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -2535,11 +2419,6 @@ core-js-compat@^3.6.2, core-js-compat@^3.6.4:
   dependencies:
     browserslist "^4.8.3"
     semver "7.0.0"
-
-core-js@^3.5.0:
-  version "3.6.5"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
-  integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
 
 core-js@^3.6.4:
   version "3.6.4"
@@ -3583,6 +3462,13 @@ fast-levenshtein@~2.0.6:
   resolved "https://registry.npm.taobao.org/fast-levenshtein/download/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
+fault@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/fault/-/fault-1.0.4.tgz#eafcfc0a6d214fc94601e170df29954a4f842f13"
+  integrity sha512-CJ0HCB5tL5fYTEA7ToAq5+kTwd++Borf1/bifxd9iT70QcXr4MRrO3Llf8Ifs70q+SJcGHFtnIE/Nw6giCtECA==
+  dependencies:
+    format "^0.2.0"
+
 faye-websocket@^0.10.0:
   version "0.10.0"
   resolved "https://registry.npm.taobao.org/faye-websocket/download/faye-websocket-0.10.0.tgz#4e492f8d04dfb6f89003507f6edbf2d501e7c6f4"
@@ -3775,6 +3661,11 @@ form-data@~2.3.2:
     asynckit "^0.4.0"
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
+
+format@^0.2.0:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/format/-/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
+  integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
 forwarded@~0.1.2:
   version "0.1.2"
@@ -4113,6 +4004,11 @@ highlight.js@^9.6.0:
   version "9.18.1"
   resolved "https://registry.npm.taobao.org/highlight.js/download/highlight.js-9.18.1.tgz#ed21aa001fe6252bb10a3d76d47573c6539fe13c"
   integrity sha1-7SGqAB/mJSuxCj121HVzxlOf4Tw=
+
+highlight.js@~9.16.0:
+  version "9.16.2"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.16.2.tgz#68368d039ffe1c6211bcc07e483daf95de3e403e"
+  integrity sha512-feMUrVLZvjy0oC7FVJQcSQRqbBq9kwqnYE4+Kj9ZjbHh3g+BisiPgF49NyQbVLNdrL/qqZr3Ca9yOKwgn2i/tw==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -5087,6 +4983,14 @@ lower-case@^1.1.1:
   version "1.1.4"
   resolved "https://registry.npm.taobao.org/lower-case/download/lower-case-1.1.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flower-case%2Fdownload%2Flower-case-1.1.4.tgz#9a2cabd1b9e8e0ae993a4bf7d5875c39c42e8eac"
   integrity sha1-miyr0bno4K6ZOkv31YdcOcQujqw=
+
+lowlight@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/lowlight/-/lowlight-1.13.1.tgz#c4f0e03906ebd23fedf2d258f6ab2f6324cf90eb"
+  integrity sha512-kQ71/T6RksEVz9AlPq07/2m+SU/1kGvt9k39UtvHX760u4SaWakaYH7hYgH5n6sTsCWk4MVYzUzLU59aN5CSmQ==
+  dependencies:
+    fault "^1.0.0"
+    highlight.js "~9.16.0"
 
 lru-cache@^4.0.1, lru-cache@^4.1.2:
   version "4.1.5"
@@ -6479,10 +6383,26 @@ promise-inflight@^1.0.1:
   resolved "https://registry.npm.taobao.org/promise-inflight/download/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
 
+prosemirror-collab@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/prosemirror-collab/-/prosemirror-collab-1.2.2.tgz#8d2c0e82779cfef5d051154bd0836428bd6d9c4a"
+  integrity sha512-tBnHKMLgy5Qmx9MYVcLfs3pAyjtcqYYDd9kp3y+LSiQzkhMQDfZSV3NXWe4Gsly32adSef173BvObwfoSQL5MA==
+  dependencies:
+    prosemirror-state "^1.0.0"
+
 prosemirror-commands@1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/prosemirror-commands/-/prosemirror-commands-1.1.3.tgz#4ee481ff062a02498ff3d50cfcca2f6327fd1fde"
   integrity sha512-YVbKwTR4likoyhuwIUC9egbzHvnFrFUNbiesB0DB/HZ8hBcopQ42Tb4KGlYrS3n+pNDTFObN73CLFY6mYLN2IQ==
+  dependencies:
+    prosemirror-model "^1.0.0"
+    prosemirror-state "^1.0.0"
+    prosemirror-transform "^1.0.0"
+
+prosemirror-commands@1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/prosemirror-commands/-/prosemirror-commands-1.1.4.tgz#991563e67623acab4f8c510fad1570f8b4693780"
+  integrity sha512-kj4Qi+8h3EpJtZuuEDwZ9h2/QNGWDsIX/CzjmClxi9GhxWyBUMVUvIFk0mgdqHyX20lLeGmOpc0TLA5aPzgpWg==
   dependencies:
     prosemirror-model "^1.0.0"
     prosemirror-state "^1.0.0"
@@ -6506,6 +6426,15 @@ prosemirror-gapcursor@1.1.5:
     prosemirror-model "^1.0.0"
     prosemirror-state "^1.0.0"
     prosemirror-view "^1.0.0"
+
+prosemirror-history@1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/prosemirror-history/-/prosemirror-history-1.1.3.tgz#4f76a1e71db4ef7cdf0e13dec6d8da2aeaecd489"
+  integrity sha512-zGDotijea+vnfnyyUGyiy1wfOQhf0B/b6zYcCouBV8yo6JmrE9X23M5q7Nf/nATywEZbgRLG70R4DmfSTC+gfg==
+  dependencies:
+    prosemirror-state "^1.2.2"
+    prosemirror-transform "^1.0.0"
+    rope-sequence "^1.3.0"
 
 prosemirror-inputrules@1.1.2:
   version "1.1.2"
@@ -6538,7 +6467,7 @@ prosemirror-schema-list@1.1.2:
     prosemirror-model "^1.0.0"
     prosemirror-transform "^1.0.0"
 
-prosemirror-state@1.3.3, prosemirror-state@^1.0.0, prosemirror-state@^1.3.1:
+prosemirror-state@1.3.3, prosemirror-state@^1.0.0, prosemirror-state@^1.2.2, prosemirror-state@^1.3.1:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/prosemirror-state/-/prosemirror-state-1.3.3.tgz#b2862866b14dec2b3ae1ab18229f2bd337651a2c"
   integrity sha512-PLXh2VJsIgvlgSTH6I2Yg6vk1CzPDp21DFreVpQtDMY2S6WaMmrQgDTLRcsrD8X38v8Yc873H7+ogdGzyIPn+w==
@@ -6557,6 +6486,13 @@ prosemirror-tables@1.0.0:
     prosemirror-transform "^1.2.1"
     prosemirror-view "^1.13.3"
 
+prosemirror-transform@1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/prosemirror-transform/-/prosemirror-transform-1.2.5.tgz#7a3e2c61fcdbaf1d0844a2a3bc34fc3524e9809c"
+  integrity sha512-eqeIaxWtUfOnpA1ERrXCuSIMzqIJtL9Qrs5uJMCjY5RMSaH5o4pc390SAjn/IDPeIlw6auh0hCCXs3wRvGnQug==
+  dependencies:
+    prosemirror-model "^1.0.0"
+
 prosemirror-transform@^1.0.0, prosemirror-transform@^1.1.0, prosemirror-transform@^1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/prosemirror-transform/-/prosemirror-transform-1.2.4.tgz#8d5843834f5ccedfb614faa9220672bb4834b00a"
@@ -6573,6 +6509,15 @@ prosemirror-view@1.14.6, prosemirror-view@^1.0.0, prosemirror-view@^1.1.0, prose
   version "1.14.6"
   resolved "https://registry.yarnpkg.com/prosemirror-view/-/prosemirror-view-1.14.6.tgz#fa1e7ed14a38f2cb234f622037a07dbd9d2830de"
   integrity sha512-0qNSFWVBHPrdQaZtIO3aou/NRsxMGER3IuI3cePHYbk5pf9wSsbMIWWaeHtXqblL+rqtgkLfcw0D2na6+WBgpA==
+  dependencies:
+    prosemirror-model "^1.1.0"
+    prosemirror-state "^1.0.0"
+    prosemirror-transform "^1.1.0"
+
+prosemirror-view@1.14.7:
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/prosemirror-view/-/prosemirror-view-1.14.7.tgz#5480f2ec7f091e616989894983b62c5e2d16edc1"
+  integrity sha512-ZCRbGAmJa0ORIY4xrDvOpxS/oAnph3egDauvQEI7SX4eex0zovUfC61I5X4AtPCaNN4JpLWEk60voCWi0cE2vA==
   dependencies:
     prosemirror-model "^1.1.0"
     prosemirror-state "^1.0.0"
@@ -7025,6 +6970,11 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
+
+rope-sequence@^1.3.0:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/rope-sequence/-/rope-sequence-1.3.2.tgz#a19e02d72991ca71feb6b5f8a91154e48e3c098b"
+  integrity sha512-ku6MFrwEVSVmXLvy3dYph3LAMNS0890K7fabn+0YIRQ2T96T9F4gkFf0vf0WW0JUraNWwGRtInEpH7yO4tbQZg==
 
 run-async@^2.2.0, run-async@^2.4.0:
   version "2.4.0"
@@ -7852,10 +7802,51 @@ tiptap-commands@^1.13.0:
     prosemirror-utils "0.9.6"
     tiptap-utils "^1.9.0"
 
+tiptap-commands@^1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/tiptap-commands/-/tiptap-commands-1.13.1.tgz#b605292aa333192f33c7c50079c96262cdc7ff2a"
+  integrity sha512-bniLSrnxId9zlcuwo4lVA4cmUgHpDzDhz5yw6ubDP0O++xtHl96me5E3lje8VAgBbMvP1txwwu6xSUp8xrAuXQ==
+  dependencies:
+    prosemirror-commands "1.1.4"
+    prosemirror-inputrules "1.1.2"
+    prosemirror-model "1.9.1"
+    prosemirror-schema-list "1.1.2"
+    prosemirror-state "1.3.3"
+    prosemirror-tables "1.0.0"
+    prosemirror-utils "0.9.6"
+    tiptap-utils "^1.9.1"
+
+tiptap-extensions@^1.29.1:
+  version "1.29.1"
+  resolved "https://registry.yarnpkg.com/tiptap-extensions/-/tiptap-extensions-1.29.1.tgz#70679bd57ffcc6a67358f58d03e574b40e0432bb"
+  integrity sha512-xwBvlGAN0W9+F5DB/s/pH8LcOaUq7WgPffv7KOGU26jmPKq8JAXXwZXn8DOmPYaRo9RscF0Tg9AADOM+0vcLkQ==
+  dependencies:
+    lowlight "1.13.1"
+    prosemirror-collab "1.2.2"
+    prosemirror-history "1.1.3"
+    prosemirror-model "1.9.1"
+    prosemirror-state "1.3.3"
+    prosemirror-tables "1.0.0"
+    prosemirror-transform "1.2.5"
+    prosemirror-utils "0.9.6"
+    prosemirror-view "1.14.7"
+    tiptap "^1.27.1"
+    tiptap-commands "^1.13.1"
+
 tiptap-utils@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tiptap-utils/-/tiptap-utils-1.9.0.tgz#64e532f250efe623ffff74650ff850f17a3618b2"
   integrity sha512-idxt7qtZDJfF2IqQZcPhhTgZOSJjlv55E0spAVYUqC5sRkx4DvjBEJewHxFrQHq/Jt/0WSSWaysUrCrRhROgPg==
+  dependencies:
+    prosemirror-model "1.9.1"
+    prosemirror-state "1.3.3"
+    prosemirror-tables "1.0.0"
+    prosemirror-utils "0.9.6"
+
+tiptap-utils@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/tiptap-utils/-/tiptap-utils-1.9.1.tgz#1adf749ecf417b3db4972afb7fa55dcef1329382"
+  integrity sha512-E0tRFTNRYYwFRBhmSEjOUFmMnEyUD5rZ2QjiJaxf4ZXAPiUVy3gt2J7DqBjeP1q1FsmXkkkAHsxV+5hqX/lfFg==
   dependencies:
     prosemirror-model "1.9.1"
     prosemirror-state "1.3.3"
@@ -7877,6 +7868,22 @@ tiptap@^1.27.0:
     prosemirror-view "1.14.6"
     tiptap-commands "^1.13.0"
     tiptap-utils "^1.9.0"
+
+tiptap@^1.27.1:
+  version "1.27.1"
+  resolved "https://registry.yarnpkg.com/tiptap/-/tiptap-1.27.1.tgz#b40b6634f23913b4570d6e7a8ed4eb5b206c7589"
+  integrity sha512-CwPMwKAKjAzsnkxZSISqDh73JmTZP3qpYn91k71WfIUZ7KUDkDt8gOKDrHMhaTJR2qMmuAChkkzd3OvBaBX+/Q==
+  dependencies:
+    prosemirror-commands "1.1.4"
+    prosemirror-dropcursor "1.3.2"
+    prosemirror-gapcursor "1.1.5"
+    prosemirror-inputrules "1.1.2"
+    prosemirror-keymap "1.1.3"
+    prosemirror-model "1.9.1"
+    prosemirror-state "1.3.3"
+    prosemirror-view "1.14.7"
+    tiptap-commands "^1.13.1"
+    tiptap-utils "^1.9.1"
 
 tmp@^0.0.33:
   version "0.0.33"
@@ -7955,7 +7962,7 @@ ts-pnp@^1.1.6:
   resolved "https://registry.npm.taobao.org/ts-pnp/download/ts-pnp-1.1.6.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fts-pnp%2Fdownload%2Fts-pnp-1.1.6.tgz#389a24396d425a0d3162e96d2b4638900fdc289a"
   integrity sha1-OJokOW1CWg0xYultK0Y4kA/cKJo=
 
-tslib@^1.9.0, tslib@^1.9.3:
+tslib@^1.9.0:
   version "1.11.1"
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha1-6xXRKIJ/vuKEFUnhcfRe0zisfjU=
@@ -8253,30 +8260,6 @@ vue-cli-plugin-vuetify@^2.0.5:
   dependencies:
     semver "^7.1.2"
     shelljs "^0.8.3"
-
-vue-editor-js@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/vue-editor-js/-/vue-editor-js-1.1.1.tgz#c6c88828b937d7fb3fc14bbfb9befcf7a3231464"
-  integrity sha512-qqXaCbPc164Uo1nX0+cCuguhr7AnKMA8ewLWO0jDVZ++JrINKUSvbJwMrp6nmzrQO/y3vSavS8lL6GXUT1mA4w==
-  dependencies:
-    "@editorjs/checklist" "^1.1.0"
-    "@editorjs/code" "^2.4.1"
-    "@editorjs/delimiter" "^1.1.0"
-    "@editorjs/editorjs" "^2.16.1"
-    "@editorjs/embed" "^2.2.1"
-    "@editorjs/header" "^2.3.2"
-    "@editorjs/image" "^2.3.3"
-    "@editorjs/inline-code" "^1.3.1"
-    "@editorjs/link" "^2.1.3"
-    "@editorjs/list" "^1.4.0"
-    "@editorjs/marker" "^1.2.2"
-    "@editorjs/paragraph" "^2.6.1"
-    "@editorjs/quote" "^2.3.0"
-    "@editorjs/raw" "^2.1.1"
-    "@editorjs/table" "^1.2.0"
-    "@editorjs/warning" "^1.1.1"
-    "@vue/composition-api" "^0.3.4"
-    core-js "^3.5.0"
 
 vue-eslint-parser@^7.0.0:
   version "7.0.0"

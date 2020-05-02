@@ -11,8 +11,6 @@
         expand-icon="fa-angle-down"
         :return-object="true"
         :items="collections"
-        @update:open="updateActive"
-        @update:active="updateActive"
       >
         <template v-slot:prepend="{ item, open }">
           <v-icon small v-if="item.is_collection">
@@ -24,10 +22,9 @@
         </template>
 
         <template v-slot:label="{ item }">
-          <span class="font-weight-bold" style="font-size: 12px">
-            {{ item.name }}
-          </span>
-          </template>
+          <router-link class="custom-link" v-if="item.is_collection" :to="{name: 'DetailCollection', params: {id: item.id}}">{{ item.name }}</router-link>
+          <router-link class="custom-link" v-else :to="{name: 'DetailDocument', params: {id: item.id}}">{{ item.name }}</router-link>
+        </template>
 
       </v-treeview>
       <v-list-item dense @click="showNewCollectionDialog">
@@ -49,9 +46,6 @@ import { SET_DIALOG } from "@/store/mutations.type";
 
 export default {
   name: "NavBarCollectionPart",
-  data() {
-    return {};
-  },
   mounted() {
     this.$store.dispatch(LOAD_ROOT_COLLECTIONS);
   },
@@ -59,23 +53,20 @@ export default {
     ...mapGetters({ getDrawer: "getDrawer", collections: "getCollections" })
   },
   methods: {
-    updateActive(objs) {
-      let obj = objs[0];
-      if (obj) {
-        if ("is_collection" in obj) {
-          this.$router
-            .push({ name: "DetailCollection", params: { id: obj.id } })
-            .catch(() => {});
-        } else {
-          this.$router
-            .push({ name: "DetailDocument", params: { id: obj.id } })
-            .catch(() => {});
-        }
-      }
-    },
     showNewCollectionDialog() {
       this.$store.commit(SET_DIALOG, { newCollection: true });
     }
   }
 };
 </script>
+
+<style scoped lang="scss">
+.custom-link {
+  width: auto;
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-size: 1em;
+  padding-top: 5px;
+}
+</style>

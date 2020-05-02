@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-tabs v-model="tab" color="basil">
+    <v-tabs v-model="tab" @change="tabChange">
       <v-tab v-for="(item, index) in items" :key="index">
         <span class="text-capitalize">{{ item.title }}</span>
       </v-tab>
@@ -36,13 +36,34 @@ export default {
       items: [
         {
           title: "Workspace Setting",
-          key: "WORKSPACE"
+          key: "WORKSPACE",
+          hash: ""
         },
         {
           title: "User profile",
-          key: "USER"
+          key: "USER",
+          hash: "user"
         }
       ]
+    }
+  },
+  created() {
+    let hash = this.$route.hash;
+    for (const [index, item] of this.items.entries()) {
+      if (`#${item.hash}` === hash) {
+        this.tab = index;
+        break
+      }
+    }
+    this.tab = 0;
+  },
+  methods: {
+    tabChange(index) {
+      history.pushState(
+        {},
+        null,
+        this.$route.path + `#${this.items[index].hash}`
+      )
     }
   }
 }
