@@ -66,7 +66,7 @@ export default {
   display: block;
   text-decoration: none;
   color: black;
-  font-size: 1em;
+  font-size: 0.8125rem;
   padding-top: 5px;
 }
 </style>
