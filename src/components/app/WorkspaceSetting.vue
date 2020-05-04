@@ -12,6 +12,7 @@
               prepend-icon=""
               append-outer-icon=""
               placeholder="Upload"
+              accept="image/*"
               @change="selectLogo"
             />
           </v-avatar>

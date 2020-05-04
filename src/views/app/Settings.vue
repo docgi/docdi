@@ -1,6 +1,16 @@
 <template>
   <div>
-    <v-tabs v-model="tab" @change="tabChange">
+    <div class="d-flex align-center">
+      <v-icon x-large>
+        {{ "fa-cog" }}
+      </v-icon>
+
+      <span class="ml-4 header" style="padding-top: 7px;">
+        Settings
+      </span>
+    </div>
+
+    <v-tabs v-model="tab">
       <v-tab v-for="(item, index) in items" :key="index">
         <span class="text-capitalize">{{ item.title }}</span>
       </v-tab>

@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap');
-
 .v-application {
   font-family: -apple-system, system-ui, BlinkMacSystemFont,
   'Segoe UI', Roboto, 'Helvetica Neue',
@@ -11,12 +9,12 @@
 }
 
 .create-workspace-input-form-title {
-  font-size: 2em;
+  font-size: 1.75rem;
 }
 
 .create-workspace-input-form-subtitle {
   @extend .create-workspace-input-form-title;
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 .create-workspace-form {

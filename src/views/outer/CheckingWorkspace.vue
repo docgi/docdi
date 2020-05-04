@@ -12,13 +12,14 @@
         </div>
         <div class="mt-1">
           <v-text-field
-            v-model.trim="workspaceName"
-            :error-messages="errors"
             solo
             text
             dense
-            class="input-workspace-name d-flex-inline"
+            autofocus
+            class="input-workspace-name"
             placeholder="work-space-name"
+            v-model.trim="workspaceName"
+            :error-messages="errors"
           >
             <template v-slot:append-outer>
               <span class="host-name" style="color: black">

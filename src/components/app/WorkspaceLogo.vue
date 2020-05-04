@@ -31,7 +31,7 @@
 
       <v-list dense>
         <v-list-item class="pa-0" v-for="(item, index) in items" :key="index" dense>
-          <v-btn text :to="{name: item.path}" class="text-capitalize w-full justify-start" :color="item.color">
+          <v-btn text :to="{name: item.path}" class="text-capitalize w-full justify-start" :color="item.color || ''">
             <template v-slot:default>
               <v-icon small>{{ item.icon }}</v-icon>
               <span class="ml-2" style="font-size: .75em; font-weight: bold">{{ item.title }}</span>
@@ -52,7 +52,8 @@ export default {
     return {
       showMenu: false,
       items: [
-        { title: "Settings", path: "Settings", icon: "fa-cog", color: "" },
+        { title: "Settings", path: "Settings", icon: "fa-cog" },
+        { title: "Invite members", path: "SendInvitations", icon: "fa-user" },
         { title: "Logout", path: "Logout", icon: "fa-sign-out-alt", color: "red lighten-2" },
       ]
     };

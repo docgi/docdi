@@ -11,6 +11,7 @@
         <v-text-field
           v-model.trim="workspaceName"
           :error-messages="errorServerMsg"
+          autofocus
           solo
           text
           dense

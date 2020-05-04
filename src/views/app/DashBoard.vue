@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div class="d-flex align-center">
+      <v-icon x-large>
+        {{ "fa-home" }}
+      </v-icon>
+
+      <span class="ml-4 header" style="padding-top: 7px;">
+        Dashboard
+      </span>
+    </div>
     <v-tabs v-model="tab" color="basil">
       <v-tab v-for="item in items" :key="item">
         <span class="text-capitalize">{{ item }}</span>

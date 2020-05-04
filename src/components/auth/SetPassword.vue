@@ -9,6 +9,7 @@
       </div>
       <div>
         <v-text-field
+          autofocus
           v-model="password"
           label="Password"
           text

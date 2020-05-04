@@ -24,7 +24,6 @@
                 v-for="(item, index) in quickAccess.items"
                 :key="index"
                 :to="item.path"
-                class="mt-1"
               >
                 <v-list-item-icon class="mr-2">
                   <v-icon :class="'fa ' + item.icon" small></v-icon>
