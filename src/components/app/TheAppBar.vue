@@ -34,7 +34,7 @@ export default {
     showNewDocButton() {
       let hideOnRoutes = [
         '/typing',
-        '/collections/[0-9]+'
+        '/collections/*'
       ]
       for (const item of hideOnRoutes) {
         let regex = RegExp(item);

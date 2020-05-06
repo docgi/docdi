@@ -11,7 +11,7 @@
       <div class="ma-4">
 
         <div class="d-flex mb-4">
-          <workspace-logo/>
+          <workspace-logo />
         </div>
 
         <v-divider/>

@@ -40,11 +40,6 @@ const router = new VueRouter({
           name: "SendInvitations"
         },
         {
-          path: "typing",
-          component: () => import("@/views/app/collections/Typing"),
-          name: "Typing"
-        },
-        {
           path: "settings",
           component: () => import("@/views/app/Settings"),
           name: "Settings"

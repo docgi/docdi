@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     v-model="getDialog.newCollection"
-    max-width="490"
+    max-width="500"
     @click:outside="showOff"
     @keydown.esc="showOff"
   >
@@ -11,24 +11,42 @@
       </v-card-title>
 
       <v-card-text>
-        <div class="d-flex flex-column">
-          <v-text-field
-            autofocus
-            dense
-            outlined
-            label="Collection name"
-            :error-messages="error.name"
-            v-model="collection.name"
-          />
-        </div>
+        <v-row>
+          <v-col cols="8">
+            <v-text-field
+              autofocus
+              dense
+              outlined
+              label="Collection name"
+              :error-messages="error.name"
+              v-model="collection.name"
+            />
+          </v-col>
+          <v-col>
+            <v-select
+              v-model="collection.color"
+              :items="colors"
+              label="Color"
+              outlined
+              dense
+            >
+              <template v-slot:item="{ item }" class="w-full">
+                <span :style="'width: 100%; height: 25px; border-radius: 7px;' + `background: ${item};`"></span>
+              </template>
+              <template v-slot:selection="{ item }" class="w-full">
+                <span :style="'width: 100%; height: 25px; border-radius: 7px;' + `background: ${item};`"></span>
+              </template>
+            </v-select>
+          </v-col>
+        </v-row>
+        <v-switch v-model="collection.private" label="Private" />
       </v-card-text>
 
       <v-card-actions class="d-flex justify-center">
         <v-btn
-          color="green"
           outlined
           small
-          @click="create"
+          @click="createCollection"
           :disabled="!validPayload"
         >
           Create
@@ -49,8 +67,17 @@ export default {
     return {
       collection: {
         name: "",
-        private: false
+        private: false,
+        color: "#4E5C6E"
       },
+      colors: [
+        "#4E5C6E",
+        "#19B7FF",
+        "#7F6BFF",
+        "#FC7419",
+        "#FC2D2D",
+        "#14CF9F",
+      ],
       error: {}
     };
   },
@@ -62,6 +89,7 @@ export default {
   },
   methods: {
     showOff() {
+      this.error = {};
       this.collection = {
         name: "",
         private: false
@@ -70,7 +98,8 @@ export default {
         newCollection: false
       });
     },
-    create() {
+    createCollection() {
+      this.error = {};
       this.$store
         .dispatch(CREATE_NEW_COLLECTION, this.collection)
         .then(() => {

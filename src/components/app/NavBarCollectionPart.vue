@@ -7,25 +7,56 @@
         activatable
         dense
         open-on-click
-        item-key="uuid"
         expand-icon="fa-angle-down"
         :return-object="true"
         :items="collections"
       >
         <template v-slot:prepend="{ item, open }">
-          <v-icon small v-if="item.is_collection">
-            {{ open ? "fa-folder-open" : "fa-folder" }}
-          </v-icon>
+          <!--     Collection       -->
+          <div v-if="item.is_collection">
+            <v-badge
+              v-if="item.private"
+              overlap
+              bottom
+              color="white"
+              offset-x="7"
+              offset-y="7"
+            >
+              <template v-slot:badge>
+                <v-icon color="black" class="fa fa-user-lock" />
+              </template>
+              <v-icon small :color="item.color">
+                {{ open ? "fa-folder-open" : "fa-folder" }}
+              </v-icon>
+            </v-badge>
+            <v-icon :color="item.color" small v-else>
+              {{ open ? "fa-folder-open" : "fa-folder" }}
+            </v-icon>
+          </div>
+
+          <!--     Collection       -->
           <v-icon small v-else>
             {{ "fa-file-alt" }}
           </v-icon>
         </template>
 
         <template v-slot:label="{ item }">
-          <router-link class="custom-link" v-if="item.is_collection" :to="{name: 'DetailCollection', params: {id: item.id}}">{{ item.name }}</router-link>
-          <router-link class="custom-link" v-else :to="{name: 'DetailDocument', params: {id: item.id}}">{{ item.name }}</router-link>
-        </template>
+          <router-link
+            class="custom-link"
+            v-if="item.is_collection"
+            :to="{ name: 'DetailCollection', params: { id: item.id } }"
+          >
+            {{ item.name }}
+          </router-link>
 
+          <router-link
+            class="custom-link"
+            v-else
+            :to="{ name: 'DetailDocument', params: { id: item.id } }"
+          >
+            {{ item.name }}
+          </router-link>
+        </template>
       </v-treeview>
       <v-list-item dense @click="showNewCollectionDialog">
         <v-list-item-icon class="mr-2">
@@ -66,7 +97,7 @@ export default {
   display: block;
   text-decoration: none;
   color: black;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   padding-top: 5px;
 }
 </style>
