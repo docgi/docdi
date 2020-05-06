@@ -2,7 +2,7 @@
   <div class="fill-height">
     <v-app-bar color="white" fixed flat class="app-bar-fixed">
       <div class="d-flex w-full">
-        <v-btn small color="primary" class="text-capitalize ml-auto">Save</v-btn>
+        <v-btn small color="primary" class="text-capitalize ml-auto" @click="saveDocument">Save</v-btn>
       </div>
     </v-app-bar>
     <div class="editor">
@@ -28,12 +28,14 @@ export default {
     return {
       keepInBounds: true,
       collectionId: null,
-      json: "",
+      jsonContent: "",
+      htmlContent: "",
       editor: new Editor({
         autoFocus: true,
         content: "",
-        onUpdate: ({ getJSON }) => {
-          this.json = getJSON();
+        onUpdate: ({ getJSON, getHTML }) => {
+          this.jsonContent = getJSON();
+          this.htmlContent = getHTML();
         },
         extensions: [
           new Doc(),
@@ -56,13 +58,9 @@ export default {
   },
   methods: {
     saveDocument() {
-
     }
   },
   computed: {
-    appBarWidth() {
-      return window.innerWidth - 300;
-    }
   },
   beforeDestroy() {
     this.editor.destroy();

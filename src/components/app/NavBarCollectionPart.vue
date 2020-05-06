@@ -10,6 +10,7 @@
         expand-icon="fa-angle-down"
         :return-object="true"
         :items="collections"
+        class="v-tree-custom"
       >
         <template v-slot:prepend="{ item, open }">
           <!--     Collection       -->
@@ -98,6 +99,12 @@ export default {
   text-decoration: none;
   color: black;
   font-size: 0.75rem;
-  padding-top: 5px;
+  padding-top: 3px;
+}
+
+.v-tree-custom {
+  &::v-deep button {
+    font-size: 16px;
+  }
 }
 </style>

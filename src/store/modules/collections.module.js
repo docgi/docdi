@@ -1,13 +1,13 @@
 import Vue from "vue";
 import {
-  CREATE_NEW_COLLECTION,
+  CREATE_NEW_COLLECTION, CREATE_NEW_DOCUMENT,
   DELETE_COLLECTION,
   LOAD_DETAIL_COLLECTION,
   LOAD_ROOT_COLLECTIONS, UPDATE_COLLECTION_INFO
 } from "@/store/actions.type";
 import {
   APPEND_COLLECTION,
-  COLLECTION_FILL_CHILDREN,
+  COLLECTION_FILL_CHILDREN, FILL_DOCUMENT_INTO_COLLECTION,
   REMOVE_COLLECTION,
   SET_ACTIVE,
   SET_COLLECTIONS, UPDATE_COLLECTION
@@ -92,6 +92,15 @@ const actions = {
         return Promise.reject(err);
       })
   },
+  [CREATE_NEW_DOCUMENT]({ commit }, document) {
+    return Vue.axios.post("documents/", document)
+      .then(response => {
+        commit(FILL_DOCUMENT_INTO_COLLECTION, response.data);
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      })
+  }
 };
 
 const fillChild = (array, id, data) => {
@@ -130,6 +139,13 @@ const mutations = {
   [UPDATE_COLLECTION](state, collection) {
     let index = state.collections.findIndex(item => item.id === collection.id);
     state.collections.splice(index, 1, collection);
+  },
+  [FILL_DOCUMENT_INTO_COLLECTION](state, document) {
+      for (let col of state.collections) {
+        if (col.id === document.collection) {
+          col.children.push(document);
+        }
+      }
   }
 };
 

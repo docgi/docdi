@@ -49,10 +49,28 @@
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="(item, index) in tabItems" :key="index">
         <v-card flat>
-          <v-card-text v-if="item.title === 'Docs'">
+          <v-card-text
+            v-if="item.title === 'Docs'"
+            class="d-flex justify-center"
+          >
             <div v-if="collection.children.length === 0">
               This collection is empty.
+              <v-btn color="primary" small class="text-capitalize">
+                <template v-slot:default>
+                  <v-icon small class="fa fa-plus mr-2" />
+                  <span style="padding-top: 2px">
+                    New document
+                  </span>
+                </template>
+              </v-btn>
             </div>
+
+            <v-list v-else>
+              <v-list-item v-for="(item, index) in collection.children" :key="index">
+                <v-list-item-content>{{ item.name }}</v-list-item-content>
+              </v-list-item>
+            </v-list>
+
           </v-card-text>
         </v-card>
       </v-tab-item>

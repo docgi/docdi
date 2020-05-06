@@ -15,3 +15,4 @@ export const APPEND_COLLECTION = "appendCollection";
 export const COLLECTION_FILL_CHILDREN = "collectionFillChildren";
 export const REMOVE_COLLECTION = "removeCollection";
 export const UPDATE_COLLECTION = "updateCollection";
+export const FILL_DOCUMENT_INTO_COLLECTION = "fillDocumentIntoCollection";
