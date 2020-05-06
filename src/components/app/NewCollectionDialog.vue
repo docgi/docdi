@@ -19,7 +19,7 @@
               outlined
               label="Collection name"
               :error-messages="error.name"
-              v-model="collection.name"
+              v-model.trim="collection.name"
             />
           </v-col>
           <v-col>
@@ -60,6 +60,7 @@
 import { mapGetters } from "vuex";
 import { SET_DIALOG } from "@/store/mutations.type";
 import { CREATE_NEW_COLLECTION } from "@/store/actions.type";
+import {DEFAULT_COLORS} from "@/common/constants";
 
 export default {
   name: "NewCollectionDialog",
@@ -70,14 +71,7 @@ export default {
         private: false,
         color: "#4E5C6E"
       },
-      colors: [
-        "#4E5C6E",
-        "#19B7FF",
-        "#7F6BFF",
-        "#FC7419",
-        "#FC2D2D",
-        "#14CF9F",
-      ],
+      colors: DEFAULT_COLORS,
       error: {}
     };
   },
@@ -102,8 +96,9 @@ export default {
       this.error = {};
       this.$store
         .dispatch(CREATE_NEW_COLLECTION, this.collection)
-        .then(() => {
+        .then((response) => {
           this.showOff();
+          this.$router.push({ name: "DetailCollection", params: { id: response.data.id } })
         })
         .catch(err => {
           this.error = err.response.data;

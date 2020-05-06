@@ -45,6 +45,11 @@ const actions = {
       .patch("workspace/", fd)
       .then(res => {
         commit("setWorkspace", res.data);
+        Vue.notify({
+          group: "foo",
+          type: "success",
+          title: "Update successful"
+        });
       })
       .catch(error => {
         return Promise.reject(error);
@@ -61,7 +66,12 @@ const actions = {
     return Vue.axios
       .patch("users/me/", fd)
       .then(res => {
-        commit("setUser", res.data);
+        commit(SET_USER, res.data);
+        Vue.notify({
+          group: "foo",
+          type: "success",
+          title: "Update successful"
+        });
       })
       .catch(error => {
         return Promise.reject(error);

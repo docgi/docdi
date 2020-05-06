@@ -24,13 +24,6 @@
 
       </div>
     </div>
-
-    <v-divider class="mt-6" />
-    <div class="d-flex mt-6">
-      <v-btn text :to="{ name: 'SendInvitations' }" color="primary">
-        Send invitations
-      </v-btn>
-    </div>
   </div>
 </template>
 

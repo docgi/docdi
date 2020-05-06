@@ -86,8 +86,7 @@ export default {
       };
       try {
         let response = await this.$http.post("users/set-password/", payload, {
-          headers: { Authorization: "Bearer " + this.token },
-          errorHandle: false
+          headers: { Authorization: "Bearer " + this.token }
         });
         this.submitting = false;
         removeToken();

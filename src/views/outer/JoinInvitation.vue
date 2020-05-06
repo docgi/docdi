@@ -66,9 +66,7 @@ export default {
       uuid: this.uuid
     };
     try {
-      await this.$http.post("invitations/check/", payload, {
-        errorHandle: false
-      });
+      await this.$http.post("invitations/check/", payload);
     } catch (e) {
       this.isError = true;
       this.error = "Invitations not found";

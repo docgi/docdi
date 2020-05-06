@@ -129,7 +129,11 @@
 </template>
 
 <script>
-import {DELETE_COLLECTION, UPDATE_COLLECTION_INFO} from "@/store/actions.type";
+import {
+  DELETE_COLLECTION,
+  UPDATE_COLLECTION_INFO
+} from "@/store/actions.type";
+import { DEFAULT_COLORS } from "@/common/constants";
 
 export default {
   name: "DetailCollection",
@@ -141,14 +145,7 @@ export default {
       showDeleteDialog: false,
       showEditDialog: false,
       editCollection: {},
-      colors: [
-        "#4E5C6E",
-        "#19B7FF",
-        "#7F6BFF",
-        "#FC7419",
-        "#FC2D2D",
-        "#14CF9F"
-      ],
+      colors: DEFAULT_COLORS,
       tabItems: [
         {
           title: "Docs",
@@ -225,7 +222,7 @@ export default {
       );
     },
     updateCollection() {
-      this.$store.dispatch(UPDATE_COLLECTION_INFO, this.editCollection)
+      this.$store.dispatch(UPDATE_COLLECTION_INFO, this.editCollection);
     },
     deleteCollection() {
       this.$store.dispatch(DELETE_COLLECTION, this.collectionId).then(() => {
@@ -236,4 +233,3 @@ export default {
   }
 };
 </script>
-

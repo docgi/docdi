@@ -31,13 +31,6 @@ const ApiService = {
 
     Vue.axios.interceptors.response.use(
       response => {
-        if (ignoreHandleError(response.config)) {
-          return response;
-        }
-        Vue.notify({
-          group: "foo",
-          title: "Success"
-        });
         return response;
       },
       error => {

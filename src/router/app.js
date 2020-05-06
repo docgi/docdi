@@ -115,7 +115,6 @@ router.beforeEach((to, from, next) => {
         ApiService.setToken();
         Vue.axios
           .get("/stats-workspace/", {
-            errorHandle: false,
             headers: {
               Authorization: "Bearer " + token
             },

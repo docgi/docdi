@@ -155,9 +155,7 @@ export default {
           password: this.password,
           workspace: this.workspaceName
         };
-        let response = await this.$http.post("auth/login/", payload, {
-          errorHandle: false
-        });
+        let response = await this.$http.post("auth/login/", payload);
         let token = response.data.token;
         setToken(token);
         await this.$router.push({name: "Dashboard"});
@@ -172,9 +170,7 @@ export default {
           workspace: this.workspaceName,
           client_origin: location.origin
         };
-        let response = await this.$http.post("auth/forgot-password/", payload, {
-          errorHandle: false
-        });
+        let response = await this.$http.post("auth/forgot-password/", payload);
         if (!response.data.send && response.data.send !== 1) {
           this.errors = ["Something wrong please try again"];
         } else {

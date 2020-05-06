@@ -39,9 +39,15 @@ const actions = {
   },
   [CREATE_NEW_COLLECTION]({ commit }, collection) {
     return Vue.axios
-      .post("collections/", collection, { errorHandle: false })
+      .post("collections/", collection, )
       .then(response => {
         commit(APPEND_COLLECTION, response.data);
+        Vue.notify({
+          group: "foo",
+          type: "success",
+          title: "Create successful"
+        });
+        return Promise.resolve(response);
       })
       .catch(error => {
         return Promise.reject(error);
@@ -62,6 +68,11 @@ const actions = {
       .delete(`collections/${collectionId}/`)
       .then(() => {
         commit(REMOVE_COLLECTION, collectionId);
+        Vue.notify({
+          group: "foo",
+          type: "success",
+          title: "Delete successful"
+        });
       })
       .catch(err => {
         return Promise.reject(err);
@@ -71,6 +82,11 @@ const actions = {
     return Vue.axios.put(`collections/${collection.id}/`, collection)
       .then(response => {
         commit(UPDATE_COLLECTION, response.data);
+        Vue.notify({
+          group: "foo",
+          type: "success",
+          title: "Update successful"
+        });
       })
       .catch(err => {
         return Promise.reject(err);
