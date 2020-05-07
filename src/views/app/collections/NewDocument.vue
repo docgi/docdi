@@ -1,28 +1,16 @@
 <template>
   <div class="fill-height">
-    <v-app-bar color="white" fixed flat class="app-bar-fixed">
-      <div class="d-flex w-full">
-        <v-btn small color="primary" class="text-capitalize ml-auto" @click="saveDocument">Save</v-btn>
-      </div>
-    </v-app-bar>
-    <div class="editor">
-      <editor-content class="editor__content" :editor="editor" />
-    </div>
+    <docgi-editor></docgi-editor>
   </div>
 </template>
 
 <script>
-import { EditorContent, Editor } from "tiptap";
-import Doc from "@/plugins/tiptap/Doc";
-import Title from "@/plugins/tiptap/Title";
-import {
-  Placeholder
-} from "tiptap-extensions";
+import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
 
 export default {
   name: "NewDocument",
   components: {
-    EditorContent,
+    DocgiEditor,
   },
   data() {
     return {
@@ -30,27 +18,6 @@ export default {
       collectionId: null,
       jsonContent: "",
       htmlContent: "",
-      editor: new Editor({
-        autoFocus: true,
-        content: "",
-        onUpdate: ({ getJSON, getHTML }) => {
-          this.jsonContent = getJSON();
-          this.htmlContent = getHTML();
-        },
-        extensions: [
-          new Doc(),
-          new Title(),
-          new Placeholder({
-            showOnlyCurrent: false,
-            emptyNodeText: node => {
-              if (node.type.name === "title") {
-                return "Give me a name";
-              }
-              return "Write something";
-            }
-          })
-        ]
-      })
     };
   },
   created() {
@@ -62,9 +29,7 @@ export default {
   },
   computed: {
   },
-  beforeDestroy() {
-    this.editor.destroy();
-  }
+
 };
 </script>
 

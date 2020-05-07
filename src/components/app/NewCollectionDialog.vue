@@ -46,6 +46,8 @@
         <v-btn
           outlined
           small
+          color="primary"
+          class="text-capitalize"
           @click="createCollection"
           :disabled="!validPayload"
         >

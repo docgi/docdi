@@ -55,7 +55,7 @@
           >
             <div v-if="collection.children.length === 0">
               This collection is empty.
-              <v-btn color="primary" small class="text-capitalize">
+              <v-btn color="primary" small class="text-capitalize" :to="{name: 'NewDocument', params: { collectionId: collection }}">
                 <template v-slot:default>
                   <v-icon small class="fa fa-plus mr-2" />
                   <span style="padding-top: 2px">
@@ -77,21 +77,7 @@
     </v-tabs-items>
 
     <!--  Delete collection dialog  -->
-    <v-dialog v-model="showDeleteDialog" width="500">
-      <v-card>
-        <v-card-title>
-          Delete <strong class="ml-2">{{ collection.name }}</strong>
-        </v-card-title>
-        <v-card-text>
-          All docs contain in this collection will be deleted.
-        </v-card-text>
-        <v-card-actions class="d-flex justify-center">
-          <v-btn color="error" outlined small @click="deleteCollection">
-            Delete
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+
 
     <!--  Edit collection info  -->
     <v-dialog v-model="showEditDialog" width="500">
