@@ -96,6 +96,7 @@ const actions = {
     return Vue.axios.post("documents/", document)
       .then(response => {
         commit(FILL_DOCUMENT_INTO_COLLECTION, response.data);
+        return Promise.resolve(response);
       })
       .catch(err => {
         return Promise.reject(err);

@@ -4,13 +4,12 @@ import VueNotification from "vue-notification";
 import App from "./App.vue";
 
 import outerRouter from "./router/outer";
+import appRouter from "./router/app";
 import store from "./store";
 import { isSubDomain } from "./common/utils";
-import appRouter from "./router/app";
 import vuetify from "./plugins/vuetify";
 import ApiService from "./common/api.service";
 import "./scss/main.scss";
-import "./components/app/tiptap/sass/main.scss";
 
 Vue.use(VueNotification);
 Vue.use(VueMeta, {
