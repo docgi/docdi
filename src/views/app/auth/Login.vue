@@ -134,7 +134,8 @@ export default {
       showPass: false,
       errors: [],
       showForgotPassword: false,
-      showForgotSuccess: false
+      showForgotSuccess: false,
+      redirectUrl: "",
     };
   },
   created() {
@@ -145,23 +146,29 @@ export default {
       this.show = true;
     }
     this.workspaceName = workspaceNameFromHost();
+    this.redirectUrl = this.$route.query.redirect;
   },
   methods: {
-    async login() {
-      try {
-        this.errors = [];
-        let payload = {
-          email: this.email,
-          password: this.password,
-          workspace: this.workspaceName
-        };
-        let response = await this.$http.post("auth/login/", payload);
-        let token = response.data.token;
-        setToken(token);
-        await this.$router.push({name: "Dashboard"});
-      } catch (e) {
-        this.errors = ["Incorrect email or password."];
-      }
+    login() {
+      this.errors = [];
+      let payload = {
+        email: this.email,
+        password: this.password,
+        workspace: this.workspaceName
+      };
+      this.$http.post("auth/login/", payload)
+        .then(response => {
+          let token = response.data.token;
+          setToken(token);
+          if (this.redirectUrl) {
+            this.$router.push(this.redirectUrl);
+          } else {
+            this.$router.push({name: "Dashboard"});
+          }
+        })
+        .catch(() => {
+          this.errors = ["Incorrect email or password."];
+        })
     },
     async forgotPasswordSubmit() {
       try {

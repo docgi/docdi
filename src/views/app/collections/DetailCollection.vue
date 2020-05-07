@@ -55,7 +55,7 @@
           >
             <div v-if="collection.children.length === 0">
               This collection is empty.
-              <v-btn color="primary" small class="text-capitalize" :to="{name: 'NewDocument', params: { collectionId: collection }}">
+              <v-btn color="primary" small class="text-capitalize" :to="{name: 'NewDocument', params: { collectionId: collectionId }}">
                 <template v-slot:default>
                   <v-icon small class="fa fa-plus mr-2" />
                   <span style="padding-top: 2px">
