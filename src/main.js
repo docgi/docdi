@@ -9,8 +9,8 @@ import { isSubDomain } from "./common/utils";
 import appRouter from "./router/app";
 import vuetify from "./plugins/vuetify";
 import ApiService from "./common/api.service";
-import "./assets/css/main.scss";
-import "./assets/tiptap/sass/main.scss";
+import "./scss/main.scss";
+import "./components/app/tiptap/sass/main.scss";
 
 Vue.use(VueNotification);
 Vue.use(VueMeta, {

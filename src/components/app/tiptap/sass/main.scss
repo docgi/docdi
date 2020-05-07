@@ -1,4 +1,4 @@
-@import "./variables";
+@import "variables";
 
 * {
   margin: 0;
@@ -87,6 +87,6 @@ h3 {
   font-style: italic;
 }
 
-@import "./editor";
-@import "./menubar";
-@import "./menububble";
+@import "editor";
+@import "menubar";
+@import "menububble";
