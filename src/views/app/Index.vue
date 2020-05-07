@@ -17,7 +17,7 @@
 <script>
 import TheNavBar from "@/components/app/TheNavBar";
 import TheAppBar from "@/components/app/TheAppBar";
-import NewCollectionDialog from "@/components/app/NewCollectionDialog";
+import NewCollectionDialog from "@/components/app/dialogs/NewCollectionDialog";
 
 export default {
   name: "AppIndex",

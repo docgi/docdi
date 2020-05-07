@@ -77,79 +77,39 @@
     </v-tabs-items>
 
     <!--  Delete collection dialog  -->
+    <delete-collection-dialog
+      :show="showDeleteDialog"
+      :collection-name="collection.name"
+      @hide="showDeleteDialog = false"
+    />
 
+    <!--  Update collection info  -->
+    <update-collection-dialog
+      :show="showUpdateDialog"
+      :collection-id="collectionId"
+      @hide="showUpdateDialog = false"
+    />
 
-    <!--  Edit collection info  -->
-    <v-dialog v-model="showEditDialog" width="500">
-      <v-card>
-        <v-card-title>Edit collection</v-card-title>
-        <v-card-text>
-          <v-row>
-            <v-col cols="8">
-              <v-text-field
-                autofocus
-                dense
-                outlined
-                label="Collection name"
-                v-model="editCollection.name"
-              />
-            </v-col>
-            <v-col>
-              <v-select
-                v-model="editCollection.color"
-                :items="colors"
-                label="Color"
-                outlined
-                dense
-              >
-                <template v-slot:item="{ item }" class="w-full">
-                  <span
-                    :style="
-                      'width: 100%; height: 25px; border-radius: 5px;' +
-                        `background: ${item};`
-                    "
-                  ></span>
-                </template>
-                <template v-slot:selection="{ item }" class="w-full">
-                  <span
-                    :style="
-                      'width: 100%; height: 25px; border-radius: 5px;' +
-                        `background: ${item};`
-                    "
-                  ></span>
-                </template>
-              </v-select>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-card-actions class="d-flex justify-center">
-          <v-btn color="primary" outlined small @click="updateCollection">
-            Update
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
 <script>
-import {
-  DELETE_COLLECTION,
-  UPDATE_COLLECTION_INFO
-} from "@/store/actions.type";
-import { DEFAULT_COLORS } from "@/common/constants";
+import DeleteCollectionDialog from "@/components/app/dialogs/DeleteCollectionDialog";
+import UpdateCollectionDialog from "@/components/app/dialogs/UpdateCollectionDialog";
 
 export default {
   name: "DetailCollection",
+  components: {
+    DeleteCollectionDialog,
+    UpdateCollectionDialog
+  },
   data() {
     return {
       collectionId: null,
       tab: null,
       showMenu: false,
       showDeleteDialog: false,
-      showEditDialog: false,
-      editCollection: {},
-      colors: DEFAULT_COLORS,
+      showUpdateDialog: false,
       tabItems: [
         {
           title: "Docs",
@@ -179,8 +139,7 @@ export default {
           title: "Edit info",
           icon: "fa-pen",
           handler: () => {
-            this.showEditDialog = true;
-            this.editCollection = { ...this.collection };
+            this.showUpdateDialog = true;
           }
         },
         {
@@ -224,15 +183,6 @@ export default {
         null,
         this.$route.path + "#" + this.tabItems[index].hash
       );
-    },
-    updateCollection() {
-      this.$store.dispatch(UPDATE_COLLECTION_INFO, this.editCollection);
-    },
-    deleteCollection() {
-      this.$store.dispatch(DELETE_COLLECTION, this.collectionId).then(() => {
-        this.showDeleteDialog = false;
-        this.$router.push({ name: "Dashboard" });
-      });
     }
   }
 };
