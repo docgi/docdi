@@ -12,9 +12,13 @@
         :items="collections"
         class="v-tree-custom"
       >
-        <template v-slot:prepend="{ item, open }">
-          <!--     Collection       -->
-          <div v-if="item.is_collection">
+        <template v-slot:label="{ item, open }">
+          <!--     is collection     -->
+          <router-link
+            class="custom-link"
+            v-if="item.is_collection"
+            :to="{ name: 'DetailCollection', params: { id: item.id } }"
+          >
             <v-badge
               v-if="item.private"
               overlap
@@ -33,23 +37,10 @@
             <v-icon :color="item.color" small v-else>
               {{ open ? "fa-folder-open" : "fa-folder" }}
             </v-icon>
-          </div>
-
-          <!--     Collection       -->
-          <v-icon small v-else>
-            {{ "fa-file-alt" }}
-          </v-icon>
-        </template>
-
-        <template v-slot:label="{ item }">
-          <router-link
-            class="custom-link"
-            v-if="item.is_collection"
-            :to="{ name: 'DetailCollection', params: { id: item.id } }"
-          >
-            {{ item.name }}
+            <span class="ml-2" style="margin-top: 3px;">{{ item.name }}</span>
           </router-link>
 
+          <!--     is document     -->
           <router-link
             class="custom-link"
             v-else
@@ -95,11 +86,10 @@ export default {
 <style scoped lang="scss">
 .custom-link {
   width: auto;
-  display: block;
+  display: flex;
   text-decoration: none;
   color: black;
   font-size: 0.75rem;
-  padding-top: 3px;
 }
 
 .v-tree-custom {
