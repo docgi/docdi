@@ -5,9 +5,10 @@
         {{ "fa-folder-open" }}
       </v-icon>
 
-      <span class="ml-4 header" style="padding-top: 7px;">
-        {{ collection.name }}
-      </span>
+      <div class="ml-4 header d-flex" style="padding-top: 7px;">
+        <div>{{ collection.name }}</div>
+        <v-chip v-if="collection.private" x-small>Private</v-chip>
+      </div>
 
       <div class="ml-auto">
         <v-menu v-model="showMenu">
@@ -42,20 +43,34 @@
     </div>
 
     <v-tabs v-model="tab" @change="tabChange">
-      <v-tab v-for="(item, index) in tabItems" :key="index">
+      <v-tab
+        v-for="(item, index) in tabItems"
+        :key="index"
+        class="justify-start pa-0 mr-4"
+        style="min-width: fit-content"
+      >
         <span class="text-capitalize">{{ item.title }}</span>
       </v-tab>
     </v-tabs>
+    <v-divider />
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="(item, index) in tabItems" :key="index">
-        <v-card flat>
+        <v-card flat class="px-0">
           <v-card-text
             v-if="item.title === 'Docs'"
-            class="d-flex justify-center"
+            class="d-flex justify-center px-0"
           >
             <div v-if="collection.children.length === 0">
               This collection is empty.
-              <v-btn color="primary" small class="text-capitalize" :to="{name: 'NewDocument', params: { collectionId: collectionId }}">
+              <v-btn
+                color="primary"
+                small
+                class="text-capitalize"
+                :to="{
+                  name: 'NewDocument',
+                  params: { collectionId: collectionId }
+                }"
+              >
                 <template v-slot:default>
                   <v-icon small class="fa fa-plus mr-2" />
                   <span style="padding-top: 2px">
@@ -65,12 +80,17 @@
               </v-btn>
             </div>
 
-            <v-list v-else>
-              <v-list-item v-for="(item, index) in collection.children" :key="index">
-                <v-list-item-content>{{ item.name }}</v-list-item-content>
+            <v-list v-else class="w-full">
+              <v-list-item
+                v-for="(item, index) in collection.children"
+                :key="index"
+                class="px-1 py-0"
+              >
+                <v-list-item-content class="pa-0">
+                  {{ item.name }}
+                </v-list-item-content>
               </v-list-item>
             </v-list>
-
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -89,7 +109,6 @@
       :collection-id="collectionId"
       @hide="showUpdateDialog = false"
     />
-
   </div>
 </template>
 

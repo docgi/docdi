@@ -19,25 +19,19 @@
             v-if="item.is_collection"
             :to="{ name: 'DetailCollection', params: { id: item.id } }"
           >
-            <v-badge
-              v-if="item.private"
-              overlap
-              bottom
-              color="white"
-              offset-x="7"
-              offset-y="7"
-            >
-              <template v-slot:badge>
-                <v-icon color="black" class="fa fa-user-lock" />
-              </template>
-              <v-icon small :color="item.color">
-                {{ open ? "fa-folder-open" : "fa-folder" }}
-              </v-icon>
-            </v-badge>
-            <v-icon :color="item.color" small v-else>
+            <v-icon size="20" :color="item.color">
               {{ open ? "fa-folder-open" : "fa-folder" }}
             </v-icon>
             <span class="ml-2" style="margin-top: 3px;">{{ item.name }}</span>
+
+            <v-chip
+              v-if="item.private"
+              class="ml-auto"
+              style="margin-top: 3px;"
+              x-small
+            >
+              Private
+            </v-chip>
           </router-link>
 
           <!--     is document     -->
@@ -96,5 +90,7 @@ export default {
   &::v-deep button {
     font-size: 16px;
   }
+
+  /*&::v-deep .*/
 }
 </style>
