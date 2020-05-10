@@ -6,7 +6,7 @@
   >
     <v-card>
       <v-card-title>
-        Delete <strong class="ml-2">{{ collectionName }}</strong>
+        Delete <strong class="ml-2">{{ collection.name }}</strong>
       </v-card-title>
       <v-card-text>
         All docs contain in this collection will be deleted.
@@ -30,14 +30,14 @@ export default {
       required: true,
       type: Boolean,
     },
-    collectionName: {
+    collection: {
       required: true,
-      type: String
+      type: Object
     }
   },
   methods: {
     deleteCollection() {
-      this.$store.dispatch(DELETE_COLLECTION, this.collectionId).then(() => {
+      this.$store.dispatch(DELETE_COLLECTION, this.collection.id).then(() => {
         this.showDeleteDialog = false;
         this.$router.push({ name: "Dashboard" });
       });

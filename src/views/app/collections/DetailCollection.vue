@@ -84,11 +84,12 @@
               <v-list-item
                 v-for="(item, index) in collection.children"
                 :key="index"
-                class="px-1 py-0"
+                class="px-0 py-0"
+                style="position: relative"
               >
-                <v-list-item-content class="pa-0">
+                <div class="d-flex doc-item w-full fill-height align-center" style="position: absolute;">
                   {{ item.name }}
-                </v-list-item-content>
+                </div>
               </v-list-item>
             </v-list>
           </v-card-text>
@@ -99,7 +100,7 @@
     <!--  Delete collection dialog  -->
     <delete-collection-dialog
       :show="showDeleteDialog"
-      :collection-name="collection.name"
+      :collection="collection"
       @hide="showDeleteDialog = false"
     />
 
@@ -206,3 +207,13 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.doc-item {
+  cursor: pointer;
+
+  &:hover {
+    background: black;
+  }
+}
+</style>
