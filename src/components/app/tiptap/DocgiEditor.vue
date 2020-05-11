@@ -1,43 +1,79 @@
 <template>
   <div class="editor">
-    <editor-floating-menu :editor="editor" v-slot="{ commands, isActive, menu }">
+    <editor-floating-menu :editor="editor" v-slot="{ commands, isActive, menu}">
       <div
         class="editor__floating-menu"
         :class="{ 'is-active': menu.isActive }"
-        :style="`top: ${menu.top}px`"
+        :style="`top: ${menu.top - 6}px`"
       >
 
         <v-btn
-          text
           icon
+          small
+          class="editor-bar-button header_text"
           @click="commands.heading({ level: 1 })"
         >
-          H1
+          <span style="font-size: 1rem;">H1</span>
         </v-btn>
 
-          <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+        <v-btn
+          icon
+          small
+          class="editor-bar-button header_text"
           @click="commands.heading({ level: 2 })"
         >
-          H2
-        </button>
+          <span style="font-size: 1rem;">H2</span>
+        </v-btn>
 
-        <button
-          class="menubar__button"
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+        <v-btn
+          icon
+          small
+          class="editor-bar-button header_text"
           @click="commands.heading({ level: 3 })"
         >
-          <v-icon small class="fa fa-heading"></v-icon>
-        </button>
+          <span style="font-size: 1rem;">H3</span>
+        </v-btn>
 
-        <button
-          class="menubar__button"
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
+          :class="{ 'is-active': isActive.blockquote() }"
+          @click="commands.blockquote"
+        >
+          <v-icon small class="fa fa-quote-right" />
+        </v-btn>
+
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
           :class="{ 'is-active': isActive.bullet_list() }"
           @click="commands.bullet_list"
         >
-          <v-icon small class="fa fa-bold"></v-icon>
-        </button>
+          <v-icon small class="fa fa-list-ul" />
+        </v-btn>
+
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
+          :class="{ 'is-active': isActive.ordered_list() }"
+          @click="commands.ordered_list"
+        >
+          <v-icon small class="fa fa-list-ol" />
+        </v-btn>
+
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
+          :class="{ 'is-active': isActive.code_block() }"
+          @click="commands.code_block"
+        >
+          <v-icon small class="fa fa-code" />
+        </v-btn>
+
       </div>
     </editor-floating-menu>
 
@@ -102,7 +138,7 @@ export default {
           new Heading({ levels: [1, 2, 3] }),
           new ListItem(),
           new OrderedList(),
-          new TodoItem(),
+          new TodoItem({nested: true}),
           new TodoList(),
           new Link(),
           new Bold(),
@@ -142,5 +178,93 @@ export default {
   pointer-events: none;
   height: 0;
   font-style: italic;
+}
+
+.editor h1:nth-child(1) {
+  margin-bottom: 2rem;
+}
+
+.editor {
+  position: relative;
+  &__floating-menu {
+    position: absolute;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s, visibility 0.2s;
+
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.editor-bar-button {
+  font-weight: bold;
+  display: inline-flex;
+  background: transparent;
+  border: 0;
+  color: $color-black;
+  padding: 0.2rem 0.5rem;
+  margin-right: 0.2rem;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($color-black, 0.05);
+  }
+
+  &.is-active {
+    background-color: rgba($color-black, 0.1);
+  }
+}
+
+.header_text {
+  padding-top: 8px;
+}
+ul[data-type="todo_list"] {
+  padding-left: 0;
+}
+li[data-type="todo_item"] {
+  display: flex;
+  flex-direction: row;
+}
+.todo-checkbox {
+  border: 2px solid $color-black;
+  height: 0.9em;
+  width: 0.9em;
+  box-sizing: border-box;
+  margin-right: 10px;
+  margin-top: 0.3rem;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+  border-radius: 0.2em;
+  background-color: transparent;
+  transition: 0.4s background;
+}
+
+.todo-content {
+  flex: 1;
+  > p:last-of-type {
+    margin-bottom: 0;
+  }
+  > ul[data-type="todo_list"] {
+    margin: .5rem 0;
+  }
+}
+li[data-done="true"] {
+  > .todo-content {
+    > p {
+      text-decoration: line-through;
+    }
+  }
+  > .todo-checkbox {
+    background-color: $color-black;
+  }
+}
+li[data-done="false"] {
+  text-decoration: none;
 }
 </style>
