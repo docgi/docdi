@@ -11,7 +11,7 @@
       </div>
 
       <div class="ml-auto">
-        <v-menu v-model="showMenu">
+        <v-menu>
           <template v-slot:activator="{ on }">
             <v-btn small icon v-on="on">
               <v-icon class="fa fa-ellipsis-h" />
@@ -84,11 +84,62 @@
               <v-list-item
                 v-for="(item, index) in collection.children"
                 :key="index"
-                class="px-0 py-0"
-                style="position: relative"
+                class="px-0 py-0 pos-relative mb-1 doc-item"
+                style="margin: 0 -8px 0 -8px"
               >
-                <div class="d-flex doc-item w-full fill-height align-center" style="position: absolute;">
-                  {{ item.name }}
+                <router-link
+                  tag="div"
+                  class="d-flex w-full fill-height align-center pos-absolute mx-2"
+                  :to="{ name: 'DetailDocument', params: { id: item.id } }"
+                >
+                  <div class="d-flex flex-column fill-height justify-center">
+                    <span class="font-weight-bold mt-1">{{ item.name }}</span>
+                    <span
+                      class="ml-2 font-weight-thin"
+                      style="font-size: 0.75em;"
+                    >
+                      Updated by
+                      <v-chip label x-small>{{ item.creator.username }}</v-chip>
+                      {{ beautyLastUpdate(item.modified) }}
+                    </span>
+                  </div>
+                </router-link>
+
+                <div class="ml-auto mr-4">
+                  <v-menu>
+                    <template v-slot:activator="{ on }">
+                      <v-btn
+                        small
+                        icon
+                        v-on="on"
+                        class="item-menu-button"
+                        style="display: none;"
+                      >
+                        <v-icon small class="fa fa-ellipsis-h" />
+                      </v-btn>
+                    </template>
+
+                    <v-list dense>
+                      <v-list-item
+                        class="pa-0"
+                        v-for="(item, index) in menuItems"
+                        :key="index"
+                      >
+                        <v-btn
+                          small
+                          text
+                          class="text-capitalize w-full justify-start"
+                          :color="item.color || ''"
+                          @click="item.handler"
+                        >
+                          <template v-slot:default>
+                            <v-icon small>{{ item.icon }}</v-icon>
+                            <span class="ml-2">{{ item.title }}</span>
+                          </template>
+                        </v-btn>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
                 </div>
               </v-list-item>
             </v-list>
@@ -109,6 +160,7 @@
       :show="showUpdateDialog"
       :collection-id="collectionId"
       @hide="showUpdateDialog = false"
+      :key="collectionId"
     />
   </div>
 </template>
@@ -116,6 +168,7 @@
 <script>
 import DeleteCollectionDialog from "@/components/app/dialogs/DeleteCollectionDialog";
 import UpdateCollectionDialog from "@/components/app/dialogs/UpdateCollectionDialog";
+import { getUpdatedText } from "@/common/utils";
 
 export default {
   name: "DetailCollection",
@@ -127,7 +180,6 @@ export default {
     return {
       collectionId: null,
       tab: null,
-      showMenu: false,
       showDeleteDialog: false,
       showUpdateDialog: false,
       tabItems: [
@@ -203,6 +255,9 @@ export default {
         null,
         this.$route.path + "#" + this.tabItems[index].hash
       );
+    },
+    beautyLastUpdate(date) {
+      return getUpdatedText(date);
     }
   }
 };
@@ -211,9 +266,13 @@ export default {
 <style lang="scss" scoped>
 .doc-item {
   cursor: pointer;
+  border-radius: 7px;
 
   &:hover {
-    background: black;
+    background: #e8e8e8;
+    ::v-deep .item-menu-button {
+      display: block !important;
+    }
   }
 }
 </style>

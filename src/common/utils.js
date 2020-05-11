@@ -55,14 +55,32 @@ export const workspaceNameFromHost = () => {
   return location.host.split('.')[0];
 };
 
-export const currentWindowWidth = () => {
-  return window.innerWidth;
-};
-
 export const isValidEmail = (email) => {
   return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
 };
 
 export const isEscKey = (kbEvent) => {
   return kbEvent.key === "Escape";
+};
+
+export const getUpdatedText = (date) => {
+  if (date) {
+    let diff = new Date(new Date().getTime() - new Date(date).getTime());
+    let seconds = Math.trunc(diff / 1000);
+    let minute = Math.trunc(seconds / 60);
+    let hours = Math.trunc(minute / 60);
+    let days = Math.trunc(hours / 24);
+
+    if (days > 1) {
+      return `${days} day${days > 1 ? "s" : ""} ago`;
+    }
+    if (hours > 1) {
+      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    }
+    if (minute > 1) {
+      return `${minute} minute${minute > 1 ? "s" : ""} ago`;
+    }
+    return "recently";
+  }
+  return "";
 };

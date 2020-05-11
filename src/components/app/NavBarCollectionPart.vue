@@ -8,7 +8,6 @@
         dense
         open-on-click
         expand-icon="fa-angle-down"
-        :return-object="true"
         :items="collections"
         class="v-tree-custom"
       >
@@ -90,7 +89,5 @@ export default {
   &::v-deep button {
     font-size: 16px;
   }
-
-  /*&::v-deep .*/
 }
 </style>
