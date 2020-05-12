@@ -21,7 +21,7 @@
       </div>
     </v-app-bar>
 
-    <docgi-editor @onUpdateContent="editChange" />
+    <docgi-editor @onChangeContent="onChangeContent" />
   </div>
 </template>
 
@@ -45,7 +45,7 @@ export default {
     this.collectionId = this.$route.params.collectionId;
   },
   methods: {
-    editChange({ json, html }) {
+    onChangeContent({ json, html }) {
       this.jsonContent = json;
       this.htmlContent = html;
     },
@@ -80,14 +80,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.app-bar-fixed {
-  left: 300px !important;
-}
-@media (max-width: 960px) {
-  .app-bar-fixed {
-    left: 50px !important;
-  }
-}
-</style>

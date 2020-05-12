@@ -53,4 +53,14 @@
   min-width: 500px;
 }
 
+.app-bar-fixed {
+  left: 300px !important;
+}
+
+@media (max-width: 960px) {
+  .app-bar-fixed {
+    left: 50px !important;
+  }
+}
+
 @import "src/scss/text";

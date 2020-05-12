@@ -71,13 +71,13 @@ export const getUpdatedText = (date) => {
     let hours = Math.trunc(minute / 60);
     let days = Math.trunc(hours / 24);
 
-    if (days > 1) {
+    if (days >= 1) {
       return `${days} day${days > 1 ? "s" : ""} ago`;
     }
-    if (hours > 1) {
+    if (hours >= 1) {
       return `${hours} hour${hours > 1 ? "s" : ""} ago`;
     }
-    if (minute > 1) {
+    if (minute >= 1) {
       return `${minute} minute${minute > 1 ? "s" : ""} ago`;
     }
     return "recently";

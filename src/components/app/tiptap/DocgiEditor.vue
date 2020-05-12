@@ -156,10 +156,17 @@ export default {
         ],
         editable: this.editable,
         onUpdate: ({ getJSON, getHTML }) => {
-          this.$emit("onUpdateContent", { json: getJSON(), html: getHTML()})
+          this.$emit("onChangeContent", { json: getJSON(), html: getHTML()})
         }
       })
     }
+  },
+  watch: {
+    editable() {
+      this.editor.setOptions({
+        editable: this.editable,
+      })
+    },
   },
   beforeDestroy() {
     this.editor.destroy();
