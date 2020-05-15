@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import TheNavBar from "@/components/app/TheNavBar";
-import TheAppBar from "@/components/app/TheAppBar";
+import TheNavBar from "@/components/app/layout/TheNavBar";
+import TheAppBar from "@/components/app/layout/TheAppBar";
 import NewCollectionDialog from "@/components/app/dialogs/NewCollectionDialog";
 
 export default {

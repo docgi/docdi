@@ -7,17 +7,18 @@
           outlined
           color="primary"
           class="mr-2 text-capitalize"
-          @click="createDoc"
+          @click="createDoc({draft: true})"
+        >
+          Save as draft
+        </v-btn>
+        <v-btn
+          small
+          color="primary"
+          class="mr-2 text-capitalize"
+          @click="createDoc({draft: false})"
         >
           Save
         </v-btn>
-        <v-menu>
-          <template v-slot:activator="{ on }">
-            <v-btn small icon v-on="on">
-              <v-icon small class="fa fa-ellipsis-h"></v-icon>
-            </v-btn>
-          </template>
-        </v-menu>
       </div>
     </v-app-bar>
 
@@ -49,12 +50,13 @@ export default {
       this.jsonContent = json;
       this.htmlContent = html;
     },
-    createDoc() {
+    createDoc(extraParams) {
       let payload = {
         name: this.docName,
         collection: this.collectionId,
         json_content: this.jsonContent,
-        html_content: this.htmlContent
+        html_content: this.htmlContent,
+        draft: extraParams.draft || false
       };
       this.$store
         .dispatch(CREATE_NEW_DOCUMENT, payload)

@@ -42,7 +42,7 @@
 
 <script>
 import WorkspaceLogo from "@/components/app/WorkspaceLogo";
-import NavBarCollectionPart from "@/components/app/NavBarCollectionPart";
+import NavBarCollectionPart from "@/components/app/layout/NavBarCollectionPart";
 import { SET_DRAWER } from "@/store/mutations.type";
 
 export default {

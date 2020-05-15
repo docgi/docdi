@@ -52,7 +52,9 @@
         <span class="text-capitalize">{{ item.title }}</span>
       </v-tab>
     </v-tabs>
+
     <v-divider />
+
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="(item, index) in tabItems" :key="index">
         <v-card flat class="px-0">
@@ -80,69 +82,8 @@
               </v-btn>
             </div>
 
-            <v-list v-else class="w-full">
-              <v-list-item
-                v-for="(item, index) in collection.children"
-                :key="index"
-                class="px-0 py-0 pos-relative mb-1 doc-item"
-                style="margin: 0 -8px 0 -8px"
-              >
-                <router-link
-                  tag="div"
-                  class="d-flex w-full fill-height align-center pos-absolute mx-2"
-                  :to="{ name: 'DetailDocument', params: { id: item.id } }"
-                >
-                  <div class="d-flex flex-column fill-height justify-center">
-                    <span class="font-weight-bold mt-1">{{ item.name }}</span>
-                    <span
-                      class="ml-2 font-weight-thin"
-                      style="font-size: 0.75em;"
-                    >
-                      Updated by
-                      <v-chip label x-small>{{ item.creator.username }}</v-chip>
-                      {{ beautyLastUpdate(item.modified) }}
-                    </span>
-                  </div>
-                </router-link>
+            <DocumentDisplay v-else :documents="collection.children" />
 
-                <div class="ml-auto mr-4">
-                  <v-menu>
-                    <template v-slot:activator="{ on }">
-                      <v-btn
-                        small
-                        icon
-                        v-on="on"
-                        class="item-menu-button"
-                        style="display: none;"
-                      >
-                        <v-icon small class="fa fa-ellipsis-h" />
-                      </v-btn>
-                    </template>
-
-                    <v-list dense>
-                      <v-list-item
-                        class="pa-0"
-                        v-for="(item, index) in menuItems"
-                        :key="index"
-                      >
-                        <v-btn
-                          small
-                          text
-                          class="text-capitalize w-full justify-start"
-                          :color="item.color || ''"
-                          @click="item.handler"
-                        >
-                          <template v-slot:default>
-                            <v-icon small>{{ item.icon }}</v-icon>
-                            <span class="ml-2">{{ item.title }}</span>
-                          </template>
-                        </v-btn>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
-                </div>
-              </v-list-item>
-            </v-list>
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -168,11 +109,12 @@
 <script>
 import DeleteCollectionDialog from "@/components/app/dialogs/DeleteCollectionDialog";
 import UpdateCollectionDialog from "@/components/app/dialogs/UpdateCollectionDialog";
-import { getUpdatedText } from "@/common/utils";
+import DocumentDisplay from "@/components/app/ListDocumentItem";
 
 export default {
   name: "DetailCollection",
   components: {
+    DocumentDisplay,
     DeleteCollectionDialog,
     UpdateCollectionDialog
   },
@@ -255,24 +197,7 @@ export default {
         null,
         this.$route.path + "#" + this.tabItems[index].hash
       );
-    },
-    beautyLastUpdate(date) {
-      return getUpdatedText(date);
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.doc-item {
-  cursor: pointer;
-  border-radius: 7px;
-
-  &:hover {
-    background: #e8e8e8;
-    ::v-deep .item-menu-button {
-      display: block !important;
-    }
-  }
-}
-</style>
