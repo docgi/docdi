@@ -2,3 +2,57 @@
 @import "editor";
 @import "menubar";
 @import "menububble";
+
+.editor *.is-empty:nth-child(1)::before,
+.editor *.is-empty:nth-child(2)::before {
+  content: attr(data-empty-text);
+  float: left;
+  color: #aaa;
+  pointer-events: none;
+  height: 0;
+  font-style: italic;
+}
+
+.editor h1:nth-child(1) {
+  margin-bottom: 2rem;
+}
+
+.editor {
+  position: relative;
+  &__floating-menu {
+    position: absolute;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s, visibility 0.2s;
+
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.editor-bar-button {
+  font-weight: bold;
+  display: inline-flex;
+  background: transparent;
+  border: 0;
+  color: $color-black;
+  padding: 0.2rem 0.5rem;
+  margin-right: 0.2rem;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($color-black, 0.05);
+  }
+
+  &.is-active {
+    background-color: rgba($color-black, 0.1);
+  }
+}
+
+.header_text {
+  padding-top: 8px;
+}

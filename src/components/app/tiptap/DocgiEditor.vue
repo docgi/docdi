@@ -1,21 +1,16 @@
 <template>
   <div class="editor">
-    <editor-floating-menu :editor="editor" v-slot="{ commands, isActive, menu}">
+    <!--  Floating menu  -->
+    <editor-floating-menu
+      v-if="editable"
+      :editor="editor"
+      v-slot="{ commands, isActive, menu }"
+    >
       <div
         class="editor__floating-menu"
         :class="{ 'is-active': menu.isActive }"
         :style="`top: ${menu.top - 6}px`"
       >
-
-        <v-btn
-          icon
-          small
-          class="editor-bar-button header_text"
-          @click="commands.heading({ level: 1 })"
-        >
-          <span style="font-size: 1rem;">H1</span>
-        </v-btn>
-
         <v-btn
           icon
           small
@@ -48,6 +43,15 @@
           icon
           small
           class="editor-bar-button"
+          @click="commands.horizontal_rule"
+        >
+          <v-icon small class="fa fa-window-minimize" />
+        </v-btn>
+
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
           :class="{ 'is-active': isActive.bullet_list() }"
           @click="commands.bullet_list"
         >
@@ -73,19 +77,85 @@
         >
           <v-icon small class="fa fa-code" />
         </v-btn>
-
       </div>
     </editor-floating-menu>
 
-    <editor-content
-      class="editor__content"
+    <!--  Bubble menu  -->
+    <editor-menu-bubble
+      v-if="editable"
       :editor="editor"
-    />
+      :keep-in-bounds="keepInBounds"
+      v-slot="{ commands, isActive, menu }"
+    >
+      <div
+        class="menububble"
+        :class="{ 'is-active': menu.isActive }"
+        :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`"
+      >
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
+          :class="{ 'is-active': isActive.bold() }"
+          @click="commands.bold"
+        >
+          <v-icon small class="fa fa-bold" />
+        </v-btn>
+
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
+          :class="{ 'is-active': isActive.italic() }"
+          @click="commands.italic"
+        >
+          <v-icon small class="fa fa-italic" />
+        </v-btn>
+
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
+          :class="{ 'is-active': isActive.strike() }"
+          @click="commands.strike"
+        >
+          <v-icon small class="fa fa-strikethrough" />
+        </v-btn>
+
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
+          :class="{ 'is-active': isActive.underline() }"
+          @click="commands.underline"
+        >
+          <v-icon small class="fa fa-underline" />
+        </v-btn>
+
+        <v-btn
+          icon
+          small
+          class="editor-bar-button"
+          :class="{ 'is-active': isActive.code() }"
+          @click="commands.code"
+        >
+          <v-icon small class="fa fa-code" />
+        </v-btn>
+      </div>
+    </editor-menu-bubble>
+
+    <!--  Editor  -->
+    <editor-content class="editor__content" :editor="editor" />
   </div>
 </template>
 
 <script>
-import { EditorContent, Editor, EditorFloatingMenu } from "tiptap";
+import {
+  EditorContent,
+  Editor,
+  EditorFloatingMenu,
+  EditorMenuBubble
+} from "tiptap";
 import Doc from "./tiptap-core/Doc";
 import Title from "./tiptap-core/Title";
 
@@ -105,6 +175,10 @@ import {
   Italic,
   Link,
   History,
+  Strike,
+  Underline,
+  Image,
+  HorizontalRule,
 } from "tiptap-extensions";
 
 export default {
@@ -112,166 +186,70 @@ export default {
   props: {
     content: {
       type: String,
-      default: "",
+      default: ""
     },
     editable: {
       type: Boolean,
-      default: true,
+      default: true
     }
   },
   components: {
     EditorContent,
-    EditorFloatingMenu
+    EditorFloatingMenu,
+    EditorMenuBubble
   },
   data() {
     return {
+      keepInBounds: true,
       editor: new Editor({
         autoFocus: true,
         content: this.content,
         extensions: [
           new Doc(),
           new Title(),
+          new Underline(),
           new Blockquote(),
           new BulletList(),
           new CodeBlock(),
           new HardBreak(),
-          new Heading({ levels: [1, 2, 3] }),
+          new Heading({ levels: [2, 3] }),
           new ListItem(),
           new OrderedList(),
-          new TodoItem({nested: true}),
+          new TodoItem({ nested: true }),
           new TodoList(),
           new Link(),
           new Bold(),
+          new Strike(),
           new Code(),
           new Italic(),
           new History(),
+          new Image(),
+          new HorizontalRule(),
           new Placeholder({
             showOnlyCurrent: false,
             emptyNodeText: node => {
               if (node.type.name === "title") {
-                return "Give me a name";
+                return "Give me a name ...";
               }
             }
           })
         ],
         editable: this.editable,
         onUpdate: ({ getJSON, getHTML }) => {
-          this.$emit("onChangeContent", { json: getJSON(), html: getHTML()})
+          this.$emit("onChangeContent", { json: getJSON(), html: getHTML() });
         }
       })
-    }
+    };
   },
   watch: {
     editable() {
       this.editor.setOptions({
-        editable: this.editable,
-      })
-    },
+        editable: this.editable
+      });
+    }
   },
   beforeDestroy() {
     this.editor.destroy();
   }
-}
+};
 </script>
-
-<style lang="scss">
-@import "sass/main";
-
-.editor *.is-empty:nth-child(1)::before,
-.editor *.is-empty:nth-child(2)::before {
-  content: attr(data-empty-text);
-  float: left;
-  color: #aaa;
-  pointer-events: none;
-  height: 0;
-  font-style: italic;
-}
-
-.editor h1:nth-child(1) {
-  margin-bottom: 2rem;
-}
-
-.editor {
-  position: relative;
-  &__floating-menu {
-    position: absolute;
-    z-index: 1;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.2s, visibility 0.2s;
-
-    &.is-active {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-}
-
-.editor-bar-button {
-  font-weight: bold;
-  display: inline-flex;
-  background: transparent;
-  border: 0;
-  color: $color-black;
-  padding: 0.2rem 0.5rem;
-  margin-right: 0.2rem;
-  border-radius: 3px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba($color-black, 0.05);
-  }
-
-  &.is-active {
-    background-color: rgba($color-black, 0.1);
-  }
-}
-
-.header_text {
-  padding-top: 8px;
-}
-ul[data-type="todo_list"] {
-  padding-left: 0;
-}
-li[data-type="todo_item"] {
-  display: flex;
-  flex-direction: row;
-}
-.todo-checkbox {
-  border: 2px solid $color-black;
-  height: 0.9em;
-  width: 0.9em;
-  box-sizing: border-box;
-  margin-right: 10px;
-  margin-top: 0.3rem;
-  user-select: none;
-  -webkit-user-select: none;
-  cursor: pointer;
-  border-radius: 0.2em;
-  background-color: transparent;
-  transition: 0.4s background;
-}
-
-.todo-content {
-  flex: 1;
-  > p:last-of-type {
-    margin-bottom: 0;
-  }
-  > ul[data-type="todo_list"] {
-    margin: .5rem 0;
-  }
-}
-li[data-done="true"] {
-  > .todo-content {
-    > p {
-      text-decoration: line-through;
-    }
-  }
-  > .todo-checkbox {
-    background-color: $color-black;
-  }
-}
-li[data-done="false"] {
-  text-decoration: none;
-}
-</style>

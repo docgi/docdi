@@ -1,7 +1,9 @@
 .editor {
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
   position: relative;
   margin: 1rem auto;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;;
+  font-family: 'Open Sans', sans-serif;
 
   .ProseMirror {
     outline: none;
@@ -16,10 +18,14 @@
       caret-color: currentColor;
     }
 
+    h1, h2, h3 {
+      margin: 1rem 0;
+    }
+
     pre {
       padding: 0.7rem 1rem;
       border-radius: 5px;
-      background: #e8e8e8;
+      background: $background-color;
       font-size: 0.8rem;
       overflow-x: auto;
       width: auto;
@@ -31,7 +37,7 @@
       code {
         display: block;
         font-size: 1rem;
-        background: #e8e8e8;
+        background: $background-color;
         color: inherit;
         -webkit-box-shadow: none;
         box-shadow: none;
@@ -48,20 +54,26 @@
     }
 
     p code {
-      margin: 8px 0;
-      padding: 0.2rem 0.4rem !important;
-      border-radius: 5px;
-      font-size: 1rem;
+      padding: 0.2rem 0.2rem !important;
+      border-radius: 3px;
       font-weight: bold;
       background: rgba($color-black, 0.1);
       color: rgba($color-black, 0.8);
+
+      // Override vuetify code style
+      &::before {
+        all: initial;
+      }
+      &::after {
+        all: initial;
+      }
     }
 
     ul {
       padding-left: 1rem;
     }
     ol {
-      padding-left: 1.75rem;
+      padding-left: 1rem;
     }
 
     li > p,
