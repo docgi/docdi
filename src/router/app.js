@@ -30,9 +30,9 @@ const router = new VueRouter({
           name: "Search"
         },
         {
-          path: "notifications",
-          component: () => import("@/views/app/Notifications"),
-          name: "Notifications"
+          path: "drafts",
+          component: () => import("@/views/app/ListDraft"),
+          name: "Drafts"
         },
         {
           path: "send-invitations",

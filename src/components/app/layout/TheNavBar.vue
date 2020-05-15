@@ -67,9 +67,9 @@ export default {
             icon: "fa-search"
           },
           {
-            name: "Notification",
-            path: "/notifications",
-            icon: "fa-bell"
+            name: "My drafts",
+            path: "/drafts",
+            icon: "fa-pencil-alt"
           }
         ]
       }

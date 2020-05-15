@@ -1,32 +1,44 @@
 <template>
   <div v-if="document">
-    <v-app-bar fixed flat color="white" class="app-bar-fixed">
+    <v-app-bar fixed flat color="white" class="app-bar-fixed" hide-on-scroll>
       <div class="ml-auto">
-        <v-btn
-          small
-          color="primary"
-          class="mr-2 text-capitalize"
-          @click="editable = true"
-          v-if="!editable"
-        >
-          Edit
-        </v-btn>
         <v-btn
           small
           color="primary"
           class="mr-2 text-capitalize"
           @click="saveEditDoc"
           outlined
-          v-else
+          v-if="editable"
         >
           Save
         </v-btn>
         <v-menu>
           <template v-slot:activator="{ on }">
             <v-btn small icon v-on="on">
-              <v-icon small class="fa fa-ellipsis-h"></v-icon>
+              <v-icon small class="fa fa-ellipsis-h" />
             </v-btn>
           </template>
+
+          <v-list dense>
+            <v-list-item
+              class="pa-0"
+              v-for="(item, index) in menuItems"
+              :key="index"
+            >
+              <v-btn
+                small
+                text
+                class="text-capitalize w-full justify-start"
+                :color="item.color || ''"
+                @click="item.handler"
+              >
+                <template v-slot:default>
+                  <v-icon small>{{ item.icon }}</v-icon>
+                  <span class="ml-2">{{ item.title }}</span>
+                </template>
+              </v-btn>
+            </v-list-item>
+          </v-list>
         </v-menu>
       </div>
     </v-app-bar>
@@ -36,20 +48,47 @@
       :key="document.id"
       @onChangeContent="onChangeContent"
     />
+
+    <delete-document-dialog 
+      :document="document"
+      :show="showDeleteDialog"
+      @hide="showDeleteDialog = false" 
+    />
+
   </div>
 </template>
 
 <script>
 import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
+import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog";
+
 export default {
   name: "DetailDocument",
-  components: { DocgiEditor },
+  components: { DocgiEditor, DeleteDocumentDialog },
   data() {
     return {
       document: null,
       jsonContent: null,
       htmlContent: "",
       editable: false,
+      menuItems: [
+        {
+          title: "Edit",
+          icon: "fa-pen",
+          handler: () => {
+            this.editable = true;
+          }
+        },
+        {
+          title: "Delete",
+          icon: "fa-trash-alt",
+          color: "red lighten-2",
+          handler: () => {
+            this.showDeleteDialog = true;
+          }
+        }
+      ],
+      showDeleteDialog: false
     }
   },
   async created() {

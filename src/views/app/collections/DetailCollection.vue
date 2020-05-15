@@ -82,7 +82,7 @@
               </v-btn>
             </div>
 
-            <DocumentDisplay v-else :documents="collection.children" />
+            <list-document-item v-else :documents="collection.children" />
 
           </v-card-text>
         </v-card>
@@ -109,12 +109,12 @@
 <script>
 import DeleteCollectionDialog from "@/components/app/dialogs/DeleteCollectionDialog";
 import UpdateCollectionDialog from "@/components/app/dialogs/UpdateCollectionDialog";
-import DocumentDisplay from "@/components/app/ListDocumentItem";
+import ListDocumentItem from "@/components/app/ListDocumentItem";
 
 export default {
   name: "DetailCollection",
   components: {
-    DocumentDisplay,
+    ListDocumentItem,
     DeleteCollectionDialog,
     UpdateCollectionDialog
   },

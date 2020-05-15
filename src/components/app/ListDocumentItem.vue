@@ -3,7 +3,7 @@
     <v-list-item
       v-for="(item, index) in documents"
       :key="index"
-      class="px-0 py-0 pos-relative mb-1 doc-item"
+      class="px-0 py-0 pos-relative mb-1 doc-item my-2"
       style="margin: 0 -8px 0 -8px"
     >
       <router-link
@@ -12,7 +12,12 @@
         :to="{ name: 'DetailDocument', params: { id: item.id } }"
       >
         <div class="d-flex flex-column fill-height justify-center">
-          <span class="font-weight-bold mt-1">{{ item.name }}</span>
+          <span
+            class="font-weight-bold mt-1"
+            style="width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+          >
+            {{ item.name }}
+          </span>
           <span class="ml-2 font-weight-thin" style="font-size: 0.75em;">
             Updated by
             <v-chip label x-small>{{ item.creator.username }}</v-chip>
@@ -22,7 +27,7 @@
       </router-link>
 
       <div class="ml-auto mr-4">
-        <v-chip x-small v-if="item.draft" >
+        <v-chip x-small v-if="item.draft" class="mr-2">
           Draft
         </v-chip>
         <v-menu>
@@ -68,7 +73,7 @@
 import { getUpdatedText } from "@/common/utils";
 
 export default {
-  name: "DocumentDisplay",
+  name: "ListDocumentItem",
   props: {
     documents: {
       type: Array,
