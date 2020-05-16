@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { DELETE_DOCUMENT } from "@/store/mutations.type";
+
 export default {
   name: "DeleteCollectionDialog",
   props: {
@@ -43,8 +45,17 @@ export default {
   methods: {
     deleteDocument: function () {
       this.$http.delete(`documents/${this.document.id}/`)
-        .then(() => { // Todo
-          this.$router.push({name: "DetailCollection", params: {id: this.document.collection}})
+        .then(() => {
+          this.$emit("hide");
+          this.$store.commit(DELETE_DOCUMENT, this.document);
+          if (this.$route.name !== "DetailCollection") {
+            this.$router.push({
+              name: "DetailCollection", params: {id: this.document.collection}
+            })
+          }
+        })
+        .catch((error) => {
+          console.log(error);
         })
     }
   }

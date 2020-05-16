@@ -1,16 +1,21 @@
 import Vue from "vue";
 import {
-  CREATE_NEW_COLLECTION, CREATE_NEW_DOCUMENT,
+  CREATE_NEW_COLLECTION,
+  CREATE_NEW_DOCUMENT,
   DELETE_COLLECTION,
   LOAD_DETAIL_COLLECTION,
-  LOAD_ROOT_COLLECTIONS, UPDATE_COLLECTION_INFO
+  LOAD_ROOT_COLLECTIONS,
+  UPDATE_COLLECTION_INFO
 } from "@/store/actions.type";
 import {
   APPEND_COLLECTION,
-  COLLECTION_FILL_CHILDREN, FILL_DOCUMENT_INTO_COLLECTION,
+  COLLECTION_FILL_CHILDREN,
+  FILL_DOCUMENT_INTO_COLLECTION,
   REMOVE_COLLECTION,
   SET_ACTIVE,
-  SET_COLLECTIONS, UPDATE_COLLECTION
+  SET_COLLECTIONS,
+  UPDATE_COLLECTION,
+  DELETE_DOCUMENT
 } from "@/store/mutations.type";
 
 const state = {
@@ -147,6 +152,13 @@ const mutations = {
           col.children.push(document);
         }
       }
+  },
+  [DELETE_DOCUMENT](state, document) {
+    for (let col of state.collections) {
+      if (col.id === document.collection) {
+       col.children = col.children.filter(item => item.id !== document.id)
+      }
+    }
   }
 };
 

@@ -1,76 +1,86 @@
 <template>
-  <v-list class="w-full">
-    <v-list-item
-      v-for="(item, index) in documents"
-      :key="index"
-      class="px-0 py-0 pos-relative mb-1 doc-item my-2"
-      style="margin: 0 -8px 0 -8px"
-    >
-      <router-link
-        tag="div"
-        class="d-flex w-full fill-height align-center pos-absolute mx-2"
-        :to="{ name: 'DetailDocument', params: { id: item.id } }"
+  <div class="w-full fill-height">
+    <v-list class="w-full">
+      <v-list-item
+        v-for="(document, index) in documents"
+        :key="index"
+        class="px-0 py-0 pos-relative mb-1 doc-item my-2"
+        style="margin: 0 -8px 0 -8px"
       >
-        <div class="d-flex flex-column fill-height justify-center">
+        <router-link
+          tag="div"
+          class="d-flex w-full fill-height align-center pos-absolute mx-2"
+          :to="{ name: 'DetailDocument', params: { id: document.id } }"
+        >
+          <div class="d-flex flex-column fill-height justify-center">
           <span
             class="font-weight-bold mt-1"
             style="width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
           >
-            {{ item.name }}
+            {{ document.name }}
           </span>
-          <span class="ml-2 font-weight-thin" style="font-size: 0.75em;">
+            <span class="ml-2 font-weight-thin" style="font-size: 0.75em;">
             Updated by
-            <v-chip label x-small>{{ item.creator.username }}</v-chip>
-            {{ beautyLastUpdate(item.modified) }}
+            <v-chip label x-small>{{ document.creator.username }}</v-chip>
+            {{ beautyLastUpdate(document.modified) }}
           </span>
-        </div>
-      </router-link>
+          </div>
+        </router-link>
 
-      <div class="ml-auto mr-4">
-        <v-chip x-small v-if="item.draft" class="mr-2">
-          Draft
-        </v-chip>
-        <v-menu>
-          <template v-slot:activator="{ on }">
-            <v-btn
-              small
-              icon
-              v-on="on"
-              class="item-menu-button"
-              style="visibility: hidden"
-            >
-              <v-icon small class="fa fa-ellipsis-h" />
-            </v-btn>
-          </template>
-
-          <v-list dense>
-            <v-list-item
-              class="pa-0"
-              v-for="(item, index) in menuItems"
-              :key="index"
-            >
+        <div class="ml-auto mr-4">
+          <v-chip x-small v-if="document.draft" class="mr-2">
+            Draft
+          </v-chip>
+          <v-menu>
+            <template v-slot:activator="{ on }">
               <v-btn
                 small
-                text
-                class="text-capitalize w-full justify-start"
-                :color="item.color || ''"
-                @click="item.handler"
+                icon
+                v-on="on"
+                class="item-menu-button"
+                style="visibility: hidden"
               >
-                <template v-slot:default>
-                  <v-icon small>{{ item.icon }}</v-icon>
-                  <span class="ml-2">{{ item.title }}</span>
-                </template>
+                <v-icon small class="fa fa-ellipsis-h" />
               </v-btn>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
-    </v-list-item>
-  </v-list>
+            </template>
+
+            <v-list dense>
+              <v-list-item
+                class="pa-0"
+                v-for="(item, index) in documentMenuItems"
+                :key="index"
+              >
+                <v-btn
+                  small
+                  text
+                  class="text-capitalize w-full justify-start"
+                  :color="item.color || ''"
+                  @click="item.handler(document)"
+                >
+                  <template v-slot:default>
+                    <v-icon small>{{ item.icon }}</v-icon>
+                    <span class="ml-2">{{ item.title }}</span>
+                  </template>
+                </v-btn>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
+      </v-list-item>
+    </v-list>
+
+    <delete-document-dialog
+      v-if="selectedDocument"
+      :document="selectedDocument"
+      @hide="selectedDocument = null"
+      :show="!!selectedDocument"
+    />
+  </div>
 </template>
 
 <script>
 import { getUpdatedText } from "@/common/utils";
+import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog";
 
 export default {
   name: "ListDocumentItem",
@@ -80,32 +90,26 @@ export default {
       required: true
     }
   },
+  components: {
+    DeleteDocumentDialog
+  },
   data() {
     return {
-      menuItems: [
-        {
-          title: "New doc",
-          icon: "fa-plus",
-          handler: () => {
-            this.$router.push({
-              name: "NewDocument",
-              params: { collectionId: this.collectionId }
-            });
-          }
-        },
+      selectedDocument: null,
+      documentMenuItems: [
         {
           title: "Edit info",
           icon: "fa-pen",
-          handler: () => {
-            this.showUpdateDialog = true;
+          handler: (document) => {
+            this.$router.push({ name: "DetailDocument", params: {id: document.id} })
           }
         },
         {
           title: "Delete",
           icon: "fa-trash-alt",
           color: "red lighten-2",
-          handler: () => {
-            this.showDeleteDialog = true;
+          handler: (document) => {
+            this.selectedDocument = document;
           }
         }
       ]

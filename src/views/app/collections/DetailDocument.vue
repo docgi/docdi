@@ -49,10 +49,10 @@
       @onChangeContent="onChangeContent"
     />
 
-    <delete-document-dialog 
+    <delete-document-dialog
       :document="document"
       :show="showDeleteDialog"
-      @hide="showDeleteDialog = false" 
+      @hide="showDeleteDialog = false"
     />
 
   </div>
