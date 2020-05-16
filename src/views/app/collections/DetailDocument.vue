@@ -1,18 +1,34 @@
 <template>
   <div v-if="document">
     <v-app-bar fixed flat color="white" class="app-bar-fixed" hide-on-scroll>
+      <v-breadcrumbs :items="breadcrumbs">
+        <template v-slot:item="{ item }">
+          <v-breadcrumbs-item :to="item.to" :disabled="item.disabled">
+            {{ item.text }}
+          </v-breadcrumbs-item>
+        </template>
+      </v-breadcrumbs>
       <div class="ml-auto">
         <v-btn
           small
           color="primary"
           class="mr-2 text-capitalize"
-          @click="saveEditDoc"
+          @click="saveEditDoc(document.draft)"
           outlined
           v-if="editable"
         >
           Save
         </v-btn>
-        <v-menu>
+        <v-btn
+          small
+          color="primary"
+          class="mr-2 text-capitalize"
+          @click="saveEditDoc(false)"
+          v-if="editable && document.draft"
+        >
+          Publish
+        </v-btn>
+        <v-menu v-if="!editable">
           <template v-slot:activator="{ on }">
             <v-btn small icon v-on="on">
               <v-icon small class="fa fa-ellipsis-h" />
@@ -54,13 +70,13 @@
       :show="showDeleteDialog"
       @hide="showDeleteDialog = false"
     />
-
   </div>
 </template>
 
 <script>
 import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
 import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog";
+import { UPDATE_DOCUMENT } from "@/store/mutations.type";
 
 export default {
   name: "DetailDocument",
@@ -89,20 +105,27 @@ export default {
         }
       ],
       showDeleteDialog: false
-    }
+    };
   },
   async created() {
     try {
-      let response = await this.$http.get(`documents/${this.$route.params.id}/`);
+      let response = await this.$http.get(
+        `documents/${this.$route.params.id}/`
+      );
       this.document = response.data;
     } catch (e) {
       console.log(e); // Todo
     }
   },
   methods: {
-    saveEditDoc() {
+    saveEditDoc(draft) {
       this.editable = false;
-      if (!this.name && !this.jsonContent && !this.htmlContent) {
+      if (
+        !this.docName &&
+        !this.jsonContent &&
+        !this.htmlContent &&
+        draft === this.document.draft
+      ) {
         this.$notify({
           group: "foo",
           type: "success",
@@ -113,27 +136,32 @@ export default {
       let payload = {
         name: this.docName,
         json_content: this.jsonContent,
-        html_content: this.htmlContent
+        html_content: this.htmlContent,
+        draft: draft
       };
-      this.$http.put(`documents/${this.document.id}/`, payload)
-        .then(() => {
+      this.$http
+        .put(`documents/${this.document.id}/`, payload)
+        .then(response => {
           this.$notify({
             group: "foo",
             type: "success",
             title: "Update successful."
           });
-          this.docName = "";
+
           this.jsonContent = "";
           this.htmlContent = "";
+          this.document = response.data;
+          this.$store.commit(UPDATE_DOCUMENT, response.data);
         })
-        .catch((error) => {
+        .catch(error => {
+          // Todo
           console.log(error);
-        })
+        });
     },
     onChangeContent({ json, html }) {
       this.jsonContent = json;
       this.htmlContent = html;
-    },
+    }
   },
   computed: {
     docName() {
@@ -141,6 +169,29 @@ export default {
         return this.jsonContent.content[0].content[0].text;
       }
       return "";
+    },
+    collection() {
+      if (this.document) {
+        return this.$store.getters.getCollectionById(this.document.collection);
+      }
+      return null;
+    },
+    breadcrumbs() {
+      if (this.collection) {
+        return [
+          {
+            text: this.collection.name,
+            disabled: false,
+            to: { name: "DetailCollection", params: { id: this.collection.id } }
+          },
+          {
+            text: this.document.name,
+            disabled: true,
+            to: { name: "DetailCollection", params: { id: this.collection.id } }
+          }
+        ];
+      }
+      return [];
     }
   },
   async beforeRouteUpdate(to, from, next) {
@@ -152,5 +203,5 @@ export default {
     }
     next();
   }
-}
+};
 </script>

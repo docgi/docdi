@@ -17,3 +17,4 @@ export const REMOVE_COLLECTION = "removeCollection";
 export const UPDATE_COLLECTION = "updateCollection";
 export const FILL_DOCUMENT_INTO_COLLECTION = "fillDocumentIntoCollection";
 export const DELETE_DOCUMENT = "deleteDocument";
+export const UPDATE_DOCUMENT = "updateDocument";

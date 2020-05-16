@@ -19,7 +19,7 @@
           >
             {{ document.name }}
           </span>
-            <span class="ml-2 font-weight-thin" style="font-size: 0.75em;">
+            <span class="font-weight-thin" style="font-size: 0.75em;">
             Updated by
             <v-chip label x-small>{{ document.creator.username }}</v-chip>
             {{ beautyLastUpdate(document.modified) }}
@@ -98,7 +98,7 @@ export default {
       selectedDocument: null,
       documentMenuItems: [
         {
-          title: "Edit info",
+          title: "Edit...",
           icon: "fa-pen",
           handler: (document) => {
             this.$router.push({ name: "DetailDocument", params: {id: document.id} })

@@ -50,7 +50,7 @@ export default {
           this.$store.commit(DELETE_DOCUMENT, this.document);
           if (this.$route.name !== "DetailCollection") {
             this.$router.push({
-              name: "DetailCollection", params: {id: this.document.collection}
+              name: "DetailCollection", params: { id: this.document.collection }
             })
           }
         })

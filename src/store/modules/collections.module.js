@@ -15,7 +15,7 @@ import {
   SET_ACTIVE,
   SET_COLLECTIONS,
   UPDATE_COLLECTION,
-  DELETE_DOCUMENT
+  DELETE_DOCUMENT, UPDATE_DOCUMENT
 } from "@/store/mutations.type";
 
 const state = {
@@ -156,7 +156,16 @@ const mutations = {
   [DELETE_DOCUMENT](state, document) {
     for (let col of state.collections) {
       if (col.id === document.collection) {
-       col.children = col.children.filter(item => item.id !== document.id)
+       col.children = col.children.filter(item => item.id !== document.id);
+      }
+    }
+  },
+  [UPDATE_DOCUMENT](state, document) {
+    for (let col of state.collections) {
+      if (col.id === document.collection) {
+        // Todo
+        col.children = col.children.filter(item => item.id !== document.id);
+        col.children.push(document);
       }
     }
   }
