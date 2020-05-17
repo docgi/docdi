@@ -1,9 +1,10 @@
-.editor {
-  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+.editor {
   position: relative;
   margin: 1rem auto;
   font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
 
   .ProseMirror {
     outline: none;
@@ -20,6 +21,7 @@
 
     h1, h2, h3 {
       margin: 1rem 0;
+      font-weight: 600 !important;
     }
 
     pre {
@@ -59,6 +61,7 @@
       font-weight: bold;
       background: rgba($color-black, 0.1);
       color: rgba($color-black, 0.8);
+      box-shadow: none;
 
       // Override vuetify code style
       &::before {
@@ -69,11 +72,17 @@
       }
     }
 
+    p {
+      text-align: justify;
+    }
+
     ul {
-      padding-left: 1rem;
+      padding-left: 0.5rem;
+      margin-left: 2rem;
     }
     ol {
-      padding-left: 1rem;
+      padding-left: 0.5rem;
+      margin-left: 2rem;
     }
 
     li > p,
@@ -161,4 +170,57 @@
       cursor: col-resize;
     }
   }
+
+  *.is-empty:nth-child(1)::before,
+  *.is-empty:nth-child(2)::before {
+    content: attr(data-empty-text);
+    float: left;
+    color: #aaa;
+    pointer-events: none;
+    height: 0;
+    font-style: italic;
+  }
+
+  h1:nth-child(1) {
+    margin-bottom: 2rem;
+    font-weight: 900 !important;
+    font-size: 2.25rem;
+  }
+
+  &__floating-menu {
+    padding: 0.2rem 0.2rem;
+    background-color: #e8e8e8;
+    position: absolute;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s, visibility 0.2s;
+    margin-top: 3px;
+
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .editor-bar-button {
+    font-weight: bold;
+    display: inline-flex;
+    background: transparent;
+    border: 0;
+    color: $color-black;
+    padding: 0.2rem 0.5rem;
+    margin-right: 0.2rem;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba($color-black, 0.05);
+    }
+
+    &.is-active {
+      background-color: rgba($color-black, 0.1);
+    }
+  }
+
 }

@@ -241,6 +241,7 @@ export default {
       })
     };
   },
+  methods: {},
   watch: {
     editable() {
       this.editor.setOptions({
