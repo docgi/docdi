@@ -80,6 +80,9 @@ import { UPDATE_DOCUMENT } from "@/store/mutations.type";
 
 export default {
   name: "DetailDocument",
+  metaInfo: {
+
+  },
   components: { DocgiEditor, DeleteDocumentDialog },
   data() {
     return {

@@ -150,6 +150,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import {
   EditorContent,
   Editor,
@@ -177,9 +178,17 @@ import {
   History,
   Strike,
   Underline,
-  Image,
   HorizontalRule,
 } from "tiptap-extensions";
+import Image from "./tiptap-core/Image"
+
+async function upload(file) {
+  let formData = new FormData();
+  formData.append('image', file);
+  const headers = {'Content-Type': 'multipart/form-data'};
+  const response = await axios.post('/document-images/', formData, {headers: headers} );
+  return response.data.src;
+}
 
 export default {
   name: "DocgiEditor",
@@ -223,14 +232,15 @@ export default {
           new Code(),
           new Italic(),
           new History(),
-          new Image(),
+          new Image(null, null, upload),
           new HorizontalRule(),
           new Placeholder({
             showOnlyCurrent: false,
             emptyNodeText: node => {
               if (node.type.name === "title") {
-                return "Give me a name ...";
+                return "Untitled";
               }
+              return "Start typing..."
             }
           })
         ],

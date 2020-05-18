@@ -2,13 +2,13 @@ import Vue from "vue";
 import Axios from "axios";
 import VueAxios from "vue-axios";
 
-import {getToken} from "./token.service";
+import { getToken } from "./token.service";
 
-const ignoreHandleError = (config) => {
+const ignoreHandleError = config => {
   return !config.errorHandle && config.errorHandle === false;
 };
 
-const getErrorMsg = (data) => {
+const getErrorMsg = data => {
   let res = [];
   for (let key of Object.keys(data)) {
     if (data[key] instanceof String) {

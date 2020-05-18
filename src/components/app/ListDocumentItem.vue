@@ -15,7 +15,6 @@
           <div class="d-flex flex-column fill-height justify-center">
           <span
             class="font-weight-bold mt-1"
-            style="width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
           >
             {{ document.name }}
           </span>
