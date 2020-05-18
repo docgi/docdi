@@ -233,5 +233,17 @@
   .image-wrapper {
     max-height: 500px;
     margin: auto;
+    border-radius: 3px;
+  }
+
+  figure {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  figcaption {
+    max-width: 70%;
+    margin: auto;
   }
 }

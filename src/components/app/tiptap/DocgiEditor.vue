@@ -159,6 +159,8 @@ import {
 } from "tiptap";
 import Doc from "./tiptap-core/Doc";
 import Title from "./tiptap-core/Title";
+import Figcaption from "@/components/app/tiptap/tiptap-core/FigureCaption";
+import Figure from "@/components/app/tiptap/tiptap-core/Figure";
 
 import {
   Placeholder,
@@ -233,6 +235,8 @@ export default {
           new Italic(),
           new History(),
           new Image(null, null, upload),
+          new Figcaption(),
+          new Figure(),
           new HorizontalRule(),
           new Placeholder({
             showOnlyCurrent: false,

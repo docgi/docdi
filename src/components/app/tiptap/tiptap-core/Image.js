@@ -18,47 +18,26 @@ export default class Image extends Node {
   }
 
   get name() {
-    return "image";
+    return "image"
   }
 
   get schema() {
     return {
-      inline: true,
-      attrs: {
-        src: {},
-        alt: {
-          default: null
-        },
-        title: {
-          default: null
-        }
-      },
-      group: "inline",
-      draggable: true,
-      parseDOM: [
-        {
-          tag: "img[src]",
-          getAttrs: dom => ({
-            src: dom.getAttribute("src"),
-            title: dom.getAttribute("title"),
-            alt: dom.getAttribute("alt")
-          })
-        }
-      ],
-      toDOM: node => ["img", {...node.attrs, ...{class: "image-wrapper"}}]
-    };
+      inline: false,
+      attrs: {src: {default: ""}, alt: {default: ""}},
+      parseDOM: [{tag: "img", getAttrs: dom => ({src: dom.src, alt: dom.alt})}],
+      toDOM: node => ["img", {...node.attrs, ...{class: "image-wrapper"}}],
+    }
   }
 
   commands({ type }) {
     return attrs => (state, dispatch) => {
-      const { selection } = state;
-      const position = selection.$cursor
-        ? selection.$cursor.pos
-        : selection.$to.pos;
-      const node = type.create(attrs);
-      const transaction = state.tr.insert(position, node);
-      dispatch(transaction);
-    };
+      const { selection } = state
+      const position = selection.$cursor ? selection.$cursor.pos : selection.$to.pos
+      const node = type.create(attrs)
+      const transaction = state.tr.insert(position, node)
+      dispatch(transaction)
+    }
   }
 
   inputRules({ type }) {
@@ -177,3 +156,4 @@ export default class Image extends Node {
     ];
   }
 }
+

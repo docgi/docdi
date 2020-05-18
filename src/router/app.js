@@ -30,11 +30,6 @@ const router = new VueRouter({
           name: "Search"
         },
         {
-          path: "drafts",
-          component: () => import("@/views/app/ListDraft"),
-          name: "Drafts"
-        },
-        {
           path: "send-invitations",
           component: () => import("@/views/app/SendInvitation"),
           name: "SendInvitations"
