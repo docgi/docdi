@@ -1,31 +1,29 @@
 <template>
-  <div>
-    <div class="d-flex mt-6">
-      <div class="d-flex flex-column">
-        <div class="font-weight-bold">Avatar</div>
-        <div class="img-wrapper">
-          <v-avatar tile size="100" color="teal" style="border-radius: 7px;">
-            <img class="img-logo" v-if="user.avatar" :src="avatarPath" />
-            <span class="img-logo" v-else>No avatar</span>
-            <v-file-input
-              class="upload-button"
-              prepend-icon=""
-              append-outer-icon=""
-              placeholder="Upload"
-              accept="image/*"
-              @change="selectImage"
-            />
-          </v-avatar>
-        </div>
+  <div class="d-flex mt-6">
+    <div class="d-flex flex-column">
+      <div class="font-weight-bold">Avatar</div>
+      <div class="img-wrapper">
+        <v-avatar tile size="100" color="teal" style="border-radius: 7px;">
+          <img class="img-logo" v-if="user.avatar" :src="avatarPath" />
+          <span class="img-logo" v-else>No avatar</span>
+          <v-file-input
+            class="upload-button"
+            prepend-icon=""
+            append-outer-icon=""
+            placeholder="Upload"
+            accept="image/*"
+            @change="selectImage"
+          />
+        </v-avatar>
+      </div>
 
-        <div class="mt-6">
-          <div class="font-weight-bold">Username</div>
+      <div class="mt-6">
+        <div class="font-weight-bold">Username</div>
 
-          <v-text-field :error-messages="error.username" outlined dense v-model="user.username"></v-text-field>
-        </div>
-        <div class="d-flex">
-          <v-btn color="primary" small @click="update">Save</v-btn>
-        </div>
+        <v-text-field :error-messages="error.username" outlined dense v-model="user.username"></v-text-field>
+      </div>
+      <div class="d-flex">
+        <v-btn color="primary" small @click="update">Save</v-btn>
       </div>
     </div>
   </div>

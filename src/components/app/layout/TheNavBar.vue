@@ -65,11 +65,6 @@ export default {
             name: "Search",
             path: "/search",
             icon: "fa-search"
-          },
-          {
-            name: "My drafts",
-            path: "/drafts",
-            icon: "fa-pencil-alt"
           }
         ]
       }

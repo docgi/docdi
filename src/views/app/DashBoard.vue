@@ -9,33 +9,53 @@
         Dashboard
       </span>
     </div>
-    <v-tabs v-model="tab" color="basil">
-      <v-tab v-for="item in items" :key="item">
-        <span class="text-capitalize">{{ item }}</span>
+    <v-tabs v-model="tab">
+      <v-tab
+        v-for="(item, index) in tabItems"
+        :key="index"
+        class="justify-start pa-0 mr-4"
+        style="min-width: fit-content"
+      >
+        <span class="text-capitalize">{{ item.title }}</span>
       </v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
-      <v-tab-item v-for="item in items" :key="item">
-        <v-card color="basil" flat>
-          <v-card-text>{{ text }}</v-card-text>
-        </v-card>
+      <v-tab-item v-for="item in tabItems" :key="item.key">
+        <recently-update v-if="item.key === 'recently-update'" />
+        <my-drafts v-if="item.key === 'my-drafts'" />
       </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
 
 <script>
+import MyDrafts from "@/components/app/tabs/MyDrafts";
+import RecentlyUpdate from "@/components/app/tabs/RecentlyUpdate";
+
 export default {
   name: "Dashboard",
   metaInfo: {
     title: "Dashboard"
   },
+  components: {
+    MyDrafts,
+    RecentlyUpdate
+  },
   data() {
     return {
       tab: null,
-      items: ["Recently Update", "Your Draft"],
-      text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      tabItems: [
+        {
+          title: "Recently update",
+          key: "recently-update",
+          hash: ""
+        },
+        {
+          title: "My Drafts",
+          key: "my-drafts",
+          hash: "#mydrafts"
+        },
+      ],
     };
   }
 };

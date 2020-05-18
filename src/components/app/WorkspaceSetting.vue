@@ -1,28 +1,26 @@
 <template>
-  <div>
-    <div class="d-flex mt-6">
-      <div class="d-flex flex-column">
-        <div class="font-weight-bold">Workspace logo</div>
-        <div class="img-wrapper">
-          <v-avatar tile size="100" color="teal" style="border-radius: 7px;">
-            <img class="img-logo" v-if="workspace.logo" :src="logoPath" />
-            <span class="img-logo" v-else>No logo</span>
-            <v-file-input
-              class="upload-button"
-              prepend-icon=""
-              append-outer-icon=""
-              placeholder="Upload"
-              accept="image/*"
-              @change="selectLogo"
-            />
-          </v-avatar>
-        </div>
-
-        <div class="d-flex mt-6">
-          <v-btn color="primary" small @click="update">Save</v-btn>
-        </div>
-
+  <div class="d-flex mt-6">
+    <div class="d-flex flex-column">
+      <div class="font-weight-bold">Workspace logo</div>
+      <div class="img-wrapper">
+        <v-avatar tile size="100" color="teal" style="border-radius: 7px;">
+          <img class="img-logo" v-if="workspace.logo" :src="logoPath" />
+          <span class="img-logo" v-else>No logo</span>
+          <v-file-input
+            class="upload-button"
+            prepend-icon=""
+            append-outer-icon=""
+            placeholder="Upload"
+            accept="image/*"
+            @change="selectLogo"
+          />
+        </v-avatar>
       </div>
+
+      <div class="d-flex mt-6">
+        <v-btn color="primary" small @click="update">Save</v-btn>
+      </div>
+
     </div>
   </div>
 </template>

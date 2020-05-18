@@ -4,8 +4,8 @@
       <v-list-item
         v-for="(document, index) in documents"
         :key="index"
-        class="px-0 py-0 pos-relative mb-1 doc-item my-2"
-        style="margin: 0 -8px 0 -8px"
+        class="px-0 py-0 pos-relative mb-1 doc-item my-4"
+        style="margin-left: -8px; margin-right: -8px"
       >
         <router-link
           tag="div"
@@ -20,7 +20,9 @@
           </span>
             <span class="font-weight-thin" style="font-size: 0.75em;">
             Updated by
-            <v-chip label x-small>{{ document.creator.username }}</v-chip>
+            <v-chip label x-small>
+              {{ document.last_update_by ? document.last_update_by.username : document.creator.username }}
+            </v-chip>
             {{ beautyLastUpdate(document.modified) }}
           </span>
           </div>
