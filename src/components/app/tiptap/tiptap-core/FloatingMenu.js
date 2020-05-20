@@ -12,7 +12,6 @@ class Menu {
       ...options,
     }
     this.preventHide = false
-    this.lKey = null
     this.editorView = editorView
     this.isActive = false
     this.top = 0

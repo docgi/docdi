@@ -15,6 +15,15 @@
           icon
           small
           class="editor-bar-button header_text"
+          @click="commands.heading({ level: 1 })"
+        >
+          <span style="font-size: 1rem;">H1</span>
+        </v-btn>
+
+        <v-btn
+          icon
+          small
+          class="editor-bar-button header_text"
           @click="commands.heading({ level: 2 })"
         >
           <span style="font-size: 1rem;">H2</span>
@@ -77,6 +86,16 @@
         >
           <v-icon small class="fa fa-code" />
         </v-btn>
+
+        <label for="file-upload" class="custom-file-upload">
+          <v-icon small class="fa fa-image" />
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          accept="image/png, image/jpeg"
+          @change="onSelectImage($event, commands)"
+        />
       </div>
     </editor-floating-menu>
 
@@ -159,7 +178,6 @@ import {
 } from "tiptap";
 import Doc from "./tiptap-core/Doc";
 import Title from "./tiptap-core/Title";
-import Figcaption from "@/components/app/tiptap/tiptap-core/FigureCaption";
 import Figure from "@/components/app/tiptap/tiptap-core/Figure";
 
 import {
@@ -180,15 +198,17 @@ import {
   History,
   Strike,
   Underline,
-  HorizontalRule,
+  HorizontalRule
 } from "tiptap-extensions";
-import Image from "./tiptap-core/Image"
+import Image from "./tiptap-core/Image";
 
 async function upload(file) {
   let formData = new FormData();
-  formData.append('image', file);
-  const headers = {'Content-Type': 'multipart/form-data'};
-  const response = await axios.post('/document-images/', formData, {headers: headers} );
+  formData.append("image", file);
+  const headers = { "Content-Type": "multipart/form-data" };
+  const response = await axios.post("/document-images/", formData, {
+    headers: headers
+  });
   return response.data.src;
 }
 
@@ -223,7 +243,7 @@ export default {
           new BulletList(),
           new CodeBlock(),
           new HardBreak(),
-          new Heading({ levels: [2, 3] }),
+          new Heading({ levels: [1, 2, 3] }),
           new ListItem(),
           new OrderedList(),
           new TodoItem({ nested: true }),
@@ -235,7 +255,6 @@ export default {
           new Italic(),
           new History(),
           new Image(null, null, upload),
-          new Figcaption(),
           new Figure(),
           new HorizontalRule(),
           new Placeholder({
@@ -244,7 +263,7 @@ export default {
               if (node.type.name === "title") {
                 return "Untitled";
               }
-              return "Start typing..."
+              return "Start typing...";
             }
           })
         ],
@@ -255,7 +274,19 @@ export default {
       })
     };
   },
-  methods: {},
+  methods: {
+    async onSelectImage(event, commands) {
+      try {
+        let res = await upload(event.target.files[0]);
+        commands.image({
+          src: res
+        });
+      } catch (error) {
+        // Todo
+        console.log(error);
+      }
+    }
+  },
   watch: {
     editable() {
       this.editor.setOptions({
@@ -268,3 +299,17 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  height: 28px;
+  width: 28px;
+  padding: 0.2rem 0.5rem;
+  margin-right: 0.2rem;
+}
+</style>

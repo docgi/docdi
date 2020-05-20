@@ -10,7 +10,7 @@ export default class Figure extends Node {
   get schema() {
     /* eslint-disable */
     return {
-      content: "image figcaption",
+      content: "image",
       group: "block",
       parseDOM: [{tag: "figure"}],
       toDOM: node => ["figure", 0],
