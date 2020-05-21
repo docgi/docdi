@@ -1,5 +1,5 @@
 <template>
-  <div class="d-inline-flex">
+  <div class="d-inline-flex flex-row-reverse">
     <user-display
       v-for="(user, key) in users"
       :user="user"

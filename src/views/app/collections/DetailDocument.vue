@@ -8,8 +8,18 @@
             :disabled="item.disabled"
             style="padding-top: 7px"
           >
-            {{ item.text }}
+            <div class="d-flex">
+              <v-icon size="20" :color="item.color" v-if="item.isCollection">
+                {{ "fa-folder-open" }}
+              </v-icon>
+              <span style="margin-top: 5px;" class="ml-2">
+                {{ item.name }}
+              </span>
+            </div>
           </v-breadcrumbs-item>
+        </template>
+        <template v-slot:divider>
+          <div style="padding-top: 12px">/</div>
         </template>
       </v-breadcrumbs>
       <div class="ml-auto d-flex align-center">
@@ -130,7 +140,7 @@
 import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
 import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog";
 import { UPDATE_DOCUMENT } from "@/store/mutations.type";
-import ListUserDisplay from "@/components/app/tiptap/ListUserDisplay";
+import ListUserDisplay from "@/components/app/ListUserDisplay";
 
 export default {
   name: "DetailDocument",
@@ -264,14 +274,17 @@ export default {
       if (this.collection) {
         return [
           {
-            text: this.collection.name,
+            name: this.collection.name,
             disabled: false,
-            to: { name: "DetailCollection", params: { id: this.collection.id } }
+            to: { name: "DetailCollection", params: { id: this.collection.id } },
+            isCollection: true,
+              color: this.collection.color,
           },
           {
-            text: this.document.name,
+            name: this.document.name,
             disabled: true,
-            to: { name: "DetailCollection", params: { id: this.collection.id } }
+            to: { name: "DetailCollection", params: { id: this.collection.id } },
+            isCollection: false
           }
         ];
       }

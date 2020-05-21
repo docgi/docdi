@@ -8,8 +8,19 @@
             exact
             style="padding-top: 7px"
           >
-            {{ item.name }}
+            <div class="d-flex">
+              <v-icon size="20" :color="item.color">
+                {{ "fa-folder-open" }}
+              </v-icon>
+              <span style="margin-top: 5px;" class="ml-2">
+                {{ item.name }}
+              </span>
+            </div>
+
           </v-breadcrumbs-item>
+        </template>
+        <template v-slot:divider>
+          <div style="padding-top: 7px">/</div>
         </template>
       </v-breadcrumbs>
       <div class="ml-auto">

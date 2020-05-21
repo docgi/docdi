@@ -166,9 +166,8 @@ const mutations = {
   [UPDATE_DOCUMENT](state, document) {
     for (let col of state.collections) {
       if (col.id === document.collection) {
-        // Todo
-        col.children = col.children.filter(item => item.id !== document.id);
-        col.children.push(document);
+        let index = col.children.findIndex(item => item.id === document.id);
+        col.children[index] = {...document};
       }
     }
   }
