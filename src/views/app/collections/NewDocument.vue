@@ -1,12 +1,13 @@
 <template>
   <div>
     <v-app-bar fixed flat color="white" class="app-bar-fixed">
-      <v-btn icon small>
-        <v-icon class="fa fa-chevron-left" small/>
-      </v-btn>
-      <v-breadcrumbs :items="[{...collection, exact: false}]">
+      <v-breadcrumbs :items="[{ ...collection, exact: true }]">
         <template v-slot:item="{ item }">
-          <v-breadcrumbs-item :to="{ name: 'DetailCollection', params: { id: item.id }}">
+          <v-breadcrumbs-item
+            :to="{ name: 'DetailCollection', params: { id: item.id } }"
+            exact
+            style="padding-top: 7px"
+          >
             {{ item.name }}
           </v-breadcrumbs-item>
         </template>
@@ -17,7 +18,7 @@
           outlined
           color="primary"
           class="mr-2 text-capitalize"
-          @click="createDoc({draft: true})"
+          @click="createDoc({ draft: true })"
         >
           Save as draft
         </v-btn>
@@ -25,7 +26,7 @@
           small
           color="primary"
           class="mr-2 text-capitalize"
-          @click="createDoc({draft: false})"
+          @click="createDoc({ draft: false })"
         >
           Save
         </v-btn>
@@ -70,7 +71,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
   </div>
 </template>
 
@@ -89,7 +89,7 @@ export default {
       jsonContent: null,
       htmlContent: "",
       showConfirmLeave: false,
-      resolveLeave: null,
+      resolveLeave: null
     };
   },
   created() {
@@ -125,7 +125,7 @@ export default {
       this.showConfirmLeave = true;
       return new Promise(resolve => {
         this.resolveLeave = resolve;
-      })
+      });
     },
     yesLeave() {
       this.showConfirmLeave = false;

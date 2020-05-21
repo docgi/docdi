@@ -3,7 +3,11 @@
     <v-app-bar fixed flat color="white" class="app-bar-fixed" hide-on-scroll>
       <v-breadcrumbs :items="breadcrumbs">
         <template v-slot:item="{ item }">
-          <v-breadcrumbs-item :to="item.to" :disabled="item.disabled">
+          <v-breadcrumbs-item
+            :to="item.to"
+            :disabled="item.disabled"
+            style="padding-top: 7px"
+          >
             {{ item.text }}
           </v-breadcrumbs-item>
         </template>
@@ -91,7 +95,8 @@
     >
       <v-card>
         <v-card-title>
-          You have unsaved changes in <strong class="ml-2">{{ document.name }}</strong>
+          You have unsaved changes in
+          <strong class="ml-2">{{ document.name }}</strong>
         </v-card-title>
         <v-card-text>
           Discard them?
@@ -286,7 +291,7 @@ export default {
             .catch(error => {
               // Todo
               console.log(error);
-            })
+            });
         }
       });
     } else {
