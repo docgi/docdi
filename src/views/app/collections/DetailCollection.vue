@@ -59,7 +59,7 @@
       <v-tab-item v-for="(item, index) in tabItems" :key="index">
         <v-card flat class="px-0">
           <v-card-text
-            v-if="item.title === 'Docs'"
+            v-if="item.title === 'Documents'"
             class="d-flex justify-center px-0"
           >
             <div v-if="collection.children.length === 0">
@@ -126,16 +126,14 @@ export default {
       showUpdateDialog: false,
       tabItems: [
         {
-          title: "Docs",
-          hash: ""
+          title: "Documents",
+          hash: "",
+          key: "DOCUMENTS"
         },
         {
           title: "Recently update",
-          hash: "recently-update"
-        },
-        {
-          title: "Search",
-          hash: "search"
+          hash: "recently-update",
+          key: "RECENTLY-UPDATE"
         }
       ],
       menuItems: [

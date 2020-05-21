@@ -28,6 +28,9 @@ const getters = {
   },
   getCollectionById: state => id => {
     return state.collections.find(collection => collection.id === id);
+  },
+  getCollectionsForSelect() {
+    return state.collections.filter(item => item);
   }
 };
 

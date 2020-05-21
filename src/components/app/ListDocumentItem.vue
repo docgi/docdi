@@ -4,8 +4,8 @@
       <v-list-item
         v-for="(document, index) in documents"
         :key="index"
-        class="px-0 py-0 pos-relative mb-1 doc-item my-4"
-        style="margin-left: -8px; margin-right: -8px"
+        class="px-0 py-0 pos-relative doc-item my-2"
+        style="margin-left: -8px; margin-right: -8px; height: 60px;"
       >
         <router-link
           tag="div"

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <list-document-item v-if="docs" :documents="docs" />
+  <div class="d-flex justify-center">
+    <list-document-item v-if="docs.length > 0" :documents="docs" />
     <div v-if="docs.length === 0">
       Nothing happened
     </div>

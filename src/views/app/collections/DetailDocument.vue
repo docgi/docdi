@@ -8,7 +8,18 @@
           </v-breadcrumbs-item>
         </template>
       </v-breadcrumbs>
-      <div class="ml-auto">
+      <div class="ml-auto d-flex align-center">
+        <list-user-display :users="document.contributors" />
+        <v-divider class="mx-2" vertical />
+        <v-btn
+          small
+          color="primary"
+          class="mr-2 text-capitalize"
+          @click="editable = true"
+          v-if="!editable"
+        >
+          Edit
+        </v-btn>
         <v-btn
           small
           color="primary"
@@ -70,6 +81,43 @@
       :show="showDeleteDialog"
       @hide="showDeleteDialog = false"
     />
+
+    <v-dialog
+      @click:outside="noLeave"
+      @keydown.esc="noLeave"
+      width="500"
+      ref="confirmLeaveDialog"
+      v-model="showConfirmLeave"
+    >
+      <v-card>
+        <v-card-title>
+          You have unsaved changes in <strong class="ml-2">{{ document.name }}</strong>
+        </v-card-title>
+        <v-card-text>
+          Discard them?
+        </v-card-text>
+        <v-card-actions class="d-flex justify-center">
+          <v-btn
+            color="warning"
+            outlined
+            small
+            class="text-capitalize"
+            @click="yesLeave"
+          >
+            Yes
+          </v-btn>
+          <v-btn
+            color="green"
+            outlined
+            small
+            class="text-capitalize"
+            @click="noLeave"
+          >
+            No
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -77,13 +125,12 @@
 import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
 import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog";
 import { UPDATE_DOCUMENT } from "@/store/mutations.type";
+import ListUserDisplay from "@/components/app/tiptap/ListUserDisplay";
 
 export default {
   name: "DetailDocument",
-  metaInfo: {
-
-  },
-  components: { DocgiEditor, DeleteDocumentDialog },
+  metaInfo: {},
+  components: { ListUserDisplay, DocgiEditor, DeleteDocumentDialog },
   data() {
     return {
       document: null,
@@ -107,7 +154,9 @@ export default {
           }
         }
       ],
-      showDeleteDialog: false
+      showDeleteDialog: false,
+      showConfirmLeave: false,
+      resolveLeave: null
     };
   },
   async created() {
@@ -121,27 +170,39 @@ export default {
     }
   },
   methods: {
-    saveEditDoc(draft) {
+    resetData() {
       this.editable = false;
+      this.jsonContent = null;
+      this.htmlContent = null;
+    },
+    getDocument(documentId) {
+      return this.$http.get(`documents/${documentId}/`);
+    },
+    calculatePayload(draft) {
+      let payload = { draft };
+      if (this.docName) {
+        payload.name = this.docName;
+      }
+      if (this.jsonContent) {
+        payload.json_content = this.jsonContent;
+      }
+      if (this.htmlContent) {
+        payload.html_content = this.htmlContent;
+      }
+      return payload;
+    },
+    saveEditDoc(draft) {
       if (
         !this.docName &&
         !this.jsonContent &&
         !this.htmlContent &&
         draft === this.document.draft
       ) {
-        this.$notify({
-          group: "foo",
-          type: "success",
-          title: "Nothing update."
-        });
+        this.editable = false;
         return;
       }
-      let payload = {
-        name: this.docName,
-        json_content: this.jsonContent,
-        html_content: this.htmlContent,
-        draft: draft
-      };
+
+      let payload = this.calculatePayload(draft);
       this.$http
         .put(`documents/${this.document.id}/`, payload)
         .then(response => {
@@ -155,6 +216,7 @@ export default {
           this.htmlContent = "";
           this.document = response.data;
           this.$store.commit(UPDATE_DOCUMENT, response.data);
+          this.editable = false;
         })
         .catch(error => {
           // Todo
@@ -164,6 +226,20 @@ export default {
     onChangeContent({ json, html }) {
       this.jsonContent = json;
       this.htmlContent = html;
+    },
+    showLeaveDialog() {
+      this.showConfirmLeave = true;
+      return new Promise(resolve => {
+        this.resolveLeave = resolve;
+      });
+    },
+    yesLeave() {
+      this.showConfirmLeave = false;
+      this.resolveLeave(true);
+    },
+    noLeave() {
+      this.showConfirmLeave = false;
+      this.resolveLeave(false);
     }
   },
   computed: {
@@ -198,13 +274,39 @@ export default {
     }
   },
   async beforeRouteUpdate(to, from, next) {
-    try {
-      let response = await this.$http.get(`documents/${to.params.id}/`);
-      this.document = response.data;
-    } catch (e) {
-      console.log(e); // Todo
+    if (this.docName || this.htmlContent || this.jsonContent) {
+      this.showLeaveDialog().then(answer => {
+        if (answer) {
+          this.getDocument(to.params.id)
+            .then(response => {
+              this.document = response.data;
+              this.resetData();
+              next();
+            })
+            .catch(error => {
+              // Todo
+              console.log(error);
+            })
+        }
+      });
+    } else {
+      try {
+        let response = await this.getDocument(to.params.id);
+        this.document = response.data;
+      } catch (e) {
+        console.log(e); // Todo
+      }
+      next();
     }
-    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.docName || this.htmlContent || this.jsonContent) {
+      this.showLeaveDialog().then(answer => {
+        next(answer);
+      });
+    } else {
+      next();
+    }
   }
 };
 </script>
