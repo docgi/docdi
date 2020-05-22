@@ -11,85 +11,65 @@
         :class="{ 'is-active': menu.isActive }"
         :style="`top: ${menu.top - 6}px`"
       >
-        <v-btn
-          icon
-          small
-          class="editor-bar-button header_text"
+        <menu-button
           @click="commands.heading({ level: 1 })"
+          tooltip-text="Heading 1"
         >
-          <span style="font-size: 1rem;">H1</span>
-        </v-btn>
+          H1
+        </menu-button>
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button header_text"
+        <menu-button
           @click="commands.heading({ level: 2 })"
+          tooltip-text="Heading 2"
         >
-          <span style="font-size: 1rem;">H2</span>
-        </v-btn>
+          H2
+        </menu-button>
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button header_text"
+        <menu-button
           @click="commands.heading({ level: 3 })"
+          tooltip-text="Heading 3"
         >
-          <span style="font-size: 1rem;">H3</span>
-        </v-btn>
+          H3
+        </menu-button>
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
-          :class="{ 'is-active': isActive.blockquote() }"
+        <menu-button
           @click="commands.blockquote"
-        >
-          <v-icon small class="fa fa-quote-right" />
-        </v-btn>
+          fa-class="fa-quote-right"
+          tooltip-text="Quote"
+        />
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
+        <menu-button
           @click="commands.horizontal_rule"
-        >
-          <v-icon small class="fa fa-window-minimize" />
-        </v-btn>
+          tooltip-text="Split"
+          fa-class="fa-window-minimize"
+        />
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
-          :class="{ 'is-active': isActive.bullet_list() }"
+        <menu-button
           @click="commands.bullet_list"
-        >
-          <v-icon small class="fa fa-list-ul" />
-        </v-btn>
+          tooltip-text="Bullet List"
+          fa-class="fa-list-ul"
+        />
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
-          :class="{ 'is-active': isActive.ordered_list() }"
+        <menu-button
           @click="commands.ordered_list"
-        >
-          <v-icon small class="fa fa-list-ol" />
-        </v-btn>
+          tooltip-text="Ordered List"
+          fa-class="fa-list-ol"
+        />
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
-          :class="{ 'is-active': isActive.code_block() }"
+        <menu-button
           @click="commands.code_block"
-        >
-          <v-icon small class="fa fa-code" />
-        </v-btn>
+          tooltip-text="Code block"
+          fa-class="fa-code"
+        />
 
-        <label for="file-upload" class="custom-file-upload">
-          <v-icon small class="fa fa-image" />
-        </label>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <label for="file-upload" class="custom-file-upload" v-on="on" style="padding-left: 5px">
+              <v-icon small class="fa fa-image" />
+            </label>
+          </template>
+          <span>Image</span>
+        </v-tooltip>
         <input
           id="file-upload"
           type="file"
@@ -111,55 +91,41 @@
         :class="{ 'is-active': menu.isActive }"
         :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`"
       >
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
-          :class="{ 'is-active': isActive.bold() }"
+        <menu-button
+          :is-active="isActive.bold()"
           @click="commands.bold"
-        >
-          <v-icon small class="fa fa-bold" />
-        </v-btn>
+          fa-class="fa-bold"
+          tooltip-text="Bold"
+        />
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
-          :class="{ 'is-active': isActive.italic() }"
+        <menu-button
+          :is-active="isActive.italic()"
           @click="commands.italic"
-        >
-          <v-icon small class="fa fa-italic" />
-        </v-btn>
+          fa-class="fa-italic"
+          tooltip-text="Italic"
+        />
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
-          :class="{ 'is-active': isActive.strike() }"
+        <menu-button
+          :is-active="isActive.strike()"
           @click="commands.strike"
-        >
-          <v-icon small class="fa fa-strikethrough" />
-        </v-btn>
+          fa-class="fa-strikethrough"
+          tooltip-text="Strike"
+        />
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
-          :class="{ 'is-active': isActive.underline() }"
+        <menu-button
+          :is-active="isActive.underline()"
           @click="commands.underline"
-        >
-          <v-icon small class="fa fa-underline" />
-        </v-btn>
+          fa-class="fa-underline"
+          tooltip-text="Underline"
+        />
 
-        <v-btn
-          icon
-          small
-          class="editor-bar-button"
-          :class="{ 'is-active': isActive.code() }"
+        <menu-button
+          :is-active="isActive.code()"
           @click="commands.code"
-        >
-          <v-icon small class="fa fa-code" />
-        </v-btn>
+          fa-class="fa-code"
+          tooltip-text="Inline code"
+        />
+
       </div>
     </editor-menu-bubble>
 
@@ -179,6 +145,7 @@ import {
 import Doc from "./tiptap-core/Doc";
 import Title from "./tiptap-core/Title";
 import Figure from "@/components/app/tiptap/tiptap-core/Figure";
+import MenuButton from "@/components/app/tiptap/tiptap-core/MenuButton";
 
 import {
   Placeholder,
@@ -227,7 +194,8 @@ export default {
   components: {
     EditorContent,
     EditorFloatingMenu,
-    EditorMenuBubble
+    EditorMenuBubble,
+    MenuButton
   },
   data() {
     return {
@@ -300,8 +268,10 @@ export default {
 };
 </script>
 
-<style scoped>
-input[type="file"] {
+<style scoped lang="scss">
+$color-black: #000000;
+
+input[id="file-upload"] {
   display: none;
 }
 .custom-file-upload {
@@ -309,7 +279,11 @@ input[type="file"] {
   cursor: pointer;
   height: 28px;
   width: 28px;
-  padding: 0.2rem 0.5rem;
-  margin-right: 0.2rem;
+  margin-left: auto;
+  margin-right: auto;
+
+  &:hover {
+    background-color: rgba($color-black, 0.05);
+  }
 }
 </style>

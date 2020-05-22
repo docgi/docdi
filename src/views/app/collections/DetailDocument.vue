@@ -278,7 +278,7 @@ export default {
             disabled: false,
             to: { name: "DetailCollection", params: { id: this.collection.id } },
             isCollection: true,
-              color: this.collection.color,
+            color: this.collection.color,
           },
           {
             name: this.document.name,

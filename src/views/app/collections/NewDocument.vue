@@ -1,28 +1,25 @@
 <template>
   <div>
     <v-app-bar fixed flat color="white" class="app-bar-fixed">
-      <v-breadcrumbs :items="[{ ...collection, exact: true }]">
+      <v-breadcrumbs :items="breadcrumbs">
         <template v-slot:item="{ item }">
-          <v-breadcrumbs-item
-            :to="{ name: 'DetailCollection', params: { id: item.id } }"
-            exact
-            style="padding-top: 7px"
-          >
+          <v-breadcrumbs-item :to="item.to" exact style="padding-top: 7px">
             <div class="d-flex">
-              <v-icon size="20" :color="item.color">
+              <v-icon v-if="item.is_collection" size="20" :color="item.color">
                 {{ "fa-folder-open" }}
               </v-icon>
               <span style="margin-top: 5px;" class="ml-2">
                 {{ item.name }}
               </span>
             </div>
-
           </v-breadcrumbs-item>
         </template>
+
         <template v-slot:divider>
-          <div style="padding-top: 7px">/</div>
+          <div style="padding-top: 12px">/</div>
         </template>
       </v-breadcrumbs>
+
       <div class="ml-auto">
         <v-btn
           small
@@ -100,7 +97,8 @@ export default {
       jsonContent: null,
       htmlContent: "",
       showConfirmLeave: false,
-      resolveLeave: null
+      resolveLeave: null,
+      document: null
     };
   },
   created() {
@@ -122,10 +120,10 @@ export default {
       this.$store
         .dispatch(CREATE_NEW_DOCUMENT, payload)
         .then(response => {
-          let documentId = response.data.id;
+          this.document = response.data;
           this.$router.push({
             name: "DetailDocument",
-            params: { id: documentId }
+            params: { id: this.document.id }
           });
         })
         .catch(err => {
@@ -149,16 +147,57 @@ export default {
   },
   computed: {
     docName() {
-      if (this.jsonContent) {
+      if (
+        this.jsonContent &&
+        this.jsonContent.content[0].type === "title" &&
+        this.jsonContent.content[0].content &&
+        this.jsonContent.content[0].content.length > 0 &&
+        Object.hasOwnProperty.call(
+          this.jsonContent.content[0].content[0],
+          "text"
+        )
+      ) {
         return this.jsonContent.content[0].content[0].text;
       }
       return "";
     },
     collection() {
       return this.$store.getters.getCollectionById(this.collectionId);
+    },
+    breadcrumbs() {
+      if (this.collection) {
+        return [
+          {
+            name: this.collection.name,
+            disabled: false,
+            to: {
+              name: "DetailCollection",
+              params: { id: this.collection.id }
+            },
+            is_collection: true,
+            color: this.collection.color
+          },
+          {
+            name: this.docName,
+            disabled: true,
+            to: "",
+            is_collection: false
+          }
+        ];
+      }
+      return [];
     }
   },
   beforeRouteLeave(to, from, next) {
+    // Ignore show dialog confirm leave when save document
+    if (
+      this.document &&
+      to.name === "DetailDocument" &&
+      to.params.id === this.document.id
+    ) {
+      next(true);
+    }
+
     if (this.docName || this.htmlContent || this.jsonContent) {
       this.showLeaveDialog().then(answer => {
         next(answer);

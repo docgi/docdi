@@ -59,10 +59,6 @@ export const isValidEmail = (email) => {
   return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
 };
 
-export const isEscKey = (kbEvent) => {
-  return kbEvent.key === "Escape";
-};
-
 export const getUpdatedText = (date) => {
   if (date) {
     let diff = new Date(new Date().getTime() - new Date(date).getTime());
