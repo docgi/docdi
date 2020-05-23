@@ -178,8 +178,8 @@
     }
   }
 
-  *.is-empty:nth-child(1)::before,
-  *.is-empty:nth-child(2)::before {
+  h1.is-empty:nth-child(1)::before,
+  p.is-empty:nth-child(2)::before {
     content: attr(data-empty-text);
     float: left;
     color: #aaa;

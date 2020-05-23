@@ -84,7 +84,8 @@
       v-if="editable"
       :editor="editor"
       :keep-in-bounds="keepInBounds"
-      v-slot="{ commands, isActive, menu }"
+      v-slot="{ commands, isActive, menu, getMarkAttrs}"
+      @hide="hideLinkMenu"
     >
       <div
         class="menububble"
@@ -126,7 +127,24 @@
           tooltip-text="Inline code"
         />
 
+        <form class="menububble__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
+          <input class="menububble__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
+          <button class="menububble__button" @click="setLinkUrl(commands.link, null)" type="button">
+            <v-icon x-small class="fa fa-remove"/>
+          </button>
+        </form>
+        <template v-else>
+          <menu-button
+            @click="showLinkMenu(getMarkAttrs('link'))"
+            fa-class="fa-link"
+            :is-active="isActive.link()"
+            :tooltip-text="isActive.link() ? 'Update Link' : 'Add Link'"
+          >
+          </menu-button>
+        </template>
+
       </div>
+
     </editor-menu-bubble>
 
     <!--  Editor  -->
@@ -239,7 +257,9 @@ export default {
         onUpdate: ({ getJSON, getHTML }) => {
           this.$emit("onChangeContent", { json: getJSON(), html: getHTML() });
         }
-      })
+      }),
+      linkUrl: null,
+      linkMenuIsActive: false,
     };
   },
   methods: {
@@ -253,7 +273,22 @@ export default {
         // Todo
         console.log(error);
       }
-    }
+    },
+    showLinkMenu(attrs) {
+      this.linkUrl = attrs.href
+      this.linkMenuIsActive = true
+      this.$nextTick(() => {
+        this.$refs.linkInput.focus()
+      })
+    },
+    hideLinkMenu() {
+      this.linkUrl = null
+      this.linkMenuIsActive = false
+    },
+    setLinkUrl(command, url) {
+      command({ href: url })
+      this.hideLinkMenu()
+    },
   },
   watch: {
     editable() {
