@@ -64,7 +64,7 @@
 
         <v-tooltip top>
           <template v-slot:activator="{ on }">
-            <label for="file-upload" class="custom-file-upload" v-on="on" style="padding-left: 5px">
+            <label for="file-upload" class="label" v-on="on" style="padding-left: 5px">
               <v-icon small class="fa fa-image" />
             </label>
           </template>
@@ -309,7 +309,7 @@ $color-black: #000000;
 input[id="file-upload"] {
   display: none;
 }
-.custom-file-upload {
+.label {
   display: inline-block;
   cursor: pointer;
   height: 28px;

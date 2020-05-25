@@ -2,64 +2,87 @@
   <div class="d-flex mt-6">
     <div class="d-flex flex-column">
       <div class="font-weight-bold">Workspace logo</div>
-      <div class="img-wrapper">
-        <v-avatar tile size="100" color="teal" style="border-radius: 7px;">
-          <img class="img-logo" v-if="workspace.logo" :src="logoPath" />
-          <span class="img-logo" v-else>No logo</span>
-          <v-file-input
-            class="upload-button"
-            prepend-icon=""
-            append-outer-icon=""
-            placeholder="Upload"
-            accept="image/*"
-            @change="selectLogo"
-          />
+      <v-hover v-slot:default="{ hover }">
+        <v-avatar
+          tile
+          size="100"
+          style="border-radius: 7px;"
+          class="d-flex flex-column"
+        >
+          <v-img :src="getSrcLogo">
+            <v-expand-transition>
+              <div
+                v-if="hover"
+                class="d-flex transition-fast-in-fast-out align-center fill-height justify-center w-full"
+              >
+                <label for="file-upload" class="label">
+                  Change
+                </label>
+                <input
+                  id="file-upload"
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  @change="selectLogo($event)"
+                />
+              </div>
+            </v-expand-transition>
+          </v-img>
         </v-avatar>
-      </div>
+      </v-hover>
 
       <div class="d-flex mt-6">
-        <v-btn color="primary" small @click="update">Save</v-btn>
+        <v-btn
+          class="text-capitalize"
+          color="primary"
+          small
+          @click="update"
+          :disabled="!selectedLogo"
+        >
+          Update
+        </v-btn>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
 import { UPDATE_WORKSPACE } from "@/store/actions.type";
+import { mapGetters } from "vuex";
 
 export default {
   name: "WorkspaceSetting",
   data() {
     return {
-      workspace: {
-        name: "",
-        logo: ""
-      }
+      selectedLogo: null
     };
   },
-  created() {
-    this.workspace = {...this.$store.state.base.workspace};
-  },
   computed: {
-    logoPath() {
-      if (typeof this.workspace.logo !== "string") {
-        return URL.createObjectURL(this.workspace.logo);
+    getSrcLogo() {
+      if (this.selectedLogo) {
+        return URL.createObjectURL(this.selectedLogo);
       }
       return this.workspace.logo;
-    }
+    },
+    ...mapGetters({ workspace: "currentWorkspace" })
   },
   methods: {
-    selectLogo(file) {
-      this.workspace.logo = file;
+    selectLogo(event) {
+      if (event.target.files.length > 0) {
+        this.selectedLogo = event.target.files[0];
+      }
     },
     async update() {
       try {
-        await this.$store.dispatch(UPDATE_WORKSPACE, this.workspace);
+        if (this.selectedLogo) {
+          let payload = {
+            logo: this.selectedLogo
+          };
+          await this.$store.dispatch(UPDATE_WORKSPACE, payload);
+        }
       } catch (e) {
         console.log(e);
       } finally {
-        this.workspace = {...this.$store.state.base.workspace};
+        this.selectedLogo = null;
       }
     }
   }
@@ -67,41 +90,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.img-wrapper {
-  .upload-button {
-    transition: 0.5s ease;
-    opacity: 0;
-    top: 50%;
-    left: 65%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-
-    ::v-deep .v-file-input__text--placeholder {
-      color: white;
-    }
-    ::v-deep .v-text-field__slot {
-      text-align: center;
-    }
-    ::v-deep .v-input__slot {
-      cursor: pointer;
-      &:before {
-        border: none;
-      }
-      &:after {
-        border: none;
-      }
-    }
-  }
-
-  &:hover {
-    .img-logo {
-      opacity: 0.2;
-    }
-    .upload-button {
-      opacity: 1;
-    }
-  }
+input[id="file-upload"] {
+  display: none;
+}
+.label {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  background-color: white;
+  border-radius: 3px;
 }
 </style>
