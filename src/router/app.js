@@ -91,6 +91,11 @@ const router = new VueRouter({
           name: "ResetPassword"
         }
       ]
+    },
+    {
+      path: "*",
+      component: () => import("@/views/app/InAppNotFound"),
+      name: "InAppNotFound"
     }
   ]
 });

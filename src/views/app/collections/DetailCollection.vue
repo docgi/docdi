@@ -110,6 +110,7 @@
 import DeleteCollectionDialog from "@/components/app/dialogs/DeleteCollectionDialog";
 import UpdateCollectionDialog from "@/components/app/dialogs/UpdateCollectionDialog";
 import ListDocumentItem from "@/components/app/ListDocumentItem";
+import {SET_TREE_VIEW_OPEN_COLLECTIONS} from "@/store/mutations.type";
 
 export default {
   name: "DetailCollection",
@@ -177,6 +178,7 @@ export default {
   },
   mounted() {
     this.collectionId = this.$route.params.id;
+    this.$store.commit(SET_TREE_VIEW_OPEN_COLLECTIONS, [this.collectionId]);
   },
   beforeRouteUpdate(to, from, next) {
     this.collectionId = to.params.id;

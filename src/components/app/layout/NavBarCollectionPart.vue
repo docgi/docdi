@@ -10,6 +10,7 @@
         expand-icon="fa-angle-down"
         :items="collections"
         class="v-tree-custom"
+        :open.sync="openCollections"
       >
         <template v-slot:label="{ item, open }">
           <!--     is collection     -->
@@ -58,7 +59,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { LOAD_ROOT_COLLECTIONS } from "@/store/actions.type";
-import { SET_DIALOG } from "@/store/mutations.type";
+import {SET_DIALOG, SET_TREE_VIEW_OPEN_COLLECTIONS} from "@/store/mutations.type";
 
 export default {
   name: "NavBarCollectionPart",
@@ -66,7 +67,19 @@ export default {
     this.$store.dispatch(LOAD_ROOT_COLLECTIONS);
   },
   computed: {
-    ...mapGetters({ getDrawer: "getDrawer", collections: "getCollections" })
+    ...mapGetters({
+      getDrawer: "getDrawer",
+      collections: "getCollections",
+      getterOpenCollections: "getTreeViewOpenCollections"
+    }),
+    openCollections: {
+      get() {
+        return this.getterOpenCollections;
+      },
+      set(collections) {
+        this.$store.commit(SET_TREE_VIEW_OPEN_COLLECTIONS, collections);
+      }
+    }
   },
   methods: {
     showNewCollectionDialog() {

@@ -15,11 +15,14 @@ import {
   SET_ACTIVE,
   SET_COLLECTIONS,
   UPDATE_COLLECTION,
-  DELETE_DOCUMENT, UPDATE_DOCUMENT
+  DELETE_DOCUMENT,
+  UPDATE_DOCUMENT,
+  SET_TREE_VIEW_OPEN_COLLECTIONS
 } from "@/store/mutations.type";
 
 const state = {
-  collections: []
+  collections: [],
+  treeViewOpenCollections: []
 };
 
 const getters = {
@@ -29,8 +32,11 @@ const getters = {
   getCollectionById: state => id => {
     return state.collections.find(collection => collection.id === id);
   },
-  getCollectionsForSelect() {
+  getCollectionsForSelect(state) {
     return state.collections.filter(item => item);
+  },
+  getTreeViewOpenCollections(state) {
+    return state.treeViewOpenCollections;
   }
 };
 
@@ -170,6 +176,9 @@ const mutations = {
         col.children[index] = {...document};
       }
     }
+  },
+  [SET_TREE_VIEW_OPEN_COLLECTIONS](state, collectionIds) {
+    state.treeViewOpenCollections = collectionIds;
   }
 };
 

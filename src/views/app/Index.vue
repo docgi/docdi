@@ -9,6 +9,7 @@
         </div>
       </v-container>
     </v-content>
+
     <new-collection-dialog />
     <notifications position="bottom right" group="foo" />
   </div>
