@@ -6,7 +6,11 @@
       :size="size"
       :key="key"
       :style="overlay ? 'margin-left: -10px' : ''"
-    />
+    >
+      <slot name="tooltip" v-bind:user="user">
+        {{ user.username }}
+      </slot>
+    </user-display>
   </div>
 </template>
 

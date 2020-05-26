@@ -7,7 +7,11 @@
           <span v-else class="white--text headline">{{ user.username }}</span>
         </v-avatar>
       </template>
-      <span>{{ user.username }}</span>
+      <span>
+        <slot>
+          {{ user.username }}
+        </slot>
+      </span>
     </v-tooltip>
   </div>
 </template>

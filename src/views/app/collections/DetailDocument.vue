@@ -23,7 +23,11 @@
         </template>
       </v-breadcrumbs>
       <div class="ml-auto d-flex align-center">
-        <list-user-display :users="document.contributors" />
+        <list-user-display :users="document.contributors">
+          <template v-slot:tooltip="{ user }">
+            {{ user.email }}
+          </template>
+        </list-user-display>
         <v-divider class="mx-2" vertical />
         <v-btn
           small
