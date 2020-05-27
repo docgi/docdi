@@ -131,11 +131,6 @@ export default {
           hash: "",
           key: "DOCUMENTS"
         },
-        {
-          title: "Recently update",
-          hash: "recently-update",
-          key: "RECENTLY-UPDATE"
-        }
       ],
       menuItems: [
         {

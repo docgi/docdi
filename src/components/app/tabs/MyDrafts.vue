@@ -1,9 +1,13 @@
 <template>
-  <div class="d-flex justify-center">
+  <div class="d-flex justify-center align-center">
     <list-document-item v-if="drafts.length > 0" :documents="drafts" />
-    <div v-if="drafts.length === 0">
-      Nothing happened
-    </div>
+    <v-card v-if="drafts.length === 0" min-height="500" class="align-center d-flex" flat>
+      <v-card-text>
+        <div>
+          You have no draft documents
+        </div>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 

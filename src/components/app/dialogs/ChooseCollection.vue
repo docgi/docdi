@@ -64,3 +64,15 @@ export default {
   }
 };
 </script>
+
+
+<style lang="scss" scoped>
+.col-item {
+  cursor: pointer;
+  border-radius: 7px;
+
+  &:hover {
+    background-color: #e8e8e8;
+  }
+}
+</style>
