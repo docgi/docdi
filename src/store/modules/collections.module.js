@@ -32,9 +32,6 @@ const getters = {
   getCollectionById: state => id => {
     return state.collections.find(collection => collection.id === id);
   },
-  getCollectionsForSelect(state) {
-    return state.collections.filter(item => item);
-  },
   getTreeViewOpenCollections(state) {
     return state.treeViewOpenCollections;
   }

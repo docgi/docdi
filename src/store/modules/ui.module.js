@@ -8,7 +8,8 @@ const state = {
   drawer: isLargeScreen(),
   currentPath: "",
   dialog: {
-    newCollection: false
+    newCollection: false,
+    newDocument: false
   }
 };
 

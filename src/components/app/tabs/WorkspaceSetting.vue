@@ -61,7 +61,7 @@ export default {
       if (this.selectedLogo) {
         return URL.createObjectURL(this.selectedLogo);
       }
-      return this.workspace.logo;
+      return this.workspace.logo ? this.workspace.logo : "";
     },
     ...mapGetters({ workspace: "currentWorkspace" })
   },

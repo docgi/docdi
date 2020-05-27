@@ -1,5 +1,5 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+//   .BundleAnalyzerPlugin;
 
 module.exports = {
   devServer: {
@@ -8,7 +8,7 @@ module.exports = {
   css: {
     extract: { ignoreOrder: true },
   },
-  configureWebpack: {
-    plugins: [new BundleAnalyzerPlugin()]
-  }
+  // configureWebpack: {
+  //   plugins: [new BundleAnalyzerPlugin()]
+  // }
 };

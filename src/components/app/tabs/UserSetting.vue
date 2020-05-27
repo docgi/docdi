@@ -108,7 +108,7 @@ export default {
       if (this.avatar) {
         return URL.createObjectURL(this.avatar);
       }
-      return this.user.avatar;
+      return this.user.avatar ? this.user.avatar : "";
     }
   }
 };

@@ -26,6 +26,7 @@
             <v-select
               v-model="collection.color"
               :items="colors"
+              :value="collection.color"
               label="Color"
               outlined
               dense
@@ -71,7 +72,7 @@ export default {
       collection: {
         name: "",
         private: false,
-        color: "#4E5C6E"
+        color: DEFAULT_COLORS[0]
       },
       colors: DEFAULT_COLORS,
       error: {}

@@ -11,6 +11,7 @@
     </v-content>
 
     <new-collection-dialog />
+    <choose-collection />
     <notifications position="bottom right" group="foo" />
   </div>
 </template>
@@ -19,6 +20,7 @@
 import TheNavBar from "@/components/app/layout/TheNavBar";
 import TheAppBar from "@/components/app/layout/TheAppBar";
 import NewCollectionDialog from "@/components/app/dialogs/NewCollectionDialog";
+import ChooseCollection from "@/components/app/dialogs/ChooseCollection";
 
 export default {
   name: "AppIndex",
@@ -30,6 +32,7 @@ export default {
     TheNavBar,
     TheAppBar,
     NewCollectionDialog,
+    ChooseCollection,
   },
 };
 </script>

@@ -5,7 +5,7 @@
         <template v-slot:item="{ item }">
           <v-breadcrumbs-item :to="item.to" exact style="padding-top: 7px">
             <div class="d-flex">
-              <v-icon v-if="item.is_collection" size="20" :color="item.color">
+              <v-icon v-if="item.isCollection" size="20" :color="item.color">
                 {{ "fa-folder-open" }}
               </v-icon>
               <span style="margin-top: 5px;" class="ml-2">
@@ -85,6 +85,7 @@
 <script>
 import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
 import { CREATE_NEW_DOCUMENT } from "@/store/actions.type";
+import { SET_DRAWER } from "@/store/mutations.type";
 
 export default {
   name: "NewDocument",
@@ -102,6 +103,7 @@ export default {
     };
   },
   created() {
+    this.$store.commit(SET_DRAWER, false);
     this.collectionId = this.$route.params.collectionId;
   },
   methods: {
@@ -174,14 +176,14 @@ export default {
               name: "DetailCollection",
               params: { id: this.collection.id }
             },
-            is_collection: true,
+            isCollection: true,
             color: this.collection.color
           },
           {
             name: this.docName,
             disabled: true,
             to: "",
-            is_collection: false
+            isCollection: false
           }
         ];
       }
@@ -190,6 +192,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     // Ignore show dialog confirm leave when save document
+    this.$store.commit(SET_DRAWER, true);
     if (
       this.document &&
       to.name === "DetailDocument" &&

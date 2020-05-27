@@ -9,8 +9,15 @@
       <div
         class="editor__floating-menu"
         :class="{ 'is-active': menu.isActive }"
-        :style="`top: ${menu.top - 6}px`"
+        :style="`top: ${menu.top - 8}px`"
       >
+        <menu-button
+          @click="cl(getNodeAttrs)"
+          tooltip-text="Heading 1"
+        >
+          Cl
+        </menu-button>
+
         <menu-button
           @click="commands.heading({ level: 1 })"
           tooltip-text="Heading 1"
@@ -64,7 +71,12 @@
 
         <v-tooltip top>
           <template v-slot:activator="{ on }">
-            <label for="file-upload" class="label" v-on="on" style="padding-left: 5px">
+            <label
+              for="file-upload"
+              class="label"
+              v-on="on"
+              style="padding-left: 5px"
+            >
               <v-icon small class="fa fa-image" />
             </label>
           </template>
@@ -84,7 +96,7 @@
       v-if="editable"
       :editor="editor"
       :keep-in-bounds="keepInBounds"
-      v-slot="{ commands, isActive, menu, getMarkAttrs}"
+      v-slot="{ commands, isActive, menu, getMarkAttrs }"
       @hide="hideLinkMenu"
     >
       <div
@@ -97,6 +109,7 @@
           @click="commands.bold"
           fa-class="fa-bold"
           tooltip-text="Bold"
+          v-if="!linkMenuIsActive"
         />
 
         <menu-button
@@ -104,6 +117,7 @@
           @click="commands.italic"
           fa-class="fa-italic"
           tooltip-text="Italic"
+          v-if="!linkMenuIsActive"
         />
 
         <menu-button
@@ -111,6 +125,7 @@
           @click="commands.strike"
           fa-class="fa-strikethrough"
           tooltip-text="Strike"
+          v-if="!linkMenuIsActive"
         />
 
         <menu-button
@@ -118,6 +133,7 @@
           @click="commands.underline"
           fa-class="fa-underline"
           tooltip-text="Underline"
+          v-if="!linkMenuIsActive"
         />
 
         <menu-button
@@ -125,13 +141,22 @@
           @click="commands.code"
           fa-class="fa-code"
           tooltip-text="Inline code"
+          v-if="!linkMenuIsActive"
         />
 
-        <form class="menububble__form" v-if="linkMenuIsActive" @submit.prevent="setLinkUrl(commands.link, linkUrl)">
-          <input class="menububble__input" type="text" v-model="linkUrl" placeholder="https://" ref="linkInput" @keydown.esc="hideLinkMenu"/>
-          <button class="menububble__button" @click="setLinkUrl(commands.link, null)" type="button">
-            <v-icon x-small class="fa fa-remove"/>
-          </button>
+        <form
+          class="menububble__form"
+          v-if="linkMenuIsActive"
+          @submit.prevent="setLinkUrl(commands.link, linkUrl)"
+        >
+          <input
+            class="menububble__input"
+            type="text"
+            v-model="linkUrl"
+            placeholder="https://"
+            ref="linkInput"
+            @keydown.esc="hideLinkMenu"
+          />
         </form>
         <template v-else>
           <menu-button
@@ -142,9 +167,7 @@
           >
           </menu-button>
         </template>
-
       </div>
-
     </editor-menu-bubble>
 
     <!--  Editor  -->
@@ -157,13 +180,13 @@ import axios from "axios";
 import {
   EditorContent,
   Editor,
-  EditorFloatingMenu,
   EditorMenuBubble
 } from "tiptap";
 import Doc from "./tiptap-core/Doc";
 import Title from "./tiptap-core/Title";
 import Figure from "@/components/app/tiptap/tiptap-core/Figure";
 import MenuButton from "@/components/app/tiptap/tiptap-core/MenuButton";
+import EditorFloatingMenu from "@/components/app/tiptap/tiptap-core/EditorFloatingMenu";
 
 import {
   Placeholder,
@@ -259,10 +282,13 @@ export default {
         }
       }),
       linkUrl: null,
-      linkMenuIsActive: false,
+      linkMenuIsActive: false
     };
   },
   methods: {
+    cl(o) {
+      console.log(o);
+    },
     async onSelectImage(event, commands) {
       try {
         let res = await upload(event.target.files[0]);
@@ -275,20 +301,20 @@ export default {
       }
     },
     showLinkMenu(attrs) {
-      this.linkUrl = attrs.href
-      this.linkMenuIsActive = true
+      this.linkUrl = attrs.href;
+      this.linkMenuIsActive = true;
       this.$nextTick(() => {
-        this.$refs.linkInput.focus()
-      })
+        this.$refs.linkInput.focus();
+      });
     },
     hideLinkMenu() {
-      this.linkUrl = null
-      this.linkMenuIsActive = false
+      this.linkUrl = null;
+      this.linkMenuIsActive = false;
     },
     setLinkUrl(command, url) {
-      command({ href: url })
-      this.hideLinkMenu()
-    },
+      command({ href: url });
+      this.hideLinkMenu();
+    }
   },
   watch: {
     editable() {
