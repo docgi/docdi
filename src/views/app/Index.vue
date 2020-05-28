@@ -12,7 +12,7 @@
 
     <new-collection-dialog />
     <choose-collection />
-    <notifications position="bottom right" group="foo" />
+    <notifications position="bottom right" group="noti" />
   </div>
 </template>
 

@@ -272,7 +272,7 @@ export default {
               if (node.type.name === "title") {
                 return "Untitled";
               }
-              return "Start typing...";
+              return "Type / for show commands ...";
             }
           })
         ],

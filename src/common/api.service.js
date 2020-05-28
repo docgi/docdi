@@ -40,7 +40,7 @@ const ApiService = {
         let msgs = getErrorMsg(error.response.data);
         for (let index = 0; index < msgs.length; index++) {
           Vue.notify({
-            group: "foo",
+            group: "noti",
             type: "error",
             title: msgs[index]
           });
