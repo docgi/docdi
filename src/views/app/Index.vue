@@ -12,6 +12,7 @@
 
     <new-collection-dialog />
     <choose-collection />
+    <send-invitation />
     <notifications position="bottom right" group="noti" />
   </div>
 </template>
@@ -21,6 +22,7 @@ import TheNavBar from "@/components/app/layout/TheNavBar";
 import TheAppBar from "@/components/app/layout/TheAppBar";
 import NewCollectionDialog from "@/components/app/dialogs/NewCollectionDialog";
 import ChooseCollection from "@/components/app/dialogs/ChooseCollection";
+import SendInvitation from "@/components/app/dialogs/SendInvitations";
 
 export default {
   name: "AppIndex",
@@ -29,6 +31,7 @@ export default {
     titleTemplate: 'Docdi - %s'
   },
   components: {
+    SendInvitation,
     TheNavBar,
     TheAppBar,
     NewCollectionDialog,

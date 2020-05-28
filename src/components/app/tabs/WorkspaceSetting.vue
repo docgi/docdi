@@ -45,7 +45,7 @@
 
     <v-divider class="my-4" />
 
-    <v-card flat>
+    <v-card flat class="pa-0">
       <v-card-title>Members</v-card-title>
       <v-card-subtitle>
         <v-btn
@@ -53,7 +53,7 @@
           class="text-capitalize pa-0"
           color="primary"
           text
-          :to="{ name: 'SendInvitations' }"
+          @click="showSendInvitation"
         >
           <v-icon class="mr-2 fa fa-plus" small />
           Invite more
@@ -117,6 +117,7 @@ import { UPDATE_WORKSPACE } from "@/store/actions.type";
 import { mapGetters } from "vuex";
 import UserDisplay from "@/components/app/UserDisplay";
 import { WORKSPACE_MEMBER_ROLES } from "@/common/constants";
+import {SET_DIALOG} from "@/store/mutations.type";
 
 export default {
   name: "WorkspaceSetting",
@@ -178,6 +179,9 @@ export default {
       } finally {
         this.selectedLogo = null;
       }
+    },
+    showSendInvitation() {
+      this.$store.commit(SET_DIALOG, {sendInvitation: true});
     }
   }
 };

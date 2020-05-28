@@ -30,11 +30,6 @@ const router = new VueRouter({
           name: "Search"
         },
         {
-          path: "send-invitations",
-          component: () => import("@/views/app/SendInvitation"),
-            name: "SendInvitations"
-        },
-        {
           path: "settings",
           component: () => import("@/views/app/Settings"),
           name: "Settings"

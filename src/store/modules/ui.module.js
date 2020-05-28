@@ -9,7 +9,8 @@ const state = {
   currentPath: "",
   dialog: {
     newCollection: false,
-    newDocument: false
+    newDocument: false,
+    sendInvitation: false
   }
 };
 

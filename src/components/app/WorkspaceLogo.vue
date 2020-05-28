@@ -53,7 +53,6 @@ export default {
       showMenu: false,
       items: [
         { title: "Settings", path: "Settings", icon: "fa-cog" },
-        { title: "Invite members", path: "SendInvitations", icon: "fa-user" },
         { title: "Logout", path: "Logout", icon: "fa-sign-out-alt", color: "red lighten-2" },
       ]
     };
