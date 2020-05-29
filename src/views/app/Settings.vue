@@ -11,14 +11,14 @@
     </div>
 
     <v-tabs v-model="tab">
-      <v-tab v-for="(item, index) in items" :key="index">
+      <v-tab v-for="(item, index) in items" :key="index" class="pl-0">
         <span class="text-capitalize">{{ item.title }}</span>
       </v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="(item, index) in items" :key="index">
         <v-card flat>
-          <v-card-text>
+          <v-card-text class="px-0">
             <user-setting v-if="item.key === 'USER'" />
             <workspace-setting v-if="item.key === 'WORKSPACE'" />
           </v-card-text>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import UserSetting from "@/components/app/tabs/UserSetting";
+import UserSetting from "@/components/app/tabs/UserProfile";
 import WorkspaceSetting from "@/components/app/tabs/WorkspaceSetting";
 
 export default {

@@ -43,11 +43,11 @@
       </div>
     </div>
 
-    <v-divider class="my-4" />
+    <v-divider class="my-7" />
 
     <v-card flat class="pa-0">
-      <v-card-title>Members</v-card-title>
-      <v-card-subtitle>
+      <v-card-title class="pt-0 pl-0">Members</v-card-title>
+      <v-card-subtitle class="pa-0 pl-0">
         <v-btn
           small
           class="text-capitalize pa-0"
@@ -60,10 +60,10 @@
         </v-btn>
       </v-card-subtitle>
 
-      <v-card-text class="pa-0">
+      <v-card-text class="px-0 pt-4">
         <v-list>
           <v-list-item
-            v-for="(member, key) of members"
+            v-for="(member, key) of workspaceMembers"
             :key="key"
             class="d-flex"
           >
@@ -122,20 +122,6 @@ import {SET_DIALOG} from "@/store/mutations.type";
 export default {
   name: "WorkspaceSetting",
   components: { UserDisplay },
-  created() {
-    this.$http
-      .get("workspace/members/")
-      .then(res => {
-        this.members = res.data;
-      })
-      .catch(error => {
-        this.$notify({
-          group: "foo",
-          type: "error",
-          title: error.response.data // Todo
-        });
-      });
-  },
   data() {
     return {
       selectedLogo: null,
@@ -149,7 +135,13 @@ export default {
       }
       return this.workspace.logo ? this.workspace.logo : "";
     },
-    ...mapGetters({ workspace: "currentWorkspace" })
+    ...mapGetters({ workspace: "currentWorkspace"}),
+    workspaceMembers() {
+      if (this.$store.getters.workspaceMembers) {
+        return this.$store.getters.workspaceMembers;
+      }
+      return [];
+    }
   },
   methods: {
     selectLogo(event) {
@@ -159,7 +151,6 @@ export default {
     },
     getTextForRole(roleNumber) {
       for (const role of WORKSPACE_MEMBER_ROLES) {
-        console.log(role);
         if (role.value === roleNumber) {
           return role.text;
         }

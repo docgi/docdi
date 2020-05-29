@@ -1,11 +1,12 @@
 import Vue from "vue";
-import { SET_AUTH, SET_USER, SET_WORKSPACE } from "@/store/mutations.type";
+import {SET_AUTH, SET_USER, SET_WORKSPACE, SET_WORKSPACE_MEMBERS} from "@/store/mutations.type";
 import { UPDATE_USER, UPDATE_WORKSPACE } from "@/store/actions.type";
 
 const state = {
   isAuthenticated: false,
   user: {},
-  workspace: {}
+  workspace: {},
+  workspaceMembers: []
 };
 
 const getters = {
@@ -14,6 +15,9 @@ const getters = {
   },
   currentWorkspace(state) {
     return state.workspace;
+  },
+  workspaceMembers(state) {
+    return state.workspaceMembers;
   }
 };
 
@@ -23,12 +27,16 @@ const mutations = {
     state.user = data.user;
     state.workspace = data.workspace;
     state.isAuthenticated = true;
+    state.workspaceMembers = data.members;
   },
   [SET_WORKSPACE](state, workspace) {
     state.workspace = workspace;
   },
   [SET_USER](state, user) {
     state.user = user;
+  },
+  [SET_WORKSPACE_MEMBERS](state, workspaceMembers) {
+    state.workspaceMembers = workspaceMembers;
   }
 };
 
@@ -46,7 +54,7 @@ const actions = {
       .then(res => {
         commit("setWorkspace", res.data);
         Vue.notify({
-          group: "foo",
+          group: "noty",
           type: "success",
           title: "Update successful"
         });
@@ -68,7 +76,7 @@ const actions = {
       .then(res => {
         commit(SET_USER, res.data);
         Vue.notify({
-          group: "foo",
+          group: "noty",
           type: "success",
           title: "Update successful"
         });

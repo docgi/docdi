@@ -2,6 +2,7 @@
 export const SET_AUTH = "setAuth";
 export const SET_USER = "setUser";
 export const SET_WORKSPACE = "setWorkspace";
+export const SET_WORKSPACE_MEMBERS = "setWorkspaceMembers";
 
 // Ui
 export const SET_DRAWER = "setDrawer";
