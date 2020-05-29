@@ -154,6 +154,11 @@ export default {
           this.password = "";
           this.confirmPass = "";
           this.error = {};
+          this.$notify({
+            group: "noti",
+            type: "success",
+            title: "Password has change"
+          })
         })
         .catch(error => {
           this.error = error.response.data;

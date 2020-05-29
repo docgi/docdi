@@ -226,7 +226,7 @@ export default {
         .put(`documents/${this.document.id}/`, payload)
         .then(response => {
           this.$notify({
-            group: "foo",
+            group: "noti",
             type: "success",
             title: "Update successful."
           });

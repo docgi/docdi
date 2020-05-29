@@ -54,7 +54,7 @@ const actions = {
       .then(res => {
         commit("setWorkspace", res.data);
         Vue.notify({
-          group: "noty",
+          group: "noti",
           type: "success",
           title: "Update successful"
         });
@@ -76,7 +76,7 @@ const actions = {
       .then(res => {
         commit(SET_USER, res.data);
         Vue.notify({
-          group: "noty",
+          group: "noti",
           type: "success",
           title: "Update successful"
         });
