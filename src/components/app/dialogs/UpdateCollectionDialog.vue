@@ -63,7 +63,7 @@
 
 <script>
 import { DEFAULT_COLORS } from "@/common/constants";
-import { UPDATE_COLLECTION_INFO } from "@/store/actions.type";
+import { PUT_COLLECTION } from "@/store/actions.type";
 
 export default {
   name: "UpdateCollectionDialog",
@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     updateCollection() {
-      this.$store.dispatch(UPDATE_COLLECTION_INFO, this.collection);
+      this.$store.dispatch(PUT_COLLECTION, this.collection);
     }
   }
 };

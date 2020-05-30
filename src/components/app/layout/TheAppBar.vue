@@ -28,6 +28,8 @@
 import { mapGetters } from "vuex";
 import { SET_DIALOG, SET_DRAWER } from "@/store/mutations.type";
 
+const UUID_REGEX = '[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}'
+
 export default {
   name: "TheAppBar",
   data() {
@@ -40,7 +42,17 @@ export default {
       this.$store.commit(SET_DRAWER, true);
     },
     newDocument() {
-      this.$store.commit(SET_DIALOG, { newDocument: true });
+      let reg = RegExp(`/collections/${UUID_REGEX}`);
+      console.log(reg);
+      if (reg.test(this.currentPath)) {
+        let matches = this.currentPath.match(UUID_REGEX);
+        if (matches.length > 0) {
+          let collectionId = matches[0];
+          this.$router.push({ name: "NewDocument", params: { collectionId } });
+        }
+      } else {
+        this.$store.commit(SET_DIALOG, { newDocument: true });
+      }
     },
     goToNewDocument(colId) {
       this.showSelectCollection = false;

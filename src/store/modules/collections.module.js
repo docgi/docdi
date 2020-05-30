@@ -5,7 +5,9 @@ import {
   DELETE_COLLECTION,
   LOAD_DETAIL_COLLECTION,
   LOAD_ROOT_COLLECTIONS,
-  UPDATE_COLLECTION_INFO
+  MAKE_PUBLIC_COLLECTION,
+  PUT_COLLECTION,
+  PATCH_COLLECTION
 } from "@/store/actions.type";
 import {
   APPEND_COLLECTION,
@@ -50,7 +52,7 @@ const actions = {
   },
   [CREATE_NEW_COLLECTION]({ commit }, collection) {
     return Vue.axios
-      .post("collections/", collection, )
+      .post("collections/", collection)
       .then(response => {
         commit(APPEND_COLLECTION, response.data);
         Vue.notify({
@@ -89,8 +91,9 @@ const actions = {
         return Promise.reject(err);
       });
   },
-  [UPDATE_COLLECTION_INFO]({ commit }, collection) {
-    return Vue.axios.put(`collections/${collection.id}/`, collection)
+  [PUT_COLLECTION]({ commit }, collection) {
+    return Vue.axios
+      .patch(`collections/${collection.id}/`, collection)
       .then(response => {
         commit(UPDATE_COLLECTION, response.data);
         Vue.notify({
@@ -101,17 +104,36 @@ const actions = {
       })
       .catch(err => {
         return Promise.reject(err);
+      });
+  },
+  [PATCH_COLLECTION]({ commit }, {collectionId, payload}) {
+    return Vue.axios.patch(`collections/${collectionId}/`, payload)
+      .then(response => {
+        commit(UPDATE_COLLECTION, response.data);
+        Vue.notify({
+          group: "foo",
+          type: "success",
+          title: "Update successful"
+        });
+        return Promise.resolve(response.data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
       })
   },
   [CREATE_NEW_DOCUMENT]({ commit }, document) {
-    return Vue.axios.post("documents/", document)
+    return Vue.axios
+      .post("documents/", document)
       .then(response => {
         commit(FILL_DOCUMENT_INTO_COLLECTION, response.data);
         return Promise.resolve(response);
       })
       .catch(err => {
         return Promise.reject(err);
-      })
+      });
+  },
+  [MAKE_PUBLIC_COLLECTION](context, collectionId) {
+    return Vue.axios.patch(`collections/${collectionId}/`, { public: true });
   }
 };
 
@@ -146,23 +168,25 @@ const mutations = {
     fillChild(state.collections, collectionId, data);
   },
   [REMOVE_COLLECTION](state, collectionId) {
-    state.collections = state.collections.filter(item => item.id !== collectionId);
+    state.collections = state.collections.filter(
+      item => item.id !== collectionId
+    );
   },
   [UPDATE_COLLECTION](state, collection) {
     let index = state.collections.findIndex(item => item.id === collection.id);
     state.collections.splice(index, 1, collection);
   },
   [FILL_DOCUMENT_INTO_COLLECTION](state, document) {
-      for (let col of state.collections) {
-        if (col.id === document.collection) {
-          col.children.push(document);
-        }
+    for (let col of state.collections) {
+      if (col.id === document.collection) {
+        col.children.push(document);
       }
+    }
   },
   [DELETE_DOCUMENT](state, document) {
     for (let col of state.collections) {
       if (col.id === document.collection) {
-       col.children = col.children.filter(item => item.id !== document.id);
+        col.children = col.children.filter(item => item.id !== document.id);
       }
     }
   },
@@ -170,7 +194,7 @@ const mutations = {
     for (let col of state.collections) {
       if (col.id === document.collection) {
         let index = col.children.findIndex(item => item.id === document.id);
-        col.children[index] = {...document};
+        col.children[index] = { ...document };
       }
     }
   },

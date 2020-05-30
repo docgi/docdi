@@ -83,7 +83,6 @@
             </div>
 
             <list-document-item v-else :documents="collection.children" />
-
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -103,21 +102,30 @@
       @hide="showUpdateDialog = false"
       :key="collectionId"
     />
+
+    <get-share-link-collection-dialog
+      :show="showGetPublicLink"
+      :collectionId="collectionId"
+      @hide="showGetPublicLink = false"
+      v-if="showGetPublicLink"
+    />
   </div>
 </template>
 
 <script>
 import DeleteCollectionDialog from "@/components/app/dialogs/DeleteCollectionDialog";
 import UpdateCollectionDialog from "@/components/app/dialogs/UpdateCollectionDialog";
+import GetShareLinkCollectionDialog from "@/components/app/dialogs/GetShareLinkCollection";
 import ListDocumentItem from "@/components/app/ListDocumentItem";
-import {SET_TREE_VIEW_OPEN_COLLECTIONS} from "@/store/mutations.type";
+import { SET_TREE_VIEW_OPEN_COLLECTIONS } from "@/store/mutations.type";
 
 export default {
   name: "DetailCollection",
   components: {
     ListDocumentItem,
     DeleteCollectionDialog,
-    UpdateCollectionDialog
+    UpdateCollectionDialog,
+    GetShareLinkCollectionDialog
   },
   data() {
     return {
@@ -125,12 +133,13 @@ export default {
       tab: null,
       showDeleteDialog: false,
       showUpdateDialog: false,
+      showGetPublicLink: false,
       tabItems: [
         {
           title: "Documents",
           hash: "",
           key: "DOCUMENTS"
-        },
+        }
       ],
       menuItems: [
         {
@@ -148,6 +157,13 @@ export default {
           icon: "fa-pen",
           handler: () => {
             this.showUpdateDialog = true;
+          }
+        },
+        {
+          title: "Get share link",
+          icon: "fa-share",
+          handler: () => {
+            this.showGetPublicLink = true;
           }
         },
         {

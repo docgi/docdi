@@ -223,7 +223,7 @@ export default {
 
       let payload = this.calculatePayload(draft);
       this.$http
-        .put(`documents/${this.document.id}/`, payload)
+        .patch(`documents/${this.document.id}/`, payload)
         .then(response => {
           this.$notify({
             group: "noti",
