@@ -5,6 +5,7 @@
   margin: 1rem auto;
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
+  max-width: 800px;
 
   .ProseMirror {
     outline: none;
@@ -26,32 +27,36 @@
 
     pre {
       display: block;
-      padding: 0.7rem 1rem;
-      border-radius: 5px;
+      padding: 1rem;
+      border-radius: 3px;
       background: $background-color;
-      width: 80% !important;
-      margin-left: auto;
-      margin-right: auto;
       margin-bottom: 1rem;
-      white-space: pre-wrap;
+      word-break: inherit;
       overflow-x: auto;
+      &::before {
+        all: initial;
+      }
+      &::after {
+        all: initial;
+      }
+    }
 
-      code {
-        display: block;
-        font-size: 1rem;
-        overflow-x: auto;
-        background: $background-color;
-        color: inherit;
-        -webkit-box-shadow: none;
-        border-radius: 0;
-        font-weight: inherit;
+    code {
+      -webkit-box-shadow: none;
+      display: inline;
+      font-size: 1rem;
+      overflow-x: auto;
+      background: $background-color;
+      color: inherit;
+      border-radius: 0;
+      font-weight: inherit;
+      white-space: pre;
 
-        &::before {
-          all: initial;
-        }
-        &::after {
-          all: initial;
-        }
+      &::before {
+        all: initial;
+      }
+      &::after {
+        all: initial;
       }
     }
 
@@ -63,24 +68,25 @@
       border: none;
     }
 
-    p code {
-      padding: 0.2rem 0.2rem !important;
-      border-radius: 3px;
-      background: rgba($color-black, 0.1);
-      color: rgba($color-black, 0.8);
-      box-shadow: none;
-
-      // Override vuetify code style
-      &::before {
-        all: initial;
-      }
-      &::after {
-        all: initial;
-      }
-    }
-
     p {
       text-align: justify;
+
+      code {
+        padding: 1px 5px;
+        border-radius: 2px;
+        background: rgba($color-black, 0.1);
+        color: rgba($color-black, 0.8);
+        box-shadow: none;
+        font-weight: 500;
+
+        // Override vuetify code style
+        &::before {
+          all: initial;
+        }
+        &::after {
+          all: initial;
+        }
+      }
     }
 
     ul {
@@ -100,6 +106,7 @@
 
     a {
       color: inherit;
+      text-decoration: none;
     }
 
     blockquote {
@@ -230,7 +237,6 @@
   }
 
   .image-wrapper {
-    max-height: 500px;
     margin: auto;
     border-radius: 3px;
   }

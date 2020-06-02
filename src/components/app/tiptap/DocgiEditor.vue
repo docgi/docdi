@@ -12,13 +12,6 @@
         :style="`top: ${menu.top - 8}px`"
       >
         <menu-button
-          @click="cl(getNodeAttrs)"
-          tooltip-text="Heading 1"
-        >
-          Cl
-        </menu-button>
-
-        <menu-button
           @click="commands.heading({ level: 1 })"
           tooltip-text="Heading 1"
         >
@@ -177,11 +170,7 @@
 
 <script>
 import axios from "axios";
-import {
-  EditorContent,
-  Editor,
-  EditorMenuBubble
-} from "tiptap";
+import { EditorContent, Editor, EditorMenuBubble } from "tiptap";
 import Doc from "./tiptap-core/Doc";
 import Title from "./tiptap-core/Title";
 import Figure from "@/components/app/tiptap/tiptap-core/Figure";
@@ -189,6 +178,7 @@ import MenuButton from "@/components/app/tiptap/tiptap-core/MenuButton";
 import EditorFloatingMenu from "@/components/app/tiptap/tiptap-core/EditorFloatingMenu";
 
 import {
+  CodeBlockHighlight,
   Placeholder,
   Blockquote,
   BulletList,
@@ -208,6 +198,10 @@ import {
   Underline,
   HorizontalRule
 } from "tiptap-extensions";
+import javascript from "highlight.js/lib/languages/javascript";
+import css from "highlight.js/lib/languages/css";
+import python from "highlight.js/lib/languages/python";
+
 import Image from "./tiptap-core/Image";
 
 async function upload(file) {
@@ -245,6 +239,13 @@ export default {
         autoFocus: true,
         content: this.content,
         extensions: [
+          new CodeBlockHighlight({
+            languages: {
+              javascript,
+              css,
+              python
+            }
+          }),
           new Doc(),
           new Title(),
           new Underline(),
@@ -286,9 +287,6 @@ export default {
     };
   },
   methods: {
-    cl(o) {
-      console.log(o);
-    },
     async onSelectImage(event, commands) {
       try {
         let res = await upload(event.target.files[0]);

@@ -115,7 +115,7 @@
 <script>
 import { UPDATE_WORKSPACE } from "@/store/actions.type";
 import { mapGetters } from "vuex";
-import UserDisplay from "@/components/app/UserDisplay";
+import UserDisplay from "@/components/app/user/UserDisplay";
 import { WORKSPACE_MEMBER_ROLES } from "@/common/constants";
 import {SET_DIALOG} from "@/store/mutations.type";
 

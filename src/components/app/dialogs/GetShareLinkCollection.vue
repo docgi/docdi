@@ -92,7 +92,6 @@ export default {
         type: "success",
         title: "Copied"
       });
-      this.$emit("hide");
     },
     unPublic() {
       this.$store.dispatch(PATCH_COLLECTION, {

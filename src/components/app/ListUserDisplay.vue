@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import UserDisplay from "@/components/app/UserDisplay";
+import UserDisplay from "@/components/app/user/UserDisplay";
 export default {
   name: "ListUserDisplay",
   components: { UserDisplay },

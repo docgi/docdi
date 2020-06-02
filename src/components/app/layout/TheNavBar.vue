@@ -10,7 +10,7 @@
     >
       <div class="ma-4">
         <div class="d-flex mb-4">
-          <workspace-logo />
+          <workspace-nav-bar-part />
         </div>
 
         <v-divider />
@@ -41,14 +41,14 @@
 </template>
 
 <script>
-import WorkspaceLogo from "@/components/app/WorkspaceLogo";
+import WorkspaceNavBarPart from "@/components/app/layout/WorkspaceNavBar";
 import NavBarCollectionPart from "@/components/app/layout/NavBarCollectionPart";
 import { SET_DRAWER } from "@/store/mutations.type";
 
 export default {
   name: "TheNavBar",
   components: {
-    WorkspaceLogo,
+    WorkspaceNavBarPart,
     NavBarCollectionPart
   },
   data() {

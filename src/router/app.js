@@ -41,12 +41,12 @@ const router = new VueRouter({
         },
         {
           path: "collections/:collectionId/new",
-          component: () => import("@/views/app/collections/NewDocument"),
+          component: () => import("@/views/app/documents/NewDocument"),
           name: "NewDocument"
         },
         {
           path: "documents/:id",
-          component: () => import("@/views/app/collections/DetailDocument"),
+          component: () => import("@/views/app/documents/DetailDocument"),
           name: "DetailDocument"
         }
       ]

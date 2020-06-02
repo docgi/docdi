@@ -43,7 +43,6 @@ export default {
     },
     newDocument() {
       let reg = RegExp(`/collections/${UUID_REGEX}`);
-      console.log(reg);
       if (reg.test(this.currentPath)) {
         let matches = this.currentPath.match(UUID_REGEX);
         if (matches.length > 0) {

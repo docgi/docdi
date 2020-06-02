@@ -1,6 +1,6 @@
 <template>
   <div v-if="document">
-    <v-app-bar fixed flat color="white" class="app-bar-fixed" hide-on-scroll>
+    <v-app-bar fixed flat color="white" class="app-bar-fixed">
       <v-breadcrumbs :items="breadcrumbs">
         <template v-slot:item="{ item }">
           <v-breadcrumbs-item
@@ -19,7 +19,7 @@
           </v-breadcrumbs-item>
         </template>
         <template v-slot:divider>
-          <div style="padding-top: 12px">/</div>
+          <div style="padding-top: 12px;">/</div>
         </template>
       </v-breadcrumbs>
       <div class="ml-auto d-flex align-center">
@@ -33,7 +33,7 @@
           small
           color="primary"
           class="mr-2 text-capitalize"
-          @click="editable = true"
+          @click="enableEdit"
           v-if="!editable"
         >
           Edit
@@ -143,7 +143,7 @@
 <script>
 import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
 import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog";
-import { UPDATE_DOCUMENT } from "@/store/mutations.type";
+import {SET_DRAWER, UPDATE_DOCUMENT} from "@/store/mutations.type";
 import ListUserDisplay from "@/components/app/ListUserDisplay";
 
 export default {
@@ -189,6 +189,10 @@ export default {
     }
   },
   methods: {
+    enableEdit() {
+      this.editable = true;
+      this.$store.commit(SET_DRAWER, false);
+    },
     resetData() {
       this.editable = false;
       this.jsonContent = null;
@@ -218,6 +222,7 @@ export default {
         draft === this.document.draft
       ) {
         this.editable = false;
+        this.$store.commit(SET_DRAWER, true);
         return;
       }
 
@@ -236,10 +241,14 @@ export default {
           this.document = response.data;
           this.$store.commit(UPDATE_DOCUMENT, response.data);
           this.editable = false;
+          this.$store.commit(SET_DRAWER, true);
         })
-        .catch(error => {
-          // Todo
-          console.log(error);
+        .catch(() => {
+          this.$notify({
+            group: "noti",
+            type: "error",
+            title: "Update failed."
+          });
         });
     },
     onChangeContent({ json, html }) {

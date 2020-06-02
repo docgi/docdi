@@ -7,32 +7,39 @@
         class="px-0 py-0 pos-relative doc-item my-2"
         style="margin-left: -8px; margin-right: -8px; height: 60px;"
       >
-        <router-link
-          tag="div"
-          class="d-flex w-full fill-height align-center pos-absolute mx-2"
-          :to="{ name: 'DetailDocument', params: { id: document.id } }"
-        >
-          <div class="d-flex flex-column fill-height justify-center">
-          <span
-            class="font-weight-bold mt-1"
+        <slot name="clickable" v-bind:document="document">
+          <router-link
+            tag="div"
+            class="d-flex w-full fill-height align-center pos-absolute mx-2"
+            :to="{ name: 'DetailDocument', params: { id: document.id } }"
           >
-            {{ document.name }}
-          </span>
-            <span class="font-weight-thin" style="font-size: 0.75em;">
-            Updated by
-            <v-chip label x-small>
-              {{ document.last_update_by ? document.last_update_by.username : document.creator.username }}
-            </v-chip>
-            {{ beautyLastUpdate(document.modified) }}
-          </span>
-          </div>
-        </router-link>
+            <div class="d-flex flex-column fill-height justify-center">
+              <span class="font-weight-bold mt-2">
+                {{ document.name }}
+              </span>
+              <slot name="extra-title" v-bind:document="document">
+                <span class="font-weight-thin" style="font-size: 0.75em;">
+                  Updated by
+                  <v-chip label x-small>
+                    {{
+                      document.last_update_by
+                        ? document.last_update_by.username
+                        : document.creator.username
+                    }}
+                  </v-chip>
+                  {{ beautyLastUpdate(document.modified) }}
+                </span>
+              </slot>
+            </div>
+          </router-link>
+        </slot>
 
         <div class="ml-auto mr-4">
           <v-chip x-small v-if="document.draft" class="mr-2">
             Draft
           </v-chip>
-          <v-menu>
+
+          <v-menu v-if="showMenu">
             <template v-slot:activator="{ on }">
               <v-btn
                 small
@@ -71,7 +78,7 @@
     </v-list>
 
     <delete-document-dialog
-      v-if="selectedDocument"
+      v-if="selectedDocument && showMenu"
       :document="selectedDocument"
       @hide="selectedDocument = null"
       :show="!!selectedDocument"
@@ -89,6 +96,10 @@ export default {
     documents: {
       type: Array,
       required: true
+    },
+    showMenu: {
+      type: Boolean,
+      default: true
     }
   },
   components: {
@@ -101,15 +112,18 @@ export default {
         {
           title: "Edit...",
           icon: "fa-pen",
-          handler: (document) => {
-            this.$router.push({ name: "DetailDocument", params: {id: document.id} })
+          handler: document => {
+            this.$router.push({
+              name: "DetailDocument",
+              params: { id: document.id }
+            });
           }
         },
         {
           title: "Delete",
           icon: "fa-trash-alt",
           color: "red lighten-2",
-          handler: (document) => {
+          handler: document => {
             this.selectedDocument = document;
           }
         }

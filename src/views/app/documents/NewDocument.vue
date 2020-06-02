@@ -103,7 +103,6 @@ export default {
     };
   },
   created() {
-    this.$store.commit(SET_DRAWER, false);
     this.collectionId = this.$route.params.collectionId;
   },
   methods: {
