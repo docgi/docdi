@@ -1,6 +1,6 @@
 <template>
   <div v-if="document">
-    <v-app-bar fixed flat color="white" class="app-bar-fixed">
+    <v-app-bar fixed flat color="white" class="app-bar-fixed" hide-on-scroll>
       <v-breadcrumbs :items="breadcrumbs">
         <template v-slot:item="{ item }">
           <v-breadcrumbs-item
@@ -23,11 +23,7 @@
         </template>
       </v-breadcrumbs>
       <div class="ml-auto d-flex align-center">
-        <list-user-display :users="document.contributors">
-          <template v-slot:tooltip="{ user }">
-            {{ user.email }}
-          </template>
-        </list-user-display>
+        <list-user-display :users="document.contributors" />
         <v-divider class="mx-2" vertical />
         <v-btn
           small
@@ -37,6 +33,16 @@
           v-if="!editable"
         >
           Edit
+        </v-btn>
+        <v-btn
+          small
+          color="warning"
+          class="mr-2 text-capitalize"
+          @click="cancel"
+          outlined
+          v-if="editable"
+        >
+          Cancel
         </v-btn>
         <v-btn
           small
@@ -92,6 +98,7 @@
       :editable="editable"
       :key="document.id"
       @onChangeContent="onChangeContent"
+      ref="editor"
     />
 
     <delete-document-dialog
@@ -143,7 +150,7 @@
 <script>
 import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
 import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog";
-import {SET_DRAWER, UPDATE_DOCUMENT} from "@/store/mutations.type";
+import { SET_DRAWER, UPDATE_DOCUMENT } from "@/store/mutations.type";
 import ListUserDisplay from "@/components/app/ListUserDisplay";
 
 export default {
@@ -175,7 +182,7 @@ export default {
       ],
       showDeleteDialog: false,
       showConfirmLeave: false,
-      resolveLeave: null
+      resolveLeave: null,
     };
   },
   async created() {
@@ -191,7 +198,6 @@ export default {
   methods: {
     enableEdit() {
       this.editable = true;
-      this.$store.commit(SET_DRAWER, false);
     },
     resetData() {
       this.editable = false;
@@ -213,6 +219,14 @@ export default {
         payload.html_content = this.htmlContent;
       }
       return payload;
+    },
+    cancel() {
+      if (this.jsonContent !== null || this.htmlContent !== null) {
+        this.$refs.editor.forceSetContent(this.document.html_content);
+      }
+      this.jsonContent = null;
+      this.htmlContent = null;
+      this.editable = false;
     },
     saveEditDoc(draft) {
       if (
@@ -289,14 +303,20 @@ export default {
           {
             name: this.collection.name,
             disabled: false,
-            to: { name: "DetailCollection", params: { id: this.collection.id } },
+            to: {
+              name: "DetailCollection",
+              params: { id: this.collection.id }
+            },
             isCollection: true,
-            color: this.collection.color,
+            color: this.collection.color
           },
           {
             name: this.document.name,
             disabled: true,
-            to: { name: "DetailCollection", params: { id: this.collection.id } },
+            to: {
+              name: "DetailCollection",
+              params: { id: this.collection.id }
+            },
             isCollection: false
           }
         ];

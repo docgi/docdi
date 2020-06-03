@@ -1,8 +1,8 @@
 <template>
-  <v-dialog fullscreen v-model="show" @click:outside="hide" @keydown.esc="hide">
+  <v-dialog fullscreen v-model="show" @click:outside="hide" @keydown.esc="hide" transition="dialog-bottom-transition">
     <v-card flat>
       <v-card-title class="px-0">
-        <v-btn text color="primary" small @click="$emit('hide')">
+        <v-btn text color="primary" small @click="$emit('hide')" class="ml-2">
           <v-icon class="fa fa-angle-left mr-2" />
           <span class="text-capitalize mt-1">Back</span>
         </v-btn>

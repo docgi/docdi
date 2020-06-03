@@ -312,6 +312,9 @@ export default {
     setLinkUrl(command, url) {
       command({ href: url });
       this.hideLinkMenu();
+    },
+    forceSetContent(content) {
+      this.editor.setContent(content);
     }
   },
   watch: {
