@@ -20,3 +20,4 @@ export const FILL_DOCUMENT_INTO_COLLECTION = "fillDocumentIntoCollection";
 export const DELETE_DOCUMENT = "deleteDocument";
 export const UPDATE_DOCUMENT = "updateDocument";
 export const SET_TREE_VIEW_OPEN_COLLECTIONS = "setTreeViewOpenCollections"
+export const SET_DOCUMENTS = "setDocuments";

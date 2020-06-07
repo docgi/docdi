@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import ApiService from "@/common/api.service";
 import store from "@/store";
-import { SET_CURRENT_PATH, SET_AUTH } from "@/store/mutations.type";
+import {SET_CURRENT_PATH, SET_AUTH, SET_COLLECTIONS, SET_DOCUMENTS} from "@/store/mutations.type";
 import { getToken, removeToken } from "@/common/token.service";
 import { isEmptyObject } from "@/common/utils";
 
@@ -116,10 +116,14 @@ router.beforeEach((to, from, next) => {
           })
           .then(({ data }) => {
             store.commit(SET_AUTH, data);
+            store.commit(SET_COLLECTIONS, data.collections);
+            store.commit(SET_DOCUMENTS, data.documents);
           })
-          .catch(() => {
-            removeToken();
-            next({ path: "/auth/login", query: { redirect: to.fullPath } });
+          .catch((error) => {
+            if (error.response.status === 401) {
+              removeToken();
+              next({ path: "/auth/login", query: { redirect: to.fullPath } });
+            } // Todo: Handle on 5xx error.
           });
       }
       next();

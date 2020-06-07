@@ -19,23 +19,26 @@ import {
   UPDATE_COLLECTION,
   DELETE_DOCUMENT,
   UPDATE_DOCUMENT,
-  SET_TREE_VIEW_OPEN_COLLECTIONS
+  SET_TREE_VIEW_OPEN_COLLECTIONS, SET_DOCUMENTS
 } from "@/store/mutations.type";
 
 const state = {
   collections: [],
-  treeViewOpenCollections: []
+  documents: []
 };
 
 const getters = {
-  getCollections(state) {
-    return state.collections;
+  getCollections(state, getters) {
+      return state.collections.map((col) => {
+        col.children = getters.groupDocuments(col.id);
+        return col;
+      })
   },
   getCollectionById: state => id => {
     return state.collections.find(collection => collection.id === id);
   },
-  getTreeViewOpenCollections(state) {
-    return state.treeViewOpenCollections;
+  groupDocuments: state => (colId) => {
+    return state.documents.filter(item => item.collection === colId);
   }
 };
 
@@ -200,6 +203,9 @@ const mutations = {
   },
   [SET_TREE_VIEW_OPEN_COLLECTIONS](state, collectionIds) {
     state.treeViewOpenCollections = collectionIds;
+  },
+  [SET_DOCUMENTS](state, documents) {
+    state.documents = documents;
   }
 };
 
