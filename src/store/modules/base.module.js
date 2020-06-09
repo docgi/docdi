@@ -1,5 +1,10 @@
 import Vue from "vue";
-import {SET_AUTH, SET_USER, SET_WORKSPACE, SET_WORKSPACE_MEMBERS} from "@/store/mutations.type";
+import {
+  SET_AUTH,
+  SET_USER,
+  SET_WORKSPACE,
+  SET_WORKSPACE_MEMBERS
+} from "@/store/mutations.type";
 import { UPDATE_USER, UPDATE_WORKSPACE } from "@/store/actions.type";
 
 const state = {

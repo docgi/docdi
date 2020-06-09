@@ -15,7 +15,6 @@ export default class Figcaption extends Node {
         { tag: "figcaption" }
       ],
       toDOM: node => {
-        console.log(node);
         return [
           "figcaption",
           {
