@@ -12,7 +12,7 @@ import {
 import {
   APPEND_COLLECTION,
   COLLECTION_FILL_CHILDREN,
-  FILL_DOCUMENT_INTO_COLLECTION,
+  ADD_DOCUMENT,
   REMOVE_COLLECTION,
   SET_ACTIVE,
   SET_COLLECTIONS,
@@ -28,17 +28,38 @@ const state = {
 };
 
 const getters = {
-  getCollections(state, getters) {
-      return state.collections.map((col) => {
-        col.children = getters.groupDocuments(col.id);
-        return col;
+  getCollections(state) {
+    let res = [];
+    state.collections.forEach((col) => {
+      col.children = []
+      state.documents.forEach(doc => {
+        if (doc.collection === col.id) {
+          col.children.push(doc);
+        }
       })
+      res.push(col);
+    })
+    return res;
   },
   getCollectionById: state => id => {
     return state.collections.find(collection => collection.id === id);
   },
   groupDocuments: state => (colId) => {
     return state.documents.filter(item => item.collection === colId);
+  },
+  groupDocumentsByCollectionWithStatus: state => (colId, onlyDraft, onlyPublished) => {
+    if (onlyDraft) {
+      return state.documents.filter(item => item.collection === colId && item.draft === true);
+    }
+
+    if (onlyPublished) {
+      return state.documents.filter(item => item.collection === colId && item.draft === false);
+    }
+
+    return state.documents.filter(item => item.collection === colId);
+  },
+  getDocuments(state) {
+    return state.documents;
   }
 };
 
@@ -128,7 +149,7 @@ const actions = {
     return Vue.axios
       .post("documents/", document)
       .then(response => {
-        commit(FILL_DOCUMENT_INTO_COLLECTION, response.data);
+        commit(ADD_DOCUMENT, response.data);
         return Promise.resolve(response);
       })
       .catch(err => {
@@ -179,19 +200,11 @@ const mutations = {
     let index = state.collections.findIndex(item => item.id === collection.id);
     state.collections.splice(index, 1, collection);
   },
-  [FILL_DOCUMENT_INTO_COLLECTION](state, document) {
-    for (let col of state.collections) {
-      if (col.id === document.collection) {
-        col.children.push(document);
-      }
-    }
+  [ADD_DOCUMENT](state, document) {
+    state.documents.push(document);
   },
   [DELETE_DOCUMENT](state, document) {
-    for (let col of state.collections) {
-      if (col.id === document.collection) {
-        col.children = col.children.filter(item => item.id !== document.id);
-      }
-    }
+    state.documents = state.documents.filter(doc => doc.id !== document.id);
   },
   [UPDATE_DOCUMENT](state, document) {
     for (let col of state.collections) {

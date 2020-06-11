@@ -1,5 +1,5 @@
 <template>
-  <div>
+
     <v-navigation-drawer
       app
       color="#EDF2F7"
@@ -7,6 +7,7 @@
       mobile-break-point="960"
       v-model="drawer"
       width="300"
+      class="d-flex"
     >
       <div class="ma-4">
         <div class="d-flex mb-4">
@@ -37,7 +38,7 @@
         <nav-bar-collection-part />
       </div>
     </v-navigation-drawer>
-  </div>
+
 </template>
 
 <script>

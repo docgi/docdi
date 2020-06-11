@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <v-tabs v-model="tab" @change="tabChange">
+    <v-tabs v-model="tab">
       <v-tab
         v-for="(item, index) in tabItems"
         :key="index"
@@ -56,36 +56,15 @@
     <v-divider />
 
     <v-tabs-items v-model="tab">
-      <v-tab-item v-for="(item, index) in tabItems" :key="index">
-        <v-card flat class="px-0">
-          <v-card-text
-            v-if="item.title === 'Documents'"
-            class="d-flex justify-center px-0"
-          >
-            <div v-if="collection.children.length === 0">
-              This collection is empty.
-              <v-btn
-                color="primary"
-                small
-                class="text-capitalize"
-                :to="{
-                  name: 'NewDocument',
-                  params: { collectionId: collectionId }
-                }"
-              >
-                <template v-slot:default>
-                  <v-icon small class="fa fa-plus mr-2" />
-                  <span style="padding-top: 2px">
-                    New document
-                  </span>
-                </template>
-              </v-btn>
-            </div>
 
-            <list-document-item v-else :documents="collection.children" />
-          </v-card-text>
-        </v-card>
+      <v-tab-item>
+        <detail-collection-tab :collectionId="collection.id" only-published/>
       </v-tab-item>
+
+      <v-tab-item>
+        <detail-collection-tab :collectionId="collection.id" only-draft/>
+      </v-tab-item>
+
     </v-tabs-items>
 
     <!--  Delete collection dialog  -->
@@ -116,16 +95,19 @@
 import DeleteCollectionDialog from "@/components/app/dialogs/DeleteCollectionDialog";
 import UpdateCollectionDialog from "@/components/app/dialogs/UpdateCollectionDialog";
 import GetShareLinkCollectionDialog from "@/components/app/dialogs/GetShareLinkCollection";
-import ListDocumentItem from "@/components/app/ListDocumentItem";
+
+// Tabs
+import DetailCollectionTab from "@/components/app/tabs/DetailCollectionTab";
+
 import { SET_TREE_VIEW_OPEN_COLLECTIONS } from "@/store/mutations.type";
 
 export default {
   name: "DetailCollection",
   components: {
-    ListDocumentItem,
     DeleteCollectionDialog,
     UpdateCollectionDialog,
-    GetShareLinkCollectionDialog
+    GetShareLinkCollectionDialog,
+    DetailCollectionTab
   },
   data() {
     return {
@@ -137,8 +119,9 @@ export default {
       tabItems: [
         {
           title: "Documents",
-          hash: "",
-          key: "DOCUMENTS"
+        },
+        {
+          title: "My drafts",
         }
       ],
       menuItems: [

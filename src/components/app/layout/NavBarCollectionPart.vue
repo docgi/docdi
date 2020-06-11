@@ -1,129 +1,58 @@
 <template>
   <v-list dense color="#EDF2F7">
-    <v-list-group class="list-group-custom">
-      <template v-slot:activator>
-        <v-list-item-content>
-          <v-list-item-title>
-            <v-icon class="fa fa-book" small />
-            <span
-              class="ml-2 font-weight-bold"
-              style="text-decoration: underline"
-            >Documents</span>
-          </v-list-item-title>
+    <v-list-item-group>
+      <v-treeview
+        hoverable
+        dense
+        expand-icon="fa-angle-down"
+        :items="collections"
+        item-key="id"
+        class="v-tree-custom"
+        :key="documents.length"
+        :open.sync="open"
+      >
+        <template v-slot:label="{ item, open }">
+          <!--     is collection     -->
+          <router-link
+            class="custom-link"
+            v-if="item.is_collection"
+            :to="{ name: 'DetailCollection', params: { id: item.id } }"
+          >
+            <v-icon size="20" :color="item.color">
+              {{ open ? "fa-folder-open" : "fa-folder" }}
+            </v-icon>
+            <span class="ml-2" style="margin-top: 3px;">{{ item.name }}</span>
+
+            <v-chip
+              v-if="item.private"
+              class="ml-auto"
+              style="margin-top: 3px;"
+              x-small
+            >
+              Private
+            </v-chip>
+          </router-link>
+
+          <!--     is document     -->
+          <router-link
+            class="custom-link"
+            v-else
+            :to="{ name: 'DetailDocument', params: { id: item.id } }"
+          >
+            <v-icon class="far fa-file-alt" small />
+            <div class="ml-2 font-weight-bold">{{ item.name }}</div>
+          </router-link>
+        </template>
+      </v-treeview>
+      <v-list-item dense @click="showNewCollectionDialog">
+        <v-list-item-icon class="mr-2">
+          <v-icon class="fa fa-plus" small />
+        </v-list-item-icon>
+        <v-list-item-content class="pb-1">
+          <v-list-item-title v-text="'New Collections'" />
         </v-list-item-content>
-      </template>
-      <v-list-item-group>
-        <v-treeview
-          hoverable
-          activatable
-          dense
-          open-on-click
-          expand-icon="fa-angle-down"
-          :items="collections"
-          class="v-tree-custom"
-        >
-          <template v-slot:label="{ item, open }">
-            <!--     is collection     -->
-            <router-link
-              class="custom-link"
-              v-if="item.is_collection"
-              :to="{ name: 'DetailCollection', params: { id: item.id } }"
-            >
-              <v-icon size="20" :color="item.color">
-                {{ open ? "fa-folder-open" : "fa-folder" }}
-              </v-icon>
-              <span class="ml-2" style="margin-top: 3px;">{{ item.name }}</span>
-
-              <v-chip
-                v-if="item.private"
-                class="ml-auto"
-                style="margin-top: 3px;"
-                x-small
-              >
-                Private
-              </v-chip>
-            </router-link>
-
-            <!--     is document     -->
-            <router-link
-              class="custom-link"
-              v-else
-              :to="{ name: 'DetailDocument', params: { id: item.id } }"
-            >
-              <v-icon class="far fa-file-alt" small/>
-              <div class="ml-2 font-weight-bold">{{ item.name }}</div>
-            </router-link>
-          </template>
-        </v-treeview>
-        <v-list-item dense @click="showNewCollectionDialog">
-          <v-list-item-icon class="mr-2">
-            <v-icon class="fa fa-plus" small />
-          </v-list-item-icon>
-          <v-list-item-content class="pb-1">
-            <v-list-item-title v-text="'New Collections'" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list-group>
-
-    <v-list-group no-action class="list-group-custom">
-      <template v-slot:activator>
-        <v-list-item-content>
-          <v-list-item-title>
-            <v-icon small class="fa fa-tasks" />
-            <span
-              class="ml-2 font-weight-bold mt-1"
-              style="text-decoration: underline"
-              >Taskboard</span
-            >
-          </v-list-item-title>
-        </v-list-item-content>
-      </template>
-
-      <v-list-item-group>
-        <v-treeview
-          hoverable
-          activatable
-          dense
-          open-on-click
-          expand-icon="fa-angle-down"
-          :items="collections"
-          class="v-tree-custom"
-        >
-          <template v-slot:label="{ item, open }">
-            <!--     is collection     -->
-            <router-link
-              class="custom-link"
-              v-if="item.is_collection"
-              :to="{ name: 'DetailCollection', params: { id: item.id } }"
-            >
-              <v-icon size="20" :color="item.color">
-                {{ open ? "fa-folder-open" : "fa-folder" }}
-              </v-icon>
-              <span class="ml-2" style="margin-top: 3px;">{{ item.name }}</span>
-
-              <v-chip
-                v-if="item.private"
-                class="ml-auto"
-                style="margin-top: 3px;"
-                x-small
-              >
-                Private
-              </v-chip>
-            </router-link>
-
-            <!--     is document     -->
-            <router-link
-              class="custom-link"
-              v-else
-              :to="{ name: 'DetailDocument', params: { id: item.id } }"
-            >
-              {{ item.name }}
-            </router-link>
-          </template>
-        </v-treeview>
-      </v-list-item-group>
-    </v-list-group>
+      </v-list-item>
+    </v-list-item-group>
   </v-list>
 </template>
 
@@ -137,10 +66,16 @@ export default {
   mounted() {
     this.$store.dispatch(LOAD_ROOT_COLLECTIONS);
   },
+  data() {
+    return {
+      open: []
+    }
+  },
   computed: {
     ...mapGetters({
       getDrawer: "getDrawer",
-      collections: "getCollections"
+      collections: "getCollections",
+      documents: "getDocuments"
     })
   },
   methods: {
