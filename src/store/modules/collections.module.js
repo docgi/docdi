@@ -28,18 +28,11 @@ const state = {
 };
 
 const getters = {
-  getCollections(state) {
-    let res = [];
-    state.collections.forEach((col) => {
-      col.children = []
-      state.documents.forEach(doc => {
-        if (doc.collection === col.id) {
-          col.children.push(doc);
-        }
-      })
-      res.push(col);
+  getCollections(state, getters) {
+    return state.collections.map(col => {
+      col.children = getters.groupDocuments(col.id);
+      return col;
     })
-    return res;
   },
   getCollectionById: state => id => {
     return state.collections.find(collection => collection.id === id);
