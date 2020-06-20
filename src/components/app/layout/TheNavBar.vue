@@ -4,7 +4,7 @@
       app
       color="#EDF2F7"
       floating
-      mobile-break-point="960"
+      mobile-breakpoint="960"
       v-model="drawer"
       width="300"
       class="d-flex"

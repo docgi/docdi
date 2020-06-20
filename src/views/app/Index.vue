@@ -2,13 +2,13 @@
   <div class="d-flex fill-height">
     <the-nav-bar />
     <the-app-bar />
-    <v-content>
+    <v-main>
       <v-container fluid class="d-flex justify-center">
         <div class="col-12 col-md-10 col-lg-8 pa-0">
           <router-view />
         </div>
       </v-container>
-    </v-content>
+    </v-main>
 
     <new-collection-dialog />
     <choose-collection />
