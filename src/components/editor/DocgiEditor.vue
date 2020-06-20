@@ -171,11 +171,11 @@
 <script>
 import axios from "axios";
 import { EditorContent, Editor, EditorMenuBubble } from "tiptap";
-import Doc from "./tiptap-core/Doc";
-import Title from "./tiptap-core/Title";
-import Figure from "@/components/app/tiptap/tiptap-core/Figure";
-import MenuButton from "@/components/app/tiptap/tiptap-core/MenuButton";
-import EditorFloatingMenu from "@/components/app/tiptap/tiptap-core/EditorFloatingMenu";
+import Doc from "./editor-core/Doc";
+import Title from "./editor-core/Title";
+import Figure from "@/components/editor/editor-core/Figure";
+import MenuButton from "@/components/editor/editor-core/MenuButton";
+import EditorFloatingMenu from "@/components/editor/editor-core/EditorFloatingMenu";
 
 import {
   CodeBlockHighlight,
@@ -202,7 +202,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 import css from "highlight.js/lib/languages/css";
 import python from "highlight.js/lib/languages/python";
 
-import Image from "./tiptap-core/Image";
+import Image from "./editor-core/Image";
 
 async function upload(file) {
   let formData = new FormData();
@@ -268,7 +268,7 @@ export default {
           new Figure(),
           new HorizontalRule(),
           new Placeholder({
-            showOnlyCurrent: false,
+            showOnlyCurrent: true,
             emptyNodeText: node => {
               if (node.type.name === "title") {
                 return "Untitled";

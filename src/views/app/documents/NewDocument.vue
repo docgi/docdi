@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
+import DocgiEditor from "@/components/editor/DocgiEditor";
 import { CREATE_NEW_DOCUMENT } from "@/store/actions.type";
 import { SET_DRAWER } from "@/store/mutations.type";
 

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
+import DocgiEditor from "@/components/editor/DocgiEditor";
 
 export default {
   name: "PublicDocumentDetail",

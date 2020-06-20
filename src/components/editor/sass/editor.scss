@@ -181,7 +181,7 @@
   }
 
   h1.is-empty:nth-child(1)::before,
-  p.is-empty:nth-child(2)::before {
+  p.is-empty::before {
     content: attr(data-empty-text);
     float: left;
     color: #aaa;
@@ -191,22 +191,6 @@
 
   h1:nth-child(1) {
     margin-bottom: 4rem;
-  }
-
-  &__floating-menu {
-    padding: 0.2rem 0.2rem;
-    background-color: transparent;
-    position: absolute;
-    z-index: 1;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.2s, visibility 0.2s;
-    margin-top: 3px;
-
-    &.is-active {
-      opacity: 1;
-      visibility: visible;
-    }
   }
 
   .editor-bar-button {

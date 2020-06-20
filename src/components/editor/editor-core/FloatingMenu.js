@@ -63,7 +63,6 @@ class Menu {
       return
     }
 
-
     const currentDom = view.domAtPos(state.selection.anchor)
     const isActive = currentDom.node.innerHTML === '/'
       && currentDom.node.tagName === 'P'

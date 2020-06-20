@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import DocgiEditor from "@/components/app/tiptap/DocgiEditor";
+import DocgiEditor from "@/components/editor/DocgiEditor";
 import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog";
 import { SET_DRAWER, UPDATE_DOCUMENT } from "@/store/mutations.type";
 import ListUserDisplay from "@/components/app/ListUserDisplay";
