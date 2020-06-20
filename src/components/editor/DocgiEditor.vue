@@ -7,9 +7,9 @@
       v-slot="{ commands, isActive, menu }"
     >
       <div
-        class="editor__floating-menu"
+        class="editor-floating-menu"
         :class="{ 'is-active': menu.isActive }"
-        :style="`top: ${menu.top - 8}px`"
+        :style="`top: ${menu.top - 11}px; left: 5px`"
       >
         <menu-button
           @click="commands.heading({ level: 1 })"

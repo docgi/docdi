@@ -16,27 +16,6 @@
     visibility: visible;
   }
 
-  &__button {
-    display: inline-flex;
-    border: 0;
-    padding: 0.2rem 0.5rem;
-    margin-right: 0.2rem;
-    border-radius: 3px;
-    cursor: pointer;
-
-    &:last-child {
-      margin-right: 0;
-    }
-
-    &:hover {
-      background-color: rgba($color-white, 0.1);
-    }
-
-    &.is-active {
-      background-color: rgba($color-white, 0.2);
-    }
-  }
-
   &__form {
     display: flex;
     align-items: center;
