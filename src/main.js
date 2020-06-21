@@ -1,8 +1,9 @@
 import Vue from "vue";
 import VueMeta from "vue-meta";
 import VueNotification from "vue-notification";
-import App from "./App.vue";
+import VueContentPlaceholders from 'vue-content-placeholders';
 
+import App from "./App.vue";
 import outerRouter from "./router/outer";
 import appRouter from "./router/app";
 import publicRouter from "./router/public";
@@ -13,6 +14,7 @@ import ApiService from "./common/api.service";
 import "./scss/main.scss";
 
 Vue.use(VueNotification);
+Vue.use(VueContentPlaceholders);
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 });

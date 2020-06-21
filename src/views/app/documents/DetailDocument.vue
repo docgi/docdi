@@ -1,149 +1,160 @@
 <template>
-  <div v-if="document">
-    <v-app-bar fixed flat color="white" class="app-bar-fixed" hide-on-scroll>
-      <v-breadcrumbs :items="breadcrumbs">
-        <template v-slot:item="{ item }">
-          <v-breadcrumbs-item
-            :to="item.to"
-            :disabled="item.disabled"
-            style="padding-top: 7px"
-          >
-            <div class="d-flex">
-              <v-icon size="20" :color="item.color" v-if="item.isCollection">
-                {{ "fa-folder-open" }}
-              </v-icon>
-              <span style="margin-top: 5px;" class="ml-2">
+  <div>
+    <div v-if="!document" class="mx-6">
+      <content-placeholders :rounded="true">
+        <content-placeholders-img />
+        <content-placeholders-heading />
+        <content-placeholders-heading />
+        <content-placeholders-heading />
+      </content-placeholders>
+    </div>
+
+    <div v-if="document">
+      <v-app-bar fixed flat color="white" class="app-bar-fixed" hide-on-scroll>
+        <v-breadcrumbs :items="breadcrumbs">
+          <template v-slot:item="{ item }">
+            <v-breadcrumbs-item
+              :to="item.to"
+              :disabled="item.disabled"
+              style="padding-top: 7px"
+            >
+              <div class="d-flex">
+                <v-icon size="20" :color="item.color" v-if="item.isCollection">
+                  {{ "fa-folder-open" }}
+                </v-icon>
+                <span style="margin-top: 5px;" class="ml-2">
                 {{ item.name }}
               </span>
-            </div>
-          </v-breadcrumbs-item>
-        </template>
-        <template v-slot:divider>
-          <div style="padding-top: 12px;">/</div>
-        </template>
-      </v-breadcrumbs>
-      <div class="ml-auto d-flex align-center">
-        <list-user-display :users="document.contributors" />
-        <v-divider class="mx-2" vertical />
-        <v-btn
-          small
-          color="primary"
-          class="mr-2 text-capitalize"
-          @click="enableEdit"
-          v-if="!editable"
-        >
-          Edit
-        </v-btn>
-        <v-btn
-          small
-          color="warning"
-          class="mr-2 text-capitalize"
-          @click="cancel"
-          outlined
-          v-if="editable"
-        >
-          Cancel
-        </v-btn>
-        <v-btn
-          small
-          color="primary"
-          class="mr-2 text-capitalize"
-          @click="saveEditDoc(document.draft)"
-          outlined
-          v-if="editable"
-        >
-          Save
-        </v-btn>
-        <v-btn
-          small
-          color="primary"
-          class="mr-2 text-capitalize"
-          @click="saveEditDoc(false)"
-          v-if="editable && document.draft"
-        >
-          Publish
-        </v-btn>
-        <v-menu v-if="!editable">
-          <template v-slot:activator="{ on }">
-            <v-btn small icon v-on="on">
-              <v-icon small class="fa fa-ellipsis-h" />
-            </v-btn>
+              </div>
+            </v-breadcrumbs-item>
           </template>
-
-          <v-list dense>
-            <v-list-item
-              class="pa-0"
-              v-for="(item, index) in menuItems"
-              :key="index"
-            >
-              <v-btn
-                small
-                text
-                class="text-capitalize w-full justify-start"
-                :color="item.color || ''"
-                @click="item.handler"
-              >
-                <template v-slot:default>
-                  <v-icon small>{{ item.icon }}</v-icon>
-                  <span class="ml-2">{{ item.title }}</span>
-                </template>
-              </v-btn>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
-    </v-app-bar>
-    <docgi-editor
-      :content="document.html_content"
-      :editable="editable"
-      :key="document.id"
-      @onChangeContent="onChangeContent"
-      ref="editor"
-    />
-
-    <delete-document-dialog
-      :document="document"
-      :show="showDeleteDialog"
-      @hide="showDeleteDialog = false"
-    />
-
-    <v-dialog
-      @click:outside="noLeave"
-      @keydown.esc="noLeave"
-      width="500"
-      ref="confirmLeaveDialog"
-      v-model="showConfirmLeave"
-    >
-      <v-card>
-        <v-card-title>
-          You have unsaved changes in
-          <strong class="ml-2">{{ document.name }}</strong>
-        </v-card-title>
-        <v-card-text>
-          Discard them?
-        </v-card-text>
-        <v-card-actions class="d-flex justify-center">
+          <template v-slot:divider>
+            <div style="padding-top: 12px;">/</div>
+          </template>
+        </v-breadcrumbs>
+        <div class="ml-auto d-flex align-center">
+          <list-user-display :users="document.contributors" />
+          <v-divider class="mx-2" vertical />
           <v-btn
+            small
+            color="primary"
+            class="mr-2 text-capitalize"
+            @click="enableEdit"
+            v-if="!editable"
+          >
+            Edit
+          </v-btn>
+          <v-btn
+            small
             color="warning"
+            class="mr-2 text-capitalize"
+            @click="cancel"
             outlined
-            small
-            class="text-capitalize"
-            @click="yesLeave"
+            v-if="editable"
           >
-            Yes
+            Cancel
           </v-btn>
           <v-btn
-            color="green"
-            outlined
             small
-            class="text-capitalize"
-            @click="noLeave"
+            color="primary"
+            class="mr-2 text-capitalize"
+            @click="saveEditDoc(document.draft)"
+            outlined
+            v-if="editable"
           >
-            No
+            Save
           </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+          <v-btn
+            small
+            color="primary"
+            class="mr-2 text-capitalize"
+            @click="saveEditDoc(false)"
+            v-if="editable && document.draft"
+          >
+            Publish
+          </v-btn>
+          <v-menu v-if="!editable">
+            <template v-slot:activator="{ on }">
+              <v-btn small icon v-on="on">
+                <v-icon small class="fa fa-ellipsis-h" />
+              </v-btn>
+            </template>
+
+            <v-list dense>
+              <v-list-item
+                class="pa-0"
+                v-for="(item, index) in menuItems"
+                :key="index"
+              >
+                <v-btn
+                  small
+                  text
+                  class="text-capitalize w-full justify-start"
+                  :color="item.color || ''"
+                  @click="item.handler"
+                >
+                  <template v-slot:default>
+                    <v-icon small>{{ item.icon }}</v-icon>
+                    <span class="ml-2">{{ item.title }}</span>
+                  </template>
+                </v-btn>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
+      </v-app-bar>
+      <docgi-editor
+        :content="document.html_content"
+        :editable="editable"
+        :key="document.id"
+        @onChangeContent="onChangeContent"
+        ref="editor"
+      />
+
+      <delete-document-dialog
+        :document="document"
+        :show="showDeleteDialog"
+        @hide="showDeleteDialog = false"
+      />
+
+      <v-dialog
+        @click:outside="noLeave"
+        @keydown.esc="noLeave"
+        width="500"
+        ref="confirmLeaveDialog"
+        v-model="showConfirmLeave"
+      >
+        <v-card>
+          <v-card-title>
+            You have unsaved changes in
+            <strong class="ml-2">{{ document.name }}</strong>
+          </v-card-title>
+          <v-card-text>
+            Discard them?
+          </v-card-text>
+          <v-card-actions class="d-flex justify-center">
+            <v-btn
+              color="warning"
+              outlined
+              small
+              class="text-capitalize"
+              @click="yesLeave"
+            >
+              Yes
+            </v-btn>
+            <v-btn
+              color="green"
+              outlined
+              small
+              class="text-capitalize"
+              @click="noLeave"
+            >
+              No
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </div>
 </template>
 
