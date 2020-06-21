@@ -93,7 +93,7 @@
       @hide="hideLinkMenu"
     >
       <div
-        class="menububble"
+        class="bubble-menu"
         :class="{ 'is-active': menu.isActive }"
         :style="`left: ${menu.left}px; bottom: ${menu.bottom}px;`"
       >
@@ -138,12 +138,12 @@
         />
 
         <form
-          class="menububble__form"
+          class="bubble-menu-form"
           v-if="linkMenuIsActive"
           @submit.prevent="setLinkUrl(commands.link, linkUrl)"
         >
           <input
-            class="menububble__input"
+            class="bubble-menu-link-input"
             type="text"
             v-model="linkUrl"
             placeholder="https://"
@@ -164,7 +164,7 @@
     </editor-menu-bubble>
 
     <!--  Editor  -->
-    <editor-content class="editor__content" :editor="editor" />
+    <editor-content class="content" :editor="editor" />
   </div>
 </template>
 
