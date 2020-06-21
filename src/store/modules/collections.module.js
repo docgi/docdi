@@ -3,7 +3,6 @@ import {
   CREATE_NEW_COLLECTION,
   CREATE_NEW_DOCUMENT,
   DELETE_COLLECTION,
-  LOAD_DETAIL_COLLECTION,
   LOAD_ROOT_COLLECTIONS,
   MAKE_PUBLIC_COLLECTION,
   PUT_COLLECTION,
@@ -11,10 +10,8 @@ import {
 } from "@/store/actions.type";
 import {
   APPEND_COLLECTION,
-  COLLECTION_FILL_CHILDREN,
   ADD_DOCUMENT,
   REMOVE_COLLECTION,
-  SET_ACTIVE,
   SET_COLLECTIONS,
   UPDATE_COLLECTION,
   DELETE_DOCUMENT,
@@ -83,16 +80,6 @@ const actions = {
         return Promise.reject(error);
       });
   },
-  [LOAD_DETAIL_COLLECTION]({ commit }, collectionId) {
-    return Vue.axios
-      .get(`collections/${collectionId}/`)
-      .then(response => {
-        commit(COLLECTION_FILL_CHILDREN, { collectionId, data: response.data });
-      })
-      .catch(err => {
-        return Promise.reject(err);
-      });
-  },
   [DELETE_COLLECTION]({ commit }, collectionId) {
     return Vue.axios
       .delete(`collections/${collectionId}/`)
@@ -154,35 +141,12 @@ const actions = {
   }
 };
 
-const fillChild = (array, id, data) => {
-  if (!(array instanceof Array)) {
-    return;
-  }
-  for (let i = 0; i < array.length; i++) {
-    if ("is_collection" in array[i]) {
-      if (array[i].id === id) {
-        array[i] = { ...data };
-        break;
-      }
-      if ("children" in array[i]) {
-        fillChild(array[i].children, id, data);
-      }
-    }
-  }
-};
-
 const mutations = {
   [SET_COLLECTIONS](state, collections) {
     state.collections = collections;
   },
-  [SET_ACTIVE](state, active) {
-    state.active = active;
-  },
   [APPEND_COLLECTION](state, collection) {
     state.collections.push(collection);
-  },
-  [COLLECTION_FILL_CHILDREN](state, { collectionId, data }) {
-    fillChild(state.collections, collectionId, data);
   },
   [REMOVE_COLLECTION](state, collectionId) {
     state.collections = state.collections.filter(
@@ -200,10 +164,9 @@ const mutations = {
     state.documents = state.documents.filter(doc => doc.id !== document.id);
   },
   [UPDATE_DOCUMENT](state, document) {
-    for (let col of state.collections) {
-      if (col.id === document.collection) {
-        let index = col.children.findIndex(item => item.id === document.id);
-        col.children[index] = { ...document };
+    for (let [index, doc] of state.documents.entries()) {
+      if (doc.id === document.id) {
+        state.documents[index] = document;
       }
     }
   },

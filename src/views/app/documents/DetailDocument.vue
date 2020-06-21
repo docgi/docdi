@@ -240,14 +240,13 @@ export default {
       this.editable = false;
     },
     saveEditDoc(draft) {
-      if (
+      if (  // if document have no changes do nothing
         !this.docName &&
         !this.jsonContent &&
         !this.htmlContent &&
         draft === this.document.draft
       ) {
         this.editable = false;
-        this.$store.commit(SET_DRAWER, true);
         return;
       }
 
@@ -345,9 +344,12 @@ export default {
               this.resetData();
               next();
             })
-            .catch(error => {
-              // Todo
-              console.log(error);
+            .catch(() => {
+              this.$notify({
+                group: "noti",
+                type: "error",
+                title: "Fail to load document"
+              })
             });
         }
       });
@@ -356,7 +358,11 @@ export default {
         let response = await this.getDocument(to.params.id);
         this.document = response.data;
       } catch (e) {
-        console.log(e); // Todo
+        this.$notify({
+          group: "noti",
+          type: "error",
+          title: "Fail to load document"
+        })
       }
       next();
     }

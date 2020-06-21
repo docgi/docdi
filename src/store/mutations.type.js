@@ -11,12 +11,10 @@ export const SET_DIALOG = "setDialog";
 
 // Collections
 export const SET_COLLECTIONS = "setCollections";
-export const SET_ACTIVE = "setActive";
 export const APPEND_COLLECTION = "appendCollection";
-export const COLLECTION_FILL_CHILDREN = "collectionFillChildren";
 export const REMOVE_COLLECTION = "removeCollection";
 export const UPDATE_COLLECTION = "updateCollection";
-export const ADD_DOCUMENT = "fillDocumentIntoCollection";
+export const ADD_DOCUMENT = "addDocument";
 export const DELETE_DOCUMENT = "deleteDocument";
 export const UPDATE_DOCUMENT = "updateDocument";
 export const SET_TREE_VIEW_OPEN_COLLECTIONS = "setTreeViewOpenCollections"
