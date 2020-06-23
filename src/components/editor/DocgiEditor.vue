@@ -279,7 +279,22 @@ export default {
         ],
         editable: this.editable,
         onUpdate: ({ getJSON, getHTML }) => {
-          this.$emit("onChangeContent", { json: getJSON(), html: getHTML() });
+          let json = getJSON();
+          let html = getHTML();
+          let name = "";
+          if (
+            json &&
+            json.content[0].type === "title" &&
+            json.content[0].content &&
+            json.content[0].content.length > 0 &&
+            Object.hasOwnProperty.call(
+              json.content[0].content[0],
+              "text"))
+          {
+              name = json.content[0].content[0].text;
+          }
+          this.$emit("onChangeName", name);
+          this.$emit("onChangeContent", { json: json, html: html});
         }
       }),
       linkUrl: null,
@@ -315,6 +330,11 @@ export default {
     },
     forceSetContent(content) {
       this.editor.setContent(content);
+    }
+  },
+  computed: {
+    title() {
+      return "";
     }
   },
   watch: {

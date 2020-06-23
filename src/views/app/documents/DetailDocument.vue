@@ -107,6 +107,7 @@
         :content="document.html_content"
         :editable="editable"
         :key="document.id"
+        @onChangeName="changeName"
         @onChangeContent="onChangeContent"
         ref="editor"
       />
@@ -161,8 +162,10 @@
 <script>
 import DocgiEditor from "@/components/editor/DocgiEditor";
 import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog";
-import { SET_DRAWER, UPDATE_DOCUMENT } from "@/store/mutations.type";
+import { UPDATE_DOCUMENT } from "@/store/mutations.type";
 import ListUserDisplay from "@/components/app/ListUserDisplay";
+
+const IDLE_TIMEOUT = 700;  // 0.7 second
 
 export default {
   name: "DetailDocument",
@@ -171,6 +174,7 @@ export default {
   data() {
     return {
       document: null,
+      docName: "",
       jsonContent: null,
       htmlContent: "",
       editable: false,
@@ -194,6 +198,7 @@ export default {
       showDeleteDialog: false,
       showConfirmLeave: false,
       resolveLeave: null,
+      autoSaveTimeoutId: null
     };
   },
   async created() {
@@ -265,7 +270,6 @@ export default {
           this.document = response.data;
           this.$store.commit(UPDATE_DOCUMENT, response.data);
           this.editable = false;
-          this.$store.commit(SET_DRAWER, true);
         })
         .catch(() => {
           this.$notify({
@@ -276,8 +280,29 @@ export default {
         });
     },
     onChangeContent({ json, html }) {
+      if (this.autoSaveTimeoutId) {
+        clearTimeout(this.autoSaveTimeoutId);
+      }
       this.jsonContent = json;
       this.htmlContent = html;
+      this.autoSaveTimeoutId = setTimeout(() => {
+        let payload = {
+          name: this.docName,
+          json_content: this.jsonContent,
+          html_content: this.htmlContent
+        }
+        this.$http.patch(`documents/${this.document.id}/`, payload)
+        .then((response) => {
+          this.jsonContent = "";
+          this.htmlContent = "";
+          this.docName = "";
+          this.document = response.data;
+          this.$store.commit(UPDATE_DOCUMENT, response.data);
+        })
+      }, IDLE_TIMEOUT);
+    },
+    changeName(name) {
+      this.docName = name;
     },
     showLeaveDialog() {
       this.showConfirmLeave = true;
@@ -295,12 +320,6 @@ export default {
     }
   },
   computed: {
-    docName() {
-      if (this.jsonContent) {
-        return this.jsonContent.content[0].content[0].text;
-      }
-      return "";
-    },
     collection() {
       if (this.document) {
         return this.$store.getters.getCollectionById(this.document.collection);
