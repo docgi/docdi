@@ -173,7 +173,6 @@ import axios from "axios";
 import { EditorContent, Editor, EditorMenuBubble } from "tiptap";
 import Doc from "./editor-core/Doc";
 import Title from "./editor-core/Title";
-import Figure from "@/components/editor/editor-core/Figure";
 import MenuButton from "@/components/editor/editor-core/MenuButton";
 import EditorFloatingMenu from "@/components/editor/editor-core/EditorFloatingMenu";
 
@@ -204,7 +203,7 @@ import python from "highlight.js/lib/languages/python";
 
 import Image from "./editor-core/Image";
 
-async function upload(file) {
+async function uploadFunc(file) {
   let formData = new FormData();
   formData.append("image", file);
   const headers = { "Content-Type": "multipart/form-data" };
@@ -264,8 +263,7 @@ export default {
           new Code(),
           new Italic(),
           new History(),
-          new Image(null, null, upload),
-          new Figure(),
+          new Image(null, null, uploadFunc),
           new HorizontalRule(),
           new Placeholder({
             showOnlyCurrent: true,
@@ -304,7 +302,7 @@ export default {
   methods: {
     async onSelectImage(event, commands) {
       try {
-        let res = await upload(event.target.files[0]);
+        let res = await uploadFunc(event.target.files[0]);
         commands.image({
           src: res
         });

@@ -1,14 +1,6 @@
-import { Node, Plugin } from "tiptap";
-import { nodeInputRule } from "tiptap-commands";
+import {Node, Plugin} from "tiptap";
+import {nodeInputRule} from "tiptap-commands";
 
-/**
- * Matches following attributes in Markdown-typed image: [, alt, src, title]
- *
- * Example:
- * ![Lorem](image.jpg) -> [, "Lorem", "image.jpg"]
- * ![](image.jpg "Ipsum") -> [, "", "image.jpg", "Ipsum"]
- * ![Lorem](image.jpg "Ipsum") -> [, "Lorem", "image.jpg", "Ipsum"]
- */
 const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/;
 
 export default class Image extends Node {
@@ -23,10 +15,24 @@ export default class Image extends Node {
 
   get schema() {
     return {
-      inline: false,
-      attrs: {src: {default: ""}, alt: {default: ""}},
-      parseDOM: [{tag: "img", getAttrs: dom => ({src: dom.src, alt: dom.alt})}],
-      toDOM: node => ["img", {...node.attrs, ...{class: "image-wrapper"}}],
+      content: "inline*",
+      attrs: {src: {default: ""}, title: {default: ""}},
+      group: "block",
+      draggable: true,
+      selectable: true,
+      parseDOM: [{
+        tag: "figure",
+        contentElement: "figcaption",
+        getAttrs(dom) {
+          let img = dom.querySelector("img")
+          return {src: img.getAttribute('src'), title: img.getAttribute('alt')}
+        }
+      }],
+      toDOM: node => [
+        "figure",
+        ["img", {...node.attrs, contentEditable: false}],
+        ["p", {"data-placeholder": "Add caption ...."}, 0],
+      ],
     }
   }
 
@@ -148,7 +154,9 @@ export default class Image extends Node {
                   };
                   reader.readAsDataURL(image);
                 }
-              });
+              }
+              );
+              return false;
             }
           }
         }

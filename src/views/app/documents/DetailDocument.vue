@@ -165,7 +165,7 @@ import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog"
 import { UPDATE_DOCUMENT } from "@/store/mutations.type";
 import ListUserDisplay from "@/components/app/ListUserDisplay";
 
-const IDLE_TIMEOUT = 700;  // 0.7 second
+const IDLE_TIMEOUT = 7000;  // 0.7 second
 
 export default {
   name: "DetailDocument",
