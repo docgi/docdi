@@ -165,7 +165,7 @@ import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog"
 import { UPDATE_DOCUMENT } from "@/store/mutations.type";
 import ListUserDisplay from "@/components/app/ListUserDisplay";
 
-const IDLE_TIMEOUT = 7000;  // 0.7 second
+const IDLE_TIMEOUT = 800;  // 0.7 second
 
 export default {
   name: "DetailDocument",
@@ -178,6 +178,7 @@ export default {
       jsonContent: null,
       htmlContent: "",
       editable: false,
+      isSaved: false,
       menuItems: [
         {
           title: "Edit",
@@ -207,8 +208,17 @@ export default {
         `documents/${this.$route.params.id}/`
       );
       this.document = response.data;
+
+      let isNew = this.$route.query.new;
+      if (isNew) {
+        this.editable = true;
+      }
     } catch (e) {
-      console.log(e); // Todo
+      this.$notify({
+        group: "noti",
+        type: "error",
+        title: "Fail to load document"
+      })
     }
   },
   methods: {
@@ -223,7 +233,7 @@ export default {
     getDocument(documentId) {
       return this.$http.get(`documents/${documentId}/`);
     },
-    calculatePayload(draft) {
+    makePayload(draft) {
       let payload = { draft };
       if (this.docName) {
         payload.name = this.docName;
@@ -240,22 +250,9 @@ export default {
       if (this.jsonContent !== null || this.htmlContent !== null) {
         this.$refs.editor.forceSetContent(this.document.html_content);
       }
-      this.jsonContent = null;
-      this.htmlContent = null;
-      this.editable = false;
     },
     saveEditDoc(draft) {
-      if (  // if document have no changes do nothing
-        !this.docName &&
-        !this.jsonContent &&
-        !this.htmlContent &&
-        draft === this.document.draft
-      ) {
-        this.editable = false;
-        return;
-      }
-
-      let payload = this.calculatePayload(draft);
+      let payload = this.makePayload(draft);
       this.$http
         .patch(`documents/${this.document.id}/`, payload)
         .then(response => {
@@ -264,10 +261,8 @@ export default {
             type: "success",
             title: "Update successful."
           });
-
-          this.jsonContent = "";
-          this.htmlContent = "";
           this.document = response.data;
+          this.isSaved = true;
           this.$store.commit(UPDATE_DOCUMENT, response.data);
           this.editable = false;
         })
@@ -283,6 +278,7 @@ export default {
       if (this.autoSaveTimeoutId) {
         clearTimeout(this.autoSaveTimeoutId);
       }
+      this.isSaved = false;
       this.jsonContent = json;
       this.htmlContent = html;
       this.autoSaveTimeoutId = setTimeout(() => {
@@ -293,9 +289,7 @@ export default {
         }
         this.$http.patch(`documents/${this.document.id}/`, payload)
         .then((response) => {
-          this.jsonContent = "";
-          this.htmlContent = "";
-          this.docName = "";
+          this.isSaved = true;
           this.document = response.data;
           this.$store.commit(UPDATE_DOCUMENT, response.data);
         })
@@ -354,7 +348,7 @@ export default {
     }
   },
   async beforeRouteUpdate(to, from, next) {
-    if (this.docName || this.htmlContent || this.jsonContent) {
+    if (!this.isSaved) {
       this.showLeaveDialog().then(answer => {
         if (answer) {
           this.getDocument(to.params.id)
@@ -387,7 +381,7 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    if (this.docName || this.htmlContent || this.jsonContent) {
+    if (!this.isSaved) {
       this.showLeaveDialog().then(answer => {
         next(answer);
       });

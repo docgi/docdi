@@ -27,8 +27,10 @@
 <script>
 import { mapGetters } from "vuex";
 import { SET_DIALOG, SET_DRAWER } from "@/store/mutations.type";
+import { CREATE_NEW_DOCUMENT } from "@/store/actions.type";
 
-const UUID_REGEX = '[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}'
+const UUID_REGEX =
+  "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}";
 
 export default {
   name: "TheAppBar",
@@ -47,18 +49,30 @@ export default {
         let matches = this.currentPath.match(UUID_REGEX);
         if (matches.length > 0) {
           let collectionId = matches[0];
-          this.$router.push({ name: "NewDocument", params: { collectionId } });
+
+          let payload = {
+            collection: collectionId
+          };
+          this.$store
+            .dispatch(CREATE_NEW_DOCUMENT, payload)
+            .then(response => {
+              this.$router.push({
+                name: "DetailDocument",
+                params: { id: response.data.id },
+                query: {new: true}
+              });
+            })
+            .catch(() => {
+              this.$notify({
+                group: "noti",
+                type: "error",
+                title: "Something wrong, please try again."
+              });
+            });
         }
       } else {
         this.$store.commit(SET_DIALOG, { newDocument: true });
       }
-    },
-    goToNewDocument(colId) {
-      this.showSelectCollection = false;
-      this.$router.push({
-        name: "NewDocument",
-        params: { collectionId: colId }
-      });
     }
   },
   computed: {

@@ -31,7 +31,7 @@ export default class Image extends Node {
       toDOM: node => [
         "figure",
         ["img", {...node.attrs, contentEditable: false}],
-        ["p", {"data-placeholder": "Add caption ...."}, 0],
+        ["p", {}, 0],
       ],
     }
   }
@@ -156,7 +156,6 @@ export default class Image extends Node {
                 }
               }
               );
-              return false;
             }
           }
         }

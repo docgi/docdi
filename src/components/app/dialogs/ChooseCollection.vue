@@ -19,7 +19,7 @@
           >
             <div
               class="d-flex w-full fill-height align-center pos-absolute col-item px-4"
-              @click="goToNewDocument(col.id)"
+              @click="newDocument(col.id)"
             >
               <v-icon class="fa fa-folder-open" :color="col.color" />
               <span class="font-weight-bold mt-1 mx-2">
@@ -36,13 +36,31 @@
 <script>
 import { mapGetters } from "vuex";
 import { SET_DIALOG } from "@/store/mutations.type";
+import {CREATE_NEW_DOCUMENT} from "@/store/actions.type";
 
 export default {
   name: "ChooseCollection",
   methods: {
-    goToNewDocument(collectionId) {
-      this.$store.commit(SET_DIALOG, { newDocument: false });
-      this.$router.push({ name: "NewDocument", params: { collectionId } });
+    newDocument(collectionId) {
+      let payload = {
+        collection: collectionId
+      }
+      this.$store.dispatch(CREATE_NEW_DOCUMENT, payload)
+        .then((response) => {
+          this.$store.commit(SET_DIALOG, { newDocument: false });
+          this.$router.push({
+            name: "DetailDocument",
+            params: { id: response.data.id },
+            query: {new: true}
+          })
+        })
+        .catch(() => {
+          this.$notify({
+            group: "noti",
+            type: "error",
+            title: "Something wrong, please try again."
+          })
+        })
     },
     createNewCollection() {
       this.$store.commit(SET_DIALOG, { newCollection: true });
