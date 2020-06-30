@@ -11,6 +11,14 @@
 
     <div v-if="document">
       <v-app-bar fixed flat color="white" class="app-bar-fixed" hide-on-scroll>
+        <v-progress-linear
+          :active="isSaving"
+          :indeterminate="isSaving"
+          top
+          absolute
+          color="deep-purple accent-4"
+        ></v-progress-linear>
+
         <v-breadcrumbs :items="breadcrumbs">
           <template v-slot:item="{ item }">
             <v-breadcrumbs-item
@@ -32,6 +40,7 @@
             <div style="padding-top: 12px;">/</div>
           </template>
         </v-breadcrumbs>
+
         <div class="ml-auto d-flex align-center">
           <list-user-display :users="document.contributors" />
           <v-divider class="mx-2" vertical />
@@ -46,13 +55,12 @@
           </v-btn>
           <v-btn
             small
-            color="warning"
-            class="mr-2 text-capitalize"
-            @click="cancel"
             outlined
-            v-if="editable"
+            class="mr-2 text-capitalize"
+            @click="saveEditDoc(false)"
+            v-if="editable && document.draft"
           >
-            Cancel
+            Publish
           </v-btn>
           <v-btn
             small
@@ -63,15 +71,6 @@
             v-if="editable"
           >
             Save
-          </v-btn>
-          <v-btn
-            small
-            color="primary"
-            class="mr-2 text-capitalize"
-            @click="saveEditDoc(false)"
-            v-if="editable && document.draft"
-          >
-            Publish
           </v-btn>
           <v-menu v-if="!editable">
             <template v-slot:activator="{ on }">
@@ -178,7 +177,8 @@ export default {
       jsonContent: null,
       htmlContent: "",
       editable: false,
-      isSaved: false,
+      isSaved: true,
+      isSaving: false,
       menuItems: [
         {
           title: "Edit",
@@ -246,12 +246,8 @@ export default {
       }
       return payload;
     },
-    cancel() {
-      if (this.jsonContent !== null || this.htmlContent !== null) {
-        this.$refs.editor.forceSetContent(this.document.html_content);
-      }
-    },
     saveEditDoc(draft) {
+      this.isSaving = true;
       let payload = this.makePayload(draft);
       this.$http
         .patch(`documents/${this.document.id}/`, payload)
@@ -272,6 +268,9 @@ export default {
             type: "error",
             title: "Update failed."
           });
+        })
+        .finally(() => {
+          this.isSaving = false;
         });
     },
     onChangeContent({ json, html }) {
@@ -287,12 +286,14 @@ export default {
           json_content: this.jsonContent,
           html_content: this.htmlContent
         }
+        this.isSaving = true;
         this.$http.patch(`documents/${this.document.id}/`, payload)
-        .then((response) => {
-          this.isSaved = true;
-          this.document = response.data;
-          this.$store.commit(UPDATE_DOCUMENT, response.data);
-        })
+          .then((response) => {
+            this.isSaved = true;
+            this.document = response.data;
+            this.$store.commit(UPDATE_DOCUMENT, response.data);
+            this.isSaving = false;
+          })
       }, IDLE_TIMEOUT);
     },
     changeName(name) {

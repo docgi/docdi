@@ -51,7 +51,8 @@ export default {
           let collectionId = matches[0];
 
           let payload = {
-            collection: collectionId
+            collection: collectionId,
+            draft: true
           };
           this.$store
             .dispatch(CREATE_NEW_DOCUMENT, payload)

@@ -43,7 +43,8 @@ export default {
   methods: {
     newDocument(collectionId) {
       let payload = {
-        collection: collectionId
+        collection: collectionId,
+        draft: true
       }
       this.$store.dispatch(CREATE_NEW_DOCUMENT, payload)
         .then((response) => {

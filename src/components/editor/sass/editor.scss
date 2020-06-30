@@ -16,7 +16,9 @@
       caret-color: currentColor;
     }
 
-    h1, h2, h3 {
+    h1,
+    h2,
+    h3 {
       margin: 1rem 0;
       font-weight: 600;
     }
@@ -35,29 +37,34 @@
       &::after {
         all: initial;
       }
-    }
+      code {
+        -webkit-box-shadow: none;
+        display: inline;
+        font-size: 1rem;
+        overflow-x: auto;
+        background: $background-color;
+        color: inherit;
+        font-weight: inherit;
+        white-space: pre;
+        padding: 0 !important;
 
-    code {
-      -webkit-box-shadow: none;
-      display: inline;
-      font-size: 1rem;
-      overflow-x: auto;
-      background: $background-color;
-      color: inherit;
-      font-weight: inherit;
-      white-space: pre;
-
-      &::before {
-        all: initial;
-      }
-      &::after {
-        all: initial;
+        &::before {
+          all: initial;
+        }
+        &::after {
+          all: initial;
+        }
       }
     }
 
     hr {
       margin: 2rem auto 2rem auto !important;
-      background-image: linear-gradient(to right,rgba(0,0,0,0),rgba(0,0,0,0.75),rgba(0,0,0,0));
+      background-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.75),
+        rgba(0, 0, 0, 0)
+      );
       width: 60%;
       height: 2px;
       border: none;
