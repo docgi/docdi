@@ -8,8 +8,10 @@
         :items="collections"
         item-key="id"
         class="v-tree-custom"
-        :key="documents.length"
-        :open.sync="open"
+        :key="key"
+        :open="open"
+        ref="tree"
+        @update:open="updateOpenCol"
       >
         <template v-slot:label="{ item, open }">
           <!--     is collection     -->
@@ -61,26 +63,56 @@ import { mapGetters } from "vuex";
 import { LOAD_ROOT_COLLECTIONS } from "@/store/actions.type";
 import { SET_DIALOG } from "@/store/mutations.type";
 
+const OPEN_COLLECTION_KEY = "opening";
+
 export default {
   name: "NavBarCollectionPart",
+  created() {
+    let opening = localStorage.getItem(OPEN_COLLECTION_KEY)
+    if (opening) {
+      this.opens = JSON.parse(opening);
+    }
+  },
   mounted() {
     this.$store.dispatch(LOAD_ROOT_COLLECTIONS);
   },
   data() {
     return {
-      open: []
-    }
+      opens: []
+    };
   },
   computed: {
     ...mapGetters({
       getDrawer: "getDrawer",
       collections: "getCollections",
       documents: "getDocuments"
-    })
+    }),
+    key() {
+      if (this.documents.length > 0) {
+        let max = Date.parse(this.documents[0].modified);
+        this.documents.forEach(item => {
+          let next = Date.parse(item.modified);
+          if (next > max) {
+            max = next;
+          }
+        });
+        return max;
+      }
+      return new Date().getTime();
+    }
   },
   methods: {
     showNewCollectionDialog() {
       this.$store.commit(SET_DIALOG, { newCollection: true });
+    },
+    updateOpenCol(opens) {
+      // Because when `created` the getter `collections` is empty and also make
+      // treeview fire `update.open` with empty array. This makes cached value from
+      // localStorage not effects.
+      if (this.collections.length > 0) {
+        this.open = opens;
+        localStorage.setItem(OPEN_COLLECTION_KEY, JSON.stringify(opens));
+      }
     }
   }
 };

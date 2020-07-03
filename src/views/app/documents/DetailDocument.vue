@@ -70,7 +70,7 @@
             outlined
             v-if="editable"
           >
-            Save
+            Done editing
           </v-btn>
           <v-menu v-if="!editable">
             <template v-slot:activator="{ on }">
@@ -164,7 +164,7 @@ import DeleteDocumentDialog from "@/components/app/dialogs/DeleteDocumentDialog"
 import { UPDATE_DOCUMENT } from "@/store/mutations.type";
 import ListUserDisplay from "@/components/app/ListUserDisplay";
 
-const IDLE_TIMEOUT = 800;  // 0.7 second
+const IDLE_TIMEOUT = 800;  // 0.8second
 
 export default {
   name: "DetailDocument",
@@ -208,7 +208,7 @@ export default {
         `documents/${this.$route.params.id}/`
       );
       this.document = response.data;
-
+      this.$store.commit(UPDATE_DOCUMENT, this.document);
       let isNew = this.$route.query.new;
       if (isNew) {
         this.editable = true;
@@ -277,6 +277,7 @@ export default {
       if (this.autoSaveTimeoutId) {
         clearTimeout(this.autoSaveTimeoutId);
       }
+
       this.isSaved = false;
       this.jsonContent = json;
       this.htmlContent = html;
@@ -349,6 +350,8 @@ export default {
     }
   },
   async beforeRouteUpdate(to, from, next) {
+    // Make sure user save doc before leave
+    this.editable = false;
     if (!this.isSaved) {
       this.showLeaveDialog().then(answer => {
         if (answer) {

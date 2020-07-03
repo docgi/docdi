@@ -166,7 +166,7 @@ const mutations = {
   [UPDATE_DOCUMENT](state, document) {
     for (let [index, doc] of state.documents.entries()) {
       if (doc.id === document.id) {
-        state.documents[index] = document;
+        state.documents.splice(index, 1, document); // make reactive
       }
     }
   },
