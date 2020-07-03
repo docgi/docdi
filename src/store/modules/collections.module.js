@@ -16,7 +16,8 @@ import {
   UPDATE_COLLECTION,
   DELETE_DOCUMENT,
   UPDATE_DOCUMENT,
-  SET_TREE_VIEW_OPEN_COLLECTIONS, SET_DOCUMENTS
+  SET_TREE_VIEW_OPEN_COLLECTIONS,
+  SET_DOCUMENTS
 } from "@/store/mutations.type";
 
 const state = {
@@ -29,7 +30,13 @@ const getters = {
     return state.collections.map(col => {
       col.children = getters.groupDocuments(col.id);
       return col;
-    })
+    });
+  },
+  getCollectionForTree(state, getters) {
+    return state.collections.map(col => {
+      col.children = getters.groupDocumentsByCollectionAndStatus(col.id, false, true);
+      return col;
+    });
   },
   getCollectionById: state => id => {
     return state.collections.find(collection => collection.id === id);
@@ -37,13 +44,21 @@ const getters = {
   groupDocuments: state => (colId) => {
     return state.documents.filter(item => item.collection === colId);
   },
-  groupDocumentsByCollectionWithStatus: state => (colId, onlyDraft, onlyPublished) => {
+  groupDocumentsByCollectionAndStatus: state => (
+    colId,
+    onlyDraft,
+    onlyPublished
+  ) => {
     if (onlyDraft) {
-      return state.documents.filter(item => item.collection === colId && item.draft === true);
+      return state.documents.filter(
+        item => item.collection === colId && item.draft === true
+      );
     }
 
     if (onlyPublished) {
-      return state.documents.filter(item => item.collection === colId && item.draft === false);
+      return state.documents.filter(
+        item => item.collection === colId && item.draft === false
+      );
     }
 
     return state.documents.filter(item => item.collection === colId);
@@ -110,8 +125,9 @@ const actions = {
         return Promise.reject(err);
       });
   },
-  [PATCH_COLLECTION]({ commit }, {collectionId, payload}) {
-    return Vue.axios.patch(`collections/${collectionId}/`, payload)
+  [PATCH_COLLECTION]({ commit }, { collectionId, payload }) {
+    return Vue.axios
+      .patch(`collections/${collectionId}/`, payload)
       .then(response => {
         commit(UPDATE_COLLECTION, response.data);
         Vue.notify({
@@ -123,7 +139,7 @@ const actions = {
       })
       .catch(error => {
         return Promise.reject(error);
-      })
+      });
   },
   [CREATE_NEW_DOCUMENT]({ commit }, document) {
     return Vue.axios

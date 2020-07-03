@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     getDocuments() {
-      return this.$store.getters.groupDocumentsByCollectionWithStatus(
+      return this.$store.getters.groupDocumentsByCollectionAndStatus(
         this.collectionId,
         this.onlyDraft,
         this.onlyPublished

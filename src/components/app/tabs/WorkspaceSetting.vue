@@ -6,7 +6,7 @@
         <v-avatar
           tile
           size="100"
-          style="border-radius: 7px;"
+          style="border-radius: 7px !important;"
           class="d-flex flex-column"
         >
           <v-img :src="getSrcLogo">

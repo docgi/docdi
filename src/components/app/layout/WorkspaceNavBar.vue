@@ -7,7 +7,7 @@
             color="teal"
             :size="size"
             tile
-            style="border-radius: 7px"
+            style="border-radius: 7px !important;"
             class="fill-height"
           >
             <v-img v-if="workspace.logo" :src="workspace.logo" />
