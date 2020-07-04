@@ -1,23 +1,19 @@
 <template>
   <v-list dense color="#EDF2F7">
+    <v-subheader>Working space</v-subheader>
     <v-list-group
-      prepend-icon="fa-file"
       class="list-group-custom"
       :value="openingGroup === 'document'"
       @click="updateOpenGroup('document')"
     >
       <template v-slot:activator>
-        <v-list-item-title class="font-weight-bold"
-          >Documents</v-list-item-title
-        >
+        <v-list-item-icon class="mr-2">
+          <v-icon class="far fa-edit" small></v-icon>
+        </v-list-item-icon>
+        <v-list-item-title class="font-weight-bold">
+          Documents
+        </v-list-item-title>
       </template>
-
-      <template v-slot:activator>
-        <v-list-item-title class="font-weight-bold"
-          >Documents</v-list-item-title
-        >
-      </template>
-
       <v-list-item-group>
         <v-treeview
           hoverable
@@ -76,14 +72,16 @@
     </v-list-group>
 
     <v-list-group
-      prepend-icon="fa-file"
       class="list-group-custom"
       :value="openingGroup === 'kanban'"
       @click="updateOpenGroup('kanban')"
     >
       <template v-slot:activator>
+        <v-list-item-icon class="mr-2">
+          <v-icon class="fab fa-trello" small></v-icon>
+        </v-list-item-icon>
         <v-list-item-title class="font-weight-bold">
-          Kanban
+          Boards
         </v-list-item-title>
       </template>
     </v-list-group>

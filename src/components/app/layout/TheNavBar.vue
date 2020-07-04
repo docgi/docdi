@@ -1,5 +1,4 @@
 <template>
-
     <v-navigation-drawer
       app
       color="#EDF2F7"
@@ -42,7 +41,7 @@
 </template>
 
 <script>
-import WorkspaceNavBarPart from "@/components/app/layout/WorkspaceNavBar";
+import WorkspaceNavBarPart from "@/components/app/layout/WorkspaceLogo";
 import NavBarCollectionPart from "@/components/app/layout/NavBarCollectionPart";
 import { SET_DRAWER } from "@/store/mutations.type";
 
