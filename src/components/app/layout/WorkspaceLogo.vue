@@ -30,11 +30,23 @@
       </template>
 
       <v-list dense>
-        <v-list-item class="pa-0" v-for="(item, index) in items" :key="index" dense>
-          <v-btn text :to="{name: item.path}" class="text-capitalize w-full justify-start" :color="item.color || ''">
+        <v-list-item
+          class="pa-0"
+          v-for="(item, index) in items"
+          :key="index"
+          dense
+        >
+          <v-btn
+            text
+            :to="{ name: item.path }"
+            class="text-capitalize w-full justify-start"
+            :color="item.color || ''"
+          >
             <template v-slot:default>
               <v-icon small>{{ item.icon }}</v-icon>
-              <span class="ml-2" style="font-size: .75em; font-weight: bold">{{ item.title }}</span>
+              <span class="ml-2" style="font-size: .75em; font-weight: bold">{{
+                item.title
+              }}</span>
             </template>
           </v-btn>
         </v-list-item>
@@ -53,7 +65,12 @@ export default {
       showMenu: false,
       items: [
         { title: "Settings", path: "Settings", icon: "fa-cog" },
-        { title: "Logout", path: "Logout", icon: "fa-sign-out-alt", color: "red lighten-2" },
+        {
+          title: "Logout",
+          path: "Logout",
+          icon: "fa-sign-out-alt",
+          color: "red lighten-2"
+        }
       ]
     };
   },

@@ -99,8 +99,12 @@ export default {
         if (e.response.data.confirm_password) {
           this.errorsPass = e.response.data.confirm_password;
         }
-        if (e.response.token) {
-          this.errorsPass = e.response.token;
+        if (e.response.msg) {
+          this.$notify({
+            group: "noti",
+            type: "error",
+            title: e.response.msg
+          })
         }
         this.submitting = false;
       }

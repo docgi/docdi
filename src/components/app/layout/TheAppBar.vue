@@ -1,10 +1,14 @@
 <template>
   <v-app-bar app flat color="white" hide-on-scroll>
     <v-app-bar-nav-icon
-      class="hidden-md-and-up"
+      v-if="!drawer"
       style="margin-left: -17px"
       @click="enableDrawer"
-    />
+    >
+      <template v-slot:default>
+        <v-icon small class="fa fa-chevron-circle-right"/>
+      </template>
+    </v-app-bar-nav-icon>
     <div class="ml-auto">
       <v-btn
         color="primary"
@@ -78,7 +82,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      currentPath: "getCurrentPath"
+      currentPath: "getCurrentPath",
+      drawer: "getDrawer",
     }),
     showNewDocButton() {
       let hideOnRoutes = ["/documents/*", "/settings"];

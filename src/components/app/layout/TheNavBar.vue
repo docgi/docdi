@@ -9,8 +9,18 @@
       class="d-flex"
     >
       <div class="ma-4">
-        <div class="d-flex mb-4">
+        <div class="d-flex mb-4" @mouseover="showChevronBtn = true" @mouseleave="showChevronBtn = false">
           <workspace-nav-bar-part />
+          <v-btn
+            v-show="showChevronBtn"
+            small
+            class="pos-absolute"
+            icon
+            @click="hideNavBar"
+            style="right: 7px; top: 15px"
+          >
+            <v-icon small class="fa fa-chevron-circle-left" />
+          </v-btn>
         </div>
 
         <v-divider />
@@ -53,6 +63,7 @@ export default {
   },
   data() {
     return {
+      showChevronBtn: false,
       quickAccess: {
         model: 0,
         items: [
@@ -69,6 +80,11 @@ export default {
         ]
       }
     };
+  },
+  methods: {
+    hideNavBar() {
+      this.$store.commit(SET_DRAWER, false);
+    }
   },
   computed: {
     drawer: {
