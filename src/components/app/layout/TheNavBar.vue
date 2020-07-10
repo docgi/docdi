@@ -1,53 +1,58 @@
 <template>
-    <v-navigation-drawer
-      app
-      color="#EDF2F7"
-      floating
-      mobile-breakpoint="960"
-      v-model="drawer"
-      width="300"
-      class="d-flex"
+  <v-navigation-drawer
+    app
+    color="#EDF2F7"
+    floating
+    mobile-breakpoint="960"
+    v-model="drawer"
+    width="300"
+    class="d-flex"
+
+  >
+    <div
+      class="ma-4"
+      @mouseover="showOrHideAllHiddenBtn(true)"
+      @mouseleave="showOrHideAllHiddenBtn(false)"
     >
-      <div class="ma-4">
-        <div class="d-flex mb-4" @mouseover="showChevronBtn = true" @mouseleave="showChevronBtn = false">
-          <workspace-nav-bar-part />
-          <v-btn
-            v-show="showChevronBtn"
-            small
-            class="pos-absolute"
-            icon
-            @click="hideNavBar"
-            style="right: 7px; top: 15px"
-          >
-            <v-icon small class="fa fa-chevron-circle-left" />
-          </v-btn>
-        </div>
-
-        <v-divider />
-        <v-list dense color="#EDF2F7">
-          <v-subheader>Quick access</v-subheader>
-          <v-list-item-group v-model="quickAccess.model">
-            <v-list-item
-              v-for="(item, index) in quickAccess.items"
-              :key="index"
-              :to="item.path"
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon :class="'fa ' + item.icon" small></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content class="pb-1">
-                <v-list-item-title
-                  v-text="item.name"
-                  class="font-weight-bold"
-                />
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-        <nav-bar-collection-part />
+      <div class="d-flex mb-4">
+        <workspace-nav-bar-part />
+        <v-btn
+          v-show="chevronBtn"
+          small
+          class="pos-absolute"
+          icon
+          @click="hideNavBar"
+          style="right: 20px; top: 15px"
+        >
+          <v-icon small class="fa fa-chevron-circle-left" />
+        </v-btn>
       </div>
-    </v-navigation-drawer>
 
+      <v-divider />
+      <v-list dense color="#EDF2F7">
+        <v-subheader>
+          Quick access
+        </v-subheader>
+        <v-list-item-group v-model="quickAccess.model">
+          <v-list-item
+            v-for="(item, index) in quickAccess.items"
+            :key="index"
+            :to="item.path"
+          >
+            <v-list-item-icon class="mr-2">
+              <v-icon :class="'fa ' + item.icon" small></v-icon>
+            </v-list-item-icon>
+            <v-list-item-content class="pb-1">
+              <v-list-item-title v-text="item.name" class="font-weight-bold" />
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+
+      <nav-bar-collection-part ref="collectionPart" />
+
+    </div>
+  </v-navigation-drawer>
 </template>
 
 <script>
@@ -63,7 +68,7 @@ export default {
   },
   data() {
     return {
-      showChevronBtn: false,
+      chevronBtn: false,
       quickAccess: {
         model: 0,
         items: [
@@ -84,6 +89,10 @@ export default {
   methods: {
     hideNavBar() {
       this.$store.commit(SET_DRAWER, false);
+    },
+    showOrHideAllHiddenBtn(val) {
+      this.chevronBtn = val;
+      this.$refs.collectionPart.setPlusBtn(val);
     }
   },
   computed: {

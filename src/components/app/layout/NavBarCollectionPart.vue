@@ -1,6 +1,19 @@
 <template>
   <v-list dense color="#EDF2F7">
-    <v-subheader>Working space</v-subheader>
+
+    <v-subheader class="d-flex">
+      <div>Working space</div>
+      <v-tooltip right>
+        <template v-slot:activator="{ on }">
+          <v-btn v-show="plusBtn" x-small icon class="ml-auto" v-on="on">
+            <v-icon small class="fa fa-plus" />
+          </v-btn>
+        </template>
+        <span>Create collection, board, ...</span>
+      </v-tooltip>
+
+    </v-subheader>
+
     <v-list-group
       class="list-group-custom"
       :value="openingGroup === 'document'"
@@ -8,12 +21,15 @@
     >
       <template v-slot:activator>
         <v-list-item-icon class="mr-2">
-          <v-icon class="far fa-edit" small></v-icon>
+          <v-icon class="far fa-edit" small />
         </v-list-item-icon>
-        <v-list-item-title class="font-weight-bold">
-          Documents
+        <v-list-item-title class="pt-1">
+          <v-list-item-title class="font-weight-bold">
+            Documents
+          </v-list-item-title>
         </v-list-item-title>
       </template>
+
       <v-list-item-group>
         <v-treeview
           hoverable
@@ -80,8 +96,10 @@
         <v-list-item-icon class="mr-2">
           <v-icon class="fab fa-trello" small></v-icon>
         </v-list-item-icon>
-        <v-list-item-title class="font-weight-bold">
-          Boards
+        <v-list-item-title class="pt-1">
+          <v-list-item-title class="font-weight-bold">
+            Boards
+          </v-list-item-title>
         </v-list-item-title>
       </template>
     </v-list-group>
@@ -115,7 +133,8 @@ export default {
   data() {
     return {
       openingCols: [],
-      openingGroup: ""
+      openingGroup: "",
+      plusBtn: false
     };
   },
   computed: {
@@ -158,8 +177,11 @@ export default {
         return
       }
       localStorage.setItem(OPEN_GROUP_KEY, JSON.stringify(value));
+    },
+    setPlusBtn(val) {
+      this.plusBtn = val;
     }
-  }
+  },
 };
 </script>
 
