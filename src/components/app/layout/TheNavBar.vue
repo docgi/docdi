@@ -92,7 +92,6 @@ export default {
     },
     showOrHideAllHiddenBtn(val) {
       this.chevronBtn = val;
-      this.$refs.collectionPart.setPlusBtn(val);
     }
   },
   computed: {

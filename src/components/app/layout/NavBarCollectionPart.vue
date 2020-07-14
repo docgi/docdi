@@ -1,17 +1,30 @@
 <template>
   <v-list dense color="#EDF2F7">
-
     <v-subheader class="d-flex">
       <div>Working space</div>
-      <v-tooltip right>
+      <v-menu :value="true">
         <template v-slot:activator="{ on }">
-          <v-btn v-show="plusBtn" x-small icon class="ml-auto" v-on="on">
+          <v-btn x-small icon class="ml-auto" style="margin-right: 5px;" v-on="on">
             <v-icon small class="fa fa-plus" />
           </v-btn>
         </template>
-        <span>Create collection, board, ...</span>
-      </v-tooltip>
-
+        <v-list dense>
+          <v-list dense>
+            <v-list-item
+              class="pa-0"
+              v-for="(item, index) in menuItems"
+              :key="index"
+            >
+              <v-btn small text class="text-capitalize w-full justify-start" @click="item.handler">
+                <template v-slot:default>
+                  <v-icon small :class="item.icon" />
+                  <span class="ml-2">{{ item.title }}</span>
+                </template>
+              </v-btn>
+            </v-list-item>
+          </v-list>
+        </v-list>
+      </v-menu>
     </v-subheader>
 
     <v-list-group
@@ -134,7 +147,25 @@ export default {
     return {
       openingCols: [],
       openingGroup: "",
-      plusBtn: false
+      menuItems: [
+        {
+          title: "New Doc",
+          icon: "fa fa-folder-open",
+          handler: () => {
+            this.$store.commit(SET_DIALOG, { newDocument: true });
+          }
+        },
+        {
+          title: "New Collection",
+          icon: "fa fa-file",
+          handler: () => {this.$store.commit(SET_DIALOG, { newCollection: true });}
+        },
+        {
+          title: "New Board",
+          icon: "fab fa-trello",
+          handler: () => {}
+        }
+      ]
     };
   },
   computed: {
@@ -172,16 +203,14 @@ export default {
     },
     updateOpenGroup(value) {
       let current = localStorage.getItem(OPEN_GROUP_KEY);
-      if (current && JSON.parse(current) === value) { // For on close
+      if (current && JSON.parse(current) === value) {
+        // For on close
         localStorage.setItem(OPEN_GROUP_KEY, "");
-        return
+        return;
       }
       localStorage.setItem(OPEN_GROUP_KEY, JSON.stringify(value));
-    },
-    setPlusBtn(val) {
-      this.plusBtn = val;
     }
-  },
+  }
 };
 </script>
 
