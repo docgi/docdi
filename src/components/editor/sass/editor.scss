@@ -1,10 +1,11 @@
 .editor {
-  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
 
   position: relative;
   margin: 1rem auto 100px auto;
   max-width: 800px;
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol" !important;
 
   .ProseMirror {
     outline: none;
@@ -81,9 +82,8 @@
         padding: 5px;
         border-radius: 2px;
         background: rgba($color-black, 0.1);
-        color: orangered;
+        font-weight: bold;
         box-shadow: none;
-        font-weight: 500;
 
         // Override vuetify code style
         &::before {
@@ -93,6 +93,10 @@
           all: initial;
         }
       }
+    }
+
+    a {
+      text-decoration: underline !important;
     }
 
     ul {
@@ -110,11 +114,6 @@
     li > ol,
     li > ul {
       margin: 0;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
     }
 
     blockquote {

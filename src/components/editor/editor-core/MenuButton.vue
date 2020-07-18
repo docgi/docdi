@@ -10,7 +10,7 @@
         class="editor-bar-button"
         :class="{'is-active': isActive}"
       >
-        <v-icon v-if="!!faClass" small :class="'fa ' + faClass" />
+        <v-icon v-if="!!faClass" small :x-small="xSmall" :class="'fa ' + faClass" />
         <span style="font-size: 1rem;" v-else>
           <slot></slot>
         </span>
@@ -28,6 +28,11 @@ export default {
       type: String,
       required: false,
       default: ""
+    },
+    xSmall: {
+      type: Boolean,
+      required: false,
+      default: false
     },
     faClass: {
       type: String,

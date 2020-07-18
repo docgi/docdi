@@ -2,7 +2,7 @@
   <v-list dense color="#EDF2F7">
     <v-subheader class="d-flex">
       <div>Working space</div>
-      <v-menu :value="true">
+      <v-menu>
         <template v-slot:activator="{ on }">
           <v-btn x-small icon class="ml-auto" style="margin-right: 5px;" v-on="on">
             <v-icon small class="fa fa-plus" />
@@ -51,7 +51,7 @@
           expand-icon="fa-angle-down"
           :items="collections"
           item-key="id"
-          :key="key"
+          :key="treeViewKey"
           :open="openingCols"
           ref="tree"
           @update:open="updateOpenCol"
@@ -174,7 +174,8 @@ export default {
       collections: "getCollectionForTree",
       documents: "getDocuments"
     }),
-    key() {
+    treeViewKey() {
+      // Get new key for force rerender treeview
       if (this.documents.length > 0) {
         let max = Date.parse(this.documents[0].modified);
         this.documents.forEach(item => {

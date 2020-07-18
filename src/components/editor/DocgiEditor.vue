@@ -1,36 +1,44 @@
 <template>
   <div class="editor">
     <!--  Floating menu  -->
-    <editor-floating-menu
-      v-if="editable"
+    <editor-menu-bar
+      v-show="editable"
       :editor="editor"
-      v-slot="{ commands, isActive, menu }"
+      v-slot="{ commands, isActive }"
     >
       <div
-        class="editor-floating-menu"
-        :class="{ 'is-active': menu.isActive }"
-        :style="`top: ${menu.top - 11}px; left: 5px`"
+        :class="{ 'is-active': isActive }"
       >
         <menu-button
-          @click="commands.heading({ level: 1 })"
-          tooltip-text="Heading 1"
-        >
-          H1
-        </menu-button>
-
-        <menu-button
           @click="commands.heading({ level: 2 })"
-          tooltip-text="Heading 2"
-        >
-          H2
-        </menu-button>
+          tooltip-text="Heading"
+          fa-class="fas fa-heading"
+        />
 
         <menu-button
           @click="commands.heading({ level: 3 })"
-          tooltip-text="Heading 3"
-        >
-          H3
-        </menu-button>
+          tooltip-text="Small heading"
+          fa-class="fas fa-heading"
+          x-small
+        />
+
+        <menu-button
+          @click="commands.bold"
+          fa-class="fa-bold"
+          tooltip-text="Bold"
+        />
+
+        <menu-button
+          @click="commands.underline"
+          fa-class="fa-underline"
+          tooltip-text="Underline"
+        />
+
+        <menu-button
+          @click="commands.italic"
+          fa-class="fa-italic"
+          tooltip-text="Italic"
+        />
 
         <menu-button
           @click="commands.blockquote"
@@ -82,7 +90,7 @@
           @change="onSelectImage($event, commands)"
         />
       </div>
-    </editor-floating-menu>
+    </editor-menu-bar>
 
     <!--  Bubble menu  -->
     <editor-menu-bubble
@@ -170,11 +178,11 @@
 
 <script>
 import axios from "axios";
-import { EditorContent, Editor, EditorMenuBubble } from "tiptap";
+import { EditorContent, Editor, EditorMenuBubble, EditorMenuBar } from "tiptap";
 import Doc from "./editor-core/Doc";
 import Title from "./editor-core/Title";
 import MenuButton from "@/components/editor/editor-core/MenuButton";
-import EditorFloatingMenu from "@/components/editor/editor-core/EditorFloatingMenu";
+// import EditorFloatingMenu from "@/components/editor/editor-core/EditorFloatingMenu";
 
 import {
   CodeBlockHighlight,
@@ -227,9 +235,9 @@ export default {
   },
   components: {
     EditorContent,
-    EditorFloatingMenu,
     EditorMenuBubble,
-    MenuButton
+    MenuButton,
+    EditorMenuBar,
   },
   data() {
     return {
@@ -271,7 +279,7 @@ export default {
               if (node.type.name === "title") {
                 return "Untitled";
               }
-              return "Type / for show commands ...";
+              // return "Type / for show commands ...";
             }
           })
         ],
@@ -300,6 +308,7 @@ export default {
     };
   },
   methods: {
+    cl(val) {console.log(val);},
     async onSelectImage(event, commands) {
       try {
         let res = await uploadFunc(event.target.files[0]);

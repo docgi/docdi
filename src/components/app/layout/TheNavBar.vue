@@ -7,7 +7,6 @@
     v-model="drawer"
     width="300"
     class="d-flex"
-
   >
     <div
       class="ma-4"
