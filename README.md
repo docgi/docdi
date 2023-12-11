@@ -1,5 +1,7 @@
 # docdi
 
+![Preview](./images/SavedImage.jpeg)
+
 ## Project setup
 ```
 yarn install
